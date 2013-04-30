@@ -1,0 +1,79 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentMenu2">
+
+    
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+	        
+	        <Button
+		        android:id="@+id/Button0"
+		        android:layout_width="130dp"
+		        android:layout_height="90dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="10dp"
+		        android:textSize="20sp"
+		        android:text="@string/other_title_0" />
+		    <Button
+		        android:id="@+id/Button1"
+		        android:layout_width="130dp"
+		        android:layout_height="90dp"
+		        android:layout_marginLeft="140dp"
+		        android:layout_marginTop="10dp"
+		        android:textSize="20sp"
+		        android:text="@string/other_title_1" />
+		    <Button
+		        android:id="@+id/Button2"
+		        android:layout_width="130dp"
+		        android:layout_height="90dp"
+		        android:layout_marginLeft="270dp"
+		        android:layout_marginTop="10dp"
+		        android:textSize="20sp"
+		        android:text="@string/other_title_2" />
+		    <Button
+		        android:id="@+id/Button3"
+		        android:layout_width="130dp"
+		        android:layout_height="90dp"
+		        android:layout_marginLeft="400dp"
+		        android:layout_marginTop="10dp"
+		        android:textSize="20sp"
+		        android:text="@string/other_title_3" />
+		    <Button
+		        android:id="@+id/Button4"
+		        android:layout_width="130dp"
+		        android:layout_height="90dp"
+		        android:layout_marginLeft="530dp"
+		        android:layout_marginTop="10dp"
+		        android:textSize="20sp"
+		        android:text="@string/other_title_4" />
+		    <Button
+		        android:id="@+id/Button5"
+		        android:layout_width="130dp"
+		        android:layout_height="90dp"
+		        android:layout_marginLeft="660dp"
+		        android:layout_marginTop="10dp"
+		        android:textSize="20sp"
+		        android:text="@string/other_title_5" />
+		     <Button
+		        android:id="@+id/Button6"
+		        android:layout_width="130dp"
+		        android:layout_height="90dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="100dp"
+		        android:textSize="20sp"
+		        android:text="@string/other_title_6" />
+		   
+		    
+        </FrameLayout>
+    </ScrollView>
+    
+</FrameLayout>

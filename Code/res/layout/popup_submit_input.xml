@@ -1,0 +1,239 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderSectionFragment">
+
+    <View
+        android:id="@+id/View01"
+        android:layout_width="match_parent"
+        android:layout_height="748dp"
+        android:background="#88000000" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="600dp"
+        android:layout_height="700dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="dp"
+        android:background="@color/white" />
+
+    <View
+        android:id="@+id/View02"
+        android:layout_width="600dp"
+        android:layout_height="700dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/back_border" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="600dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:background="@color/blue" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:text="輸入上繳金額"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:textStyle="italic|normal" />
+
+    <TextView
+        android:id="@+id/textView0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="190dp"
+        android:text="上繳金額"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="310dp"
+        android:text="元"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton0"
+        android:layout_width="240dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="480dp"
+        android:layout_marginTop="600dp"
+        android:text="0"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="480dp"
+        android:layout_marginTop="520dp"
+        android:text="1"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="560dp"
+        android:layout_marginTop="520dp"
+        android:text="2"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="640dp"
+        android:layout_marginTop="520dp"
+        android:text="3"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton4"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="480dp"
+        android:layout_marginTop="440dp"
+        android:text="4"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton5"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="560dp"
+        android:layout_marginTop="440dp"
+        android:text="5"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton6"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="640dp"
+        android:layout_marginTop="440dp"
+        android:text="6"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton7"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="480dp"
+        android:layout_marginTop="360dp"
+        android:text="7"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton8"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="560dp"
+        android:layout_marginTop="360dp"
+        android:text="8"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButton9"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="640dp"
+        android:layout_marginTop="360dp"
+        android:text="9"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/NumberButtonBack"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="720dp"
+        android:layout_marginTop="360dp"
+        android:text="更正"
+        android:textSize="27sp" />
+
+    <Button
+        android:id="@+id/NumberButtonEnter"
+        android:layout_width="80dp"
+        android:layout_height="240dp"
+        android:layout_marginLeft="720dp"
+        android:layout_marginTop="440dp"
+        android:text="確定"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/TextViewEdit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="250dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/blue"
+        android:textSize="40sp" />
+
+    <View
+        android:id="@+id/View03"
+        android:layout_width="200dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="295dp"
+        android:background="@color/lightBlack" />
+
+    <ImageButton
+        android:id="@+id/ButtonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="885dp"
+        android:layout_marginTop="3dp"
+        android:background="@null"
+        android:src="@drawable/delete_btn_press" />
+
+    <TextView
+        android:id="@+id/TextViewMoney0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:text="營業額"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/red"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextViewMoney1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="110dp"
+        android:text="支出"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/red"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextViewMoney2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="150dp"
+        android:text="預估上繳金額"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/red"
+        android:textSize="30sp" />
+
+</FrameLayout>

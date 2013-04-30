@@ -1,0 +1,56 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderSectionFragment" >
+
+    <ListView
+        android:id="@+id/ListViewCategory"
+        android:layout_width="640dp"
+        android:layout_height="610dp"
+        android:layout_marginTop="0dp" >
+
+    </ListView>
+
+    <ListView
+        android:id="@+id/ListViewDetail"
+        android:layout_width="640dp"
+        android:layout_height="610dp"
+        android:layout_marginLeft="640dp"
+        android:layout_marginTop="0dp" >
+
+    </ListView>
+
+    <View
+        android:id="@+id/View07"
+        android:layout_width="2dp"
+        android:layout_height="760dp"
+        android:layout_marginLeft="640dp"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="610dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="620dp"
+        android:background="@drawable/query_button"
+        android:text="結 算 早 / 晚 班 營 業 額"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/ButtonSubmitAll"
+        android:layout_width="610dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="660dp"
+        android:layout_marginTop="620dp"
+        android:background="@drawable/cancel_button"
+        android:text="列 印 今 日 總 營 業 額"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+    
+</FrameLayout>

@@ -1,0 +1,16 @@
+eclipse.preferences.version=1
+encoding//res/raw/category=UTF-8
+encoding//res/raw/db_init=UTF-8
+encoding//res/raw/product=UTF-8
+encoding//src/com/bravebot/youngipos/MainActivity.java=UTF-8
+encoding//src/com/bravebot/youngipos/OrderActivity.java=UTF-8
+encoding//src/com/bravebot/youngipos/OrderListActivity.java=UTF-8
+encoding//src/com/bravebot/youngipos/OrderListRowAdapter.java=UTF-8
+encoding//src/com/bravebot/youngipos/OrderSectionFragment0.java=UTF-8
+encoding//src/com/bravebot/youngipos/PopupBillInputWindow.java=UTF-8
+encoding//src/com/bravebot/youngipos/PopupBillInputWindowOrderList.java=UTF-8
+encoding//src/com/bravebot/youngipos/PopupNumberInputWindow.java=UTF-8
+encoding//src/com/bravebot/youngipos/PopupSubmitInputWindow.java=UTF-8
+encoding//src/com/bravebot/youngipos/ProductMap.java=UTF-8
+encoding//src/com/bravebot/youngipos/SettingsActivity.java=UTF-8
+encoding//src/com/bravebot/youngipos/StatisticsActivity.java=UTF-8

@@ -1,0 +1,98 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:text="櫃台預備金:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/TextViewPrepare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="230dp"
+        android:layout_marginTop="20dp"
+        android:text="1,000,000"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/blue"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/buttonConnect"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="540dp"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/cancel_button"
+        android:text="連結出單機"
+        android:textColor="@color/white"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="80dp"
+        android:text="出單數:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="40sp" />
+
+<RadioGroup
+    android:id="@+id/myRadioGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="150dp"
+    android:layout_marginTop="80dp"
+    android:orientation="horizontal" >
+
+    <RadioButton
+        android:id="@+id/radioButton0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1張"
+        android:textColor="@color/green"
+        android:textSize="40sp" />
+
+    <RadioButton
+        android:id="@+id/radioButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="2張"
+        android:textColor="@color/green"
+        android:textSize="40sp" />
+
+    <RadioButton
+        android:id="@+id/radioButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="不出單"
+        android:textColor="@color/green"
+        android:textSize="40sp" />
+
+    </RadioGroup>  
+
+    <Button
+        android:id="@+id/ButtonPrepare"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="430dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/query_button"
+        android:text="更改"
+        android:textColor="@color/white"
+        android:textSize="35sp" />
+
+</FrameLayout>

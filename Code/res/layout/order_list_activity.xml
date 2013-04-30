@@ -1,0 +1,316 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderSectionFragment" >
+
+    <FrameLayout
+        android:layout_width="480dp"
+        android:layout_height="510dp"
+        android:layout_marginLeft="799dp"
+        android:layout_marginTop="50dp"
+        android:background="#FFFFFF" >
+
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="480dp"
+            android:layout_height="510dp"
+            android:background="@drawable/back_border" >
+        </ListView>
+    </FrameLayout>
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="799dp"
+        android:background="#FFFFFF" />
+
+    <View
+        android:id="@+id/View0"
+        android:layout_width="1dp"
+        android:layout_height="700dp"
+        android:layout_marginLeft="799dp"
+        android:background="#000000" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="959dp"
+        android:background="#000000" />
+
+    <View
+        android:id="@+id/View2"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="1034dp"
+        android:background="#000000" />
+
+    <View
+        android:id="@+id/View3"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="1111dp"
+        android:background="#000000" />
+
+    <View
+        android:id="@+id/View4"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="1201dp"
+        android:background="#000000" />
+
+    <View
+        android:id="@+id/View5"
+        android:layout_width="480dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="799dp"
+        android:layout_marginTop="50dp"
+        android:background="#000000" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="965dp"
+        android:gravity="center_vertical"
+        android:text="@string/bill_title_2"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextViewEdit"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="1045dp"
+        android:gravity="center_vertical"
+        android:text="@string/bill_title_3"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView03"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="1130dp"
+        android:gravity="center_vertical"
+        android:text="@string/bill_title_4"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView04"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="1210dp"
+        android:gravity="center_vertical"
+        android:text="備註"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView05"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="805dp"
+        android:layout_marginTop="560dp"
+        android:gravity="center_vertical"
+        android:text="@string/bill_title_6"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextViewTotal"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="915dp"
+        android:layout_marginTop="560dp"
+        android:gravity="center_vertical|right"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/blue"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView06"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="1230dp"
+        android:layout_marginTop="560dp"
+        android:gravity="center_vertical"
+        android:text="@string/bill_title_7"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
+
+    <View
+        android:id="@+id/View7"
+        android:layout_width="480dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="799dp"
+        android:layout_marginTop="560dp"
+        android:background="#000000" />
+
+    <Button
+        android:id="@+id/PayButton"
+        android:layout_width="220dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="1050dp"
+        android:layout_marginTop="620dp"
+        android:background="@drawable/pay_button"
+        android:text="@string/button_title_1"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/DeleteButton"
+        android:layout_width="220dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="810dp"
+        android:layout_marginTop="620dp"
+        android:background="@drawable/cancel_button"
+        android:text="@string/button_title_3"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+    <ListView
+        android:id="@+id/ListViewOrder"
+        android:layout_width="798dp"
+        android:layout_height="646dp"
+        android:layout_marginTop="50dp" >
+
+    </ListView>
+
+    <View
+        android:id="@+id/View01"
+        android:layout_width="800dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="0dp"
+        android:background="@color/blue" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="860dp"
+        android:gravity="center_vertical"
+        android:text="@string/bill_title_1"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/textView00"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="0dp"
+        android:gravity="center_vertical"
+        android:text=" 單號"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView07"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="110dp"
+        android:gravity="center_vertical"
+        android:text="時間"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView08"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="300dp"
+        android:gravity="center_vertical"
+        android:text="內容"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView09"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="490dp"
+        android:gravity="center_vertical"
+        android:text="價格"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView10"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="600dp"
+        android:gravity="center_vertical"
+        android:text="類別"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView11"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="710dp"
+        android:gravity="center_vertical"
+        android:text="狀態"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="30sp" />
+
+    <View
+        android:id="@+id/View02"
+        android:layout_width="2dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="70dp"
+        android:background="@color/white" />
+
+    <View
+        android:id="@+id/View03"
+        android:layout_width="2dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="201dp"
+        android:background="@color/white" />
+
+    <View
+        android:id="@+id/View04"
+        android:layout_width="2dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="464dp"
+        android:background="@color/white" />
+
+    <View
+        android:id="@+id/View05"
+        android:layout_width="2dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="686dp"
+        android:background="@color/white" />
+
+    <View
+        android:id="@+id/View06"
+        android:layout_width="2dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="575dp"
+        android:background="@color/white" />
+
+    <View
+        android:id="@+id/View07"
+        android:layout_width="2dp"
+        android:layout_height="760dp"
+        android:layout_marginLeft="800dp"
+        android:background="#000000" />
+
+</FrameLayout>

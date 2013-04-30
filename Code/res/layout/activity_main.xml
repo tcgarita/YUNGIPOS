@@ -1,0 +1,67 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <ImageButton
+        android:id="@+id/order_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:contentDescription="@string/order_button_title"
+        android:src="@drawable/sell_operation" />
+    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:layout_marginLeft="30dp"
+        android:gravity="center"
+        android:text="@string/order_button_title"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    
+    <ImageButton
+        android:id="@+id/accounts_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="170dp"
+        android:contentDescription="@string/accounts_button_title"
+        android:src="@drawable/accounts" />
+    
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:layout_marginLeft="170dp"
+        android:gravity="center"
+        android:text="@string/accounts_button_title"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageButton
+        android:id="@+id/settings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/order_button_title"
+        android:src="@drawable/settings" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="130dp"
+        android:gravity="center"
+        android:text="設定"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</FrameLayout>

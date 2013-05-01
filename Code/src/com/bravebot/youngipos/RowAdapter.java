@@ -9,6 +9,7 @@ import com.bravebot.youngipos.FragmentMenu.OnClickOrderButtonListener;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -95,6 +96,7 @@ public class RowAdapter extends ArrayAdapter<ListRow>{
 
     	   @Override
     	   public void onClick(View v) {
+    		   Log.v("Msg","tcgarita RowAdapter ItemButton_Click");
     		   callback.onDeleteButtonClicked(position);
     	       //int vid = v.getId();
     	       //if (vid == itemView.ItemButton.getId())

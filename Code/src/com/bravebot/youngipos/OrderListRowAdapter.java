@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -131,6 +132,7 @@ public class OrderListRowAdapter extends ArrayAdapter<OrderListRow>{
 
     public void setSelectedItem(int position) {
         selectedItem = position;
+        Log.v("Msg","OrderListRowAdapter setSelectedItem");
         this.notifyDataSetChanged();
     }
    

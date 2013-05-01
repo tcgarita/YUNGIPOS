@@ -12,31 +12,19 @@ import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class FragmentMenu0 extends FragmentMenu{
+public class FragmentMenu0 extends FragmentMenu {
 		private View fragmentView;
-		private int buttonCount = 13;
+		//private int buttonCount = 13;
 	    public FragmentMenu0() {
 		}
-	    public void create_button() {
-	    	GridView gridview = (GridView) fragmentView.findViewById(R.id.gridview);
-	    	gridview.setNumColumns(6);
-			
-			gridview.setOnItemClickListener(new GridView.OnItemClickListener(){
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					// TODO Auto-generated method stub
-					Log.v("Msg","haha test"+String.valueOf(position));
-				}
-			});
-			gridview.setAdapter(new ButtonAdapter(getActivity(),1));
-	    }
+	    
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			//fragmentView = inflater.inflate(R.layout.fragment_menu_0, container, false);
-			fragmentView = inflater.inflate(R.layout.test, container, false);
 			//fragmentView = inflater.createView();
+			
+			fragmentView = inflater.inflate(R.layout.fragment_gridview, container, false);
 			this.initViews();
 			
 			return fragmentView;
@@ -44,34 +32,12 @@ public class FragmentMenu0 extends FragmentMenu{
 
 		private void initViews()
 		{
-			create_button();
-			/*
-			buttons = new Button[buttonCount];
-			for(int i = 0; i < buttonCount; i++)
-			{
-				String buttonID = "Button" + i;
-				int resID = getResources().getIdentifier(buttonID, "id", MainActivity.PACKAGE_NAME);
-			    buttons[i] = ((Button) fragmentView.findViewById(resID));
-			    buttons[i].setOnClickListener(clickButton);
-			    buttons[i].setTag(i);
-			}*/
+	    	GridView gridview = (GridView) fragmentView.findViewById(R.id.gridview);
+	    	gridview.setNumColumns(6);
+
+			ButtonAdapter adapter = new ButtonAdapter(getActivity(),1);
+			gridview.setAdapter(adapter);
+			adapter.setCallback(this);
 		}
-		private Button.OnClickListener clickButton = new Button.OnClickListener()
-		{
-			public void onClick(View v)
-			{				 
-				Log.d("Button", v.getTag().toString());
-				callback.onButtonClicked(0, Integer.parseInt(v.getTag().toString()));
-			}
-		};
-		private OnItemClickListener clickButton2 = new OnItemClickListener()
-		{
-			public void onItemClick(AdapterView<?> parent,
-					View view, int position, long id)
-			{
-				Log.v("Msg","Click:"+ String.valueOf(view.getId()));
-				//Toast.makeText(getActivity(), "hello" + position, Toast.LENGTH_SHORT).show();
-				//callback.onButtonClicked(0, Integer.parseInt(view.getTag().toString()));
-			}
-		};
+		
 	}

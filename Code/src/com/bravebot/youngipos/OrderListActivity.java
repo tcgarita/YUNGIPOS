@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -248,6 +249,7 @@ public class OrderListActivity extends FragmentActivity  implements PopupBillInp
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 				long id) {
+			Log.v("Msg","OrderListActivity onItemClick");
 			adapter.setSelectedItem(position);
 			OrderListRow row = row_data.get(position);
 			selectedRow = row;

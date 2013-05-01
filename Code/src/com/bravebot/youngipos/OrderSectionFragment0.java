@@ -48,6 +48,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -59,7 +60,7 @@ import android.widget.TextView;
 
 @SuppressLint("SimpleDateFormat")
 public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnClickOrderButtonListener, PopupNumberInputWindow.OnClickNumberButtonListener, RowAdapter.OnClickDeleteButtonListener
-, PopupBillInputWindow.OnClickBillButtonListener{
+, PopupBillInputWindow.OnClickBillButtonListener, ButtonAdapter.OnClickButtonListener {
 	private View fragmentView;
 	private TabHost tabHost;
 	private Fragment fragment_menu_0;
@@ -75,6 +76,10 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	private ArrayList<ListRow> row_data;
 	private RowAdapter adapter;
 	private PopupWindow popWindow;
+	/*tcgarita*/
+	private GridView gridView;
+	private ButtonAdapter btn_adapter;
+	/*tcgarita*/
 	private int total = 0;
 	private TextView textViewTotal;
 	private ArrayList<String> product_data;
@@ -455,6 +460,10 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		
 	}
 
+	public void onOrderButtonClicked(int cat_id, int product_id){
+		Log.v("Msg","Hi in orderSection Fragment");
+	}
+	
 	@Override
 	public void onDeleteButtonClicked(int position) {
 		NumberFormat formatter = new DecimalFormat("###,###,###");
@@ -466,6 +475,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		String tmp = rowData.title3.replaceAll(",", "");
 		total -= Integer.parseInt(tmp);
 		textViewTotal.setText(formatter.format(total));
+		Log.v("Msg","tcgarita OrderSectionFragment");
 	}
 	@SuppressLint("SimpleDateFormat")
 	private void addDataToDatabase()
@@ -607,13 +617,14 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	{
 		public void onClick(View v)
 		{
+			Log.v("Msg","OrderSectionFragment clickOrderListButton,OnClickListener");
 			Intent intent = new Intent();
 			Bundle bundle = new Bundle();
 			bundle.putInt("mode", 0);
 			intent.setClass(getActivity(), OrderListActivity.class);
 			intent.putExtras(bundle);
 			startActivity(intent);
-			
+
 			
 		}
 	};

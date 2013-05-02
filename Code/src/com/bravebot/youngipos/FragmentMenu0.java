@@ -37,7 +37,8 @@ public class FragmentMenu0 extends FragmentMenu {
 
 			ButtonAdapter adapter = new ButtonAdapter(getActivity(),1);
 			gridview.setAdapter(adapter);
-			adapter.setCallback(this);
+			//this.callback.onButtonClicked(1, 2);
+			adapter.setCallback(this.callback);
 		}
 		
 	}

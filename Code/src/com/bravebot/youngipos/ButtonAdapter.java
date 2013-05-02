@@ -26,17 +26,15 @@ public class ButtonAdapter extends BaseAdapter {
 	    private Context mContext;
 	    private List<Pair<String,String>> product_data;
 	    private int section_id;
-	    protected OnClickButtonListener callback;
+	    protected OnClickOrderButtonListener callback2;
+	   
 	    
-	    public interface OnClickButtonListener {
-	        public void onOrderButtonClicked(int section_num,int position);
-	    }
-	    
-		public void setCallback(Fragment fragment)
+		public void setCallback(OnClickOrderButtonListener fragment)
 		{
 			try {
 				Log.v("Msg","set callback in ButtonAdapter");
-				callback = (OnClickButtonListener) fragment;
+				//callback = (OnClickButtonListener) fragment;
+				callback2 = fragment;
 		    } catch (ClassCastException e) {
 		    	throw new ClassCastException(fragment.toString()
 		    			+ " must implement OnClickButtonListener");
@@ -57,11 +55,19 @@ public class ButtonAdapter extends BaseAdapter {
 	        if(cursor.getCount()>0){
 	        	cursor.moveToFirst();
 	        	do{
-	        		product_data.add(new Pair<String,String>(
-	        				cursor.getString(0),
-	        				cursor.getString(1)+"\n$"+cursor.getString(2)));
+	        		int price = Integer.parseInt(cursor.getString(2));
+	        		if(price == 0){
+	        			product_data.add(new Pair<String,String>(
+    							cursor.getString(0),
+    							cursor.getString(1)+"\n(¦Û­q)"));
+	        		}else{
+	        			product_data.add(new Pair<String,String>(
+    							cursor.getString(0),
+    							cursor.getString(1)+"\n$"+cursor.getString(2)));
+	        		}
 	        	}while(cursor.moveToNext());
 	        }
+	        cursor.close();
 	    }
 	    public Object getItem(int position) {
 	        return null;
@@ -106,7 +112,11 @@ public class ButtonAdapter extends BaseAdapter {
 	    	   @Override
 	    	   public void onClick(View v) {
 	    		   Log.v("Msg","section:"+String.valueOf(section_id)+",id:"+String.valueOf(id));
-	    		   callback.onOrderButtonClicked(section_id-1,id-1); // Map db and ProductMap temporarily 
+	    		   if(false && section_id == 4){
+	    			   callback2.onButtonClicked(section_id-1,id); // Map db and ProductMap temporarily
+	    		   }else{
+	    			   callback2.onButtonClicked(id); // Map db and ProductMap temporarily
+	    		   }
 	    	   }
 	    }
 }

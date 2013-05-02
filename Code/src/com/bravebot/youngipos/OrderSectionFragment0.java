@@ -60,7 +60,7 @@ import android.widget.TextView;
 
 @SuppressLint("SimpleDateFormat")
 public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnClickOrderButtonListener, PopupNumberInputWindow.OnClickNumberButtonListener, RowAdapter.OnClickDeleteButtonListener
-, PopupBillInputWindow.OnClickBillButtonListener, ButtonAdapter.OnClickButtonListener {
+, PopupBillInputWindow.OnClickBillButtonListener {
 	private View fragmentView;
 	private TabHost tabHost;
 	private Fragment fragment_menu_0;
@@ -356,12 +356,25 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 			
 			targetName = productMap.productNames[sectionNo][btnNo];
 			targetPrice = productMap.productPrice[sectionNo][btnNo];
+			
 			if(sectionNo == 2 && btnNo == 6)
 				pop(1);
 			else
 				pop(0);
 		}
-		
+	}
+	public void onButtonClicked(int product_id) {
+		if(popWindow != null && popWindow.isShowing() == false)
+		{
+			this.get_product_detail(product_id);
+			
+			Log.v("Msg","Yoyo");
+			
+			if(targetName.matches("辦桌"))
+				pop(1);
+			else 	
+				pop(0);
+		}
 	}
 	private String discountMapping(Double discount)
 	{
@@ -458,10 +471,6 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		}
 		popWindow.dismiss();
 		
-	}
-
-	public void onOrderButtonClicked(int cat_id, int product_id){
-		Log.v("Msg","Hi in orderSection Fragment");
 	}
 	
 	@Override
@@ -1051,4 +1060,15 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	    m_handler.removeCallbacks(m_statusChecker);
 	}
 
+	private void get_product_detail(int id){
+		SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from product where id=? limit 1", new String [] {String.valueOf(id)});
+        Log.v("Msg","get product id: "+ String.valueOf(id));
+        if(cursor.getCount()>0){
+        	cursor.moveToFirst();
+        	targetName = cursor.getString(1);
+        	targetPrice = Integer.parseInt(cursor.getString(2));
+        }
+        cursor.close();
+	}
 }

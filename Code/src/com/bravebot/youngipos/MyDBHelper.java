@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import android.util.Log;
 
 public class MyDBHelper extends SQLiteOpenHelper {
@@ -145,13 +147,13 @@ public class MyDBHelper extends SQLiteOpenHelper {
         cursor.close();
 	}
 
-	public Cursor get_order_detail (){
+	public Cursor getOrderDetail (){
 		SQLiteDatabase db = this.getReadableDatabase();
 		return db.rawQuery("select * from " + DBConstants.ORDER_DETAIL_TABLE_NAME + " WHERE "
 				+ DBConstants.ORDER_DETAIL_DELETE + "=0", null);
 	}
 	
-	public Product get_product_by_id (int id){
+	public Product getProductById (int id){
 		Product p = new Product();
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM product where id=?", 
@@ -164,5 +166,105 @@ public class MyDBHelper extends SQLiteOpenHelper {
 			p.cat_id = cursor.getInt(3);	
 		}
 		return p;
+	}
+	
+	public ArrayList<Product> getProductByCatId (int cat_id){
+		ArrayList<Product> res = new ArrayList<Product>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM product where cat_id=?", 
+				new String[]{String.valueOf(cat_id)});
+		if(cursor.getCount()>0){
+			cursor.moveToFirst();
+			do{
+				Product p = new Product();
+				p.id = cursor.getInt(0);
+				p.name = cursor.getString(1);
+				p.sticker_price = cursor.getInt(2);
+				p.cat_id = cursor.getInt(3);
+				res.add(p);
+			} while (cursor.moveToNext());
+		}		
+		return res;
+	}
+	
+	public ArrayList<Category> getAllCategory () {
+		ArrayList<Category> res = new ArrayList<Category>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM category where 1",null);
+		if(cursor.getCount()>0){
+			cursor.moveToFirst();
+			do{
+				Category p = new Category();
+				p.id = cursor.getInt(0);
+				p.name = cursor.getString(1);
+				res.add(p);
+			} while (cursor.moveToNext());
+		}
+		return res;
+	}
+	
+	public long addCategory(String name) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("name", name);
+		return db.insert("category", null, values);
+	}
+	
+	public boolean delCategoryById (int cat_id){
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.beginTransaction();
+		boolean res = false;
+		try{
+			int ret = db.delete("product", "cat_id=?", new String[]{String.valueOf(cat_id)});
+			int ret2 = db.delete("category", "id=?", new String[]{String.valueOf(cat_id)});
+			if(ret != -1 && ret2 != -1){
+				res = true;
+				db.setTransactionSuccessful();
+			}
+		}finally{
+			db.endTransaction();
+		}
+		return res;
+	}
+	
+	public int editCategoryById(int id, String new_name){
+		if(!new_name.equals("")){
+			SQLiteDatabase db = this.getWritableDatabase();
+			ContentValues values = new ContentValues();
+			values.put("name", new_name);
+			return db.update("category", values, "id=?", 
+				new String[]{String.valueOf(id)});
+		} else {
+			return 0;
+		}
+	}
+	
+	public long addProduct(String name, int price, int category_id){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("name",name);
+		values.put("price", price);
+		values.put("cat_id", category_id);
+		return db.insert("product", null, values);
+	}
+	
+	public int delProductById (int id) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		return db.delete("product", "id=?", new String[]{String.valueOf("id")});
+	}
+	
+	public int editProductById(int id, String new_name, int new_price, int cat_id ) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		if( ! new_name.equals("") )
+			values.put("name", new_name);
+		
+		if( new_price != -1 )
+			values.put("price", new_price);
+		
+		if( cat_id != -1 )
+			values.put("cat_id", cat_id);
+		
+		return db.update("product", values, "id=?", new String[]{String.valueOf(id)});
 	}
 }

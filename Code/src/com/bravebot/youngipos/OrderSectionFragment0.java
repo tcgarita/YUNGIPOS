@@ -216,7 +216,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		// 輸入金額
 		if(sold_product.getSoldPrice() == 0)
 		{
-			PopupNumberInputWindow popupNumberInputWindow = new PopupNumberInputWindow(this.inflater, getResources(), targetName.replace("　", ""), 1, again);
+			PopupNumberInputWindow popupNumberInputWindow = new PopupNumberInputWindow(this.inflater, getResources(), sold_product.getSoldName(), 1, again);
 			popupNumberInputWindow.setCallback(this);
 			popWindow = new PopupWindow(1280, 748);
 			popWindow.setContentView(popupNumberInputWindow.popView);
@@ -227,7 +227,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		// 輸入數量
 		else
 		{
-			PopupNumberInputWindow popupNumberInputWindow = new PopupNumberInputWindow(this.inflater, getResources(), targetName.replace("　", ""), 0, again);
+			PopupNumberInputWindow popupNumberInputWindow = new PopupNumberInputWindow(this.inflater, getResources(), sold_product.getSoldName(), 0, again);
 			popupNumberInputWindow.setCallback(this);
 			popWindow = new PopupWindow(1280, 748);
 			popWindow.setContentView(popupNumberInputWindow.popView);
@@ -356,7 +356,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		Log.v("Fragment0", cat_id + " " + product_id);
 		if(popWindow != null && popWindow.isShowing() == false)
 		{
-			product = MainActivity.dbhelper.get_product_by_id(product_id);
+			product = MainActivity.dbhelper.getProductById(product_id);
 			sold_product = new SoldProduct(product);
 			targetName = sold_product.getSoldName();
 			if(product.name.matches("辦桌"))

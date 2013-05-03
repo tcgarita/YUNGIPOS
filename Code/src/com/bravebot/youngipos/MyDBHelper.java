@@ -114,14 +114,12 @@ public class MyDBHelper extends SQLiteOpenHelper {
                 	} else {
                 		ContentValues values = new ContentValues();
                 		for(int i=0;i<fields.length;++i){
-                			//Log.v("Msg",header[i]+":"+ fields[i]);
                 			values.put(header[i],fields[i]);
                 		}
                 		db.insert(table_name, null, values);
                 	}
                 }
                 input.close();
-                table_dumper(db,table_name);
 			}
 		} catch (IOException e){
 			// TODO Auto-generated catch block
@@ -129,10 +127,12 @@ public class MyDBHelper extends SQLiteOpenHelper {
 		}
 	}
 	
-	public void table_dumper (SQLiteDatabase db, String table){
+	public void table_dumper (String table){
+		SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from "+table+" where 1", null);
-        Log.v("Msg","NUM:"+String.valueOf(cursor.getColumnCount()));
-        if(cursor.getCount()>0){
+        int count = cursor.getCount();
+        Log.v("Msg","TABLE:"+table+" COUNT:"+count);
+        if(count>0){
         	int field_num = cursor.getColumnCount();
         	cursor.moveToFirst();
         	do{
@@ -144,5 +144,25 @@ public class MyDBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
 	}
+
+	public Cursor get_order_detail (){
+		SQLiteDatabase db = this.getReadableDatabase();
+		return db.rawQuery("select * from " + DBConstants.ORDER_DETAIL_TABLE_NAME + " WHERE "
+				+ DBConstants.ORDER_DETAIL_DELETE + "=0", null);
+	}
 	
+	public Product get_product_by_id (int id){
+		Product p = new Product();
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM product where id=?", 
+				new String[]{String.valueOf(id)});
+		if(cursor.getCount()>0){
+			cursor.moveToFirst();
+			p.id = cursor.getInt(0);
+			p.name = cursor.getString(1);
+			p.sticker_price = cursor.getInt(2);
+			p.cat_id = cursor.getInt(3);	
+		}
+		return p;
+	}
 }

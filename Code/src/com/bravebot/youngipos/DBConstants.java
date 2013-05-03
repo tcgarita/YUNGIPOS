@@ -30,6 +30,7 @@ public class DBConstants{
     public static final String ORDER_DETAIL_ORDER_ID = "order_id";
     public static final String ORDER_DETAIL_PRICE = "price";
     public static final String ORDER_DETAIL_PRODUCT = "product";
+    public static final String ORDER_DETAIL_CAT_ID = "cat_id";
     public static final String ORDER_DETAIL_PRODUCT_ID = "product_id";
     public static final String ORDER_DETAIL_AMOUNT = "amount";
     public static final String ORDER_DETAIL_TOTAL = "total";

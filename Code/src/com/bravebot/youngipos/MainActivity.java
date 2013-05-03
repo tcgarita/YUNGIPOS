@@ -48,7 +48,8 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		SharedPreferences settings = getSharedPreferences ("POS_ORDER", 0);
 		SharedPreferences.Editor PE = settings.edit();
-		PE.putString("StoreSN", "YG0001");
+		//PE.putString("StoreSN", "YG0000");
+		PE.putString("StoreSN", "tcgarita");
 		PE.commit();
 		/*SharedPreferences settings = getSharedPreferences ("POS_ORDER", 0);
 		SharedPreferences.Editor PE = settings.edit();
@@ -95,9 +96,7 @@ public class MainActivity extends FragmentActivity {
 		
 	}
 	private void openDatabase(){
-		Log.v("Msg","Before DB");
         dbhelper = new MyDBHelper(this);
-        Log.v("Msg","After DB");
     }
 	 private void closeDatabase(){
 	    dbhelper.close();

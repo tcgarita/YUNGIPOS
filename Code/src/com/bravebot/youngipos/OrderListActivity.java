@@ -99,7 +99,6 @@ public class OrderListActivity extends FragmentActivity  implements PopupBillInp
 	private void readDataFromDatabase() {
 		row_data.clear();
 		SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
-		
 		Cursor cursor;
 		if(mode == 0)
 			cursor = db.rawQuery("select * from " + DBConstants.ORDER_TABLE_NAME + " WHERE " + DBConstants.ORDER_SN 
@@ -135,8 +134,8 @@ public class OrderListActivity extends FragmentActivity  implements PopupBillInp
         if(rows_num != 0) {
         	cursor.moveToFirst();   //將指標移至第一筆資料
         	for(int i=0; i < rows_num; i++) {
-        		row_data_detail.add(new ListRow(cursor.getString(2), cursor.getString(5), cursor.getString(4), 
-        				cursor.getString(6), cursor.getDouble(7), 0));
+        		row_data_detail.add(new ListRow(cursor.getString(2), cursor.getInt(5), cursor.getInt(4), 
+        				cursor.getInt(6), cursor.getDouble(7), 0, 0));
         	    
            
         		cursor.moveToNext();//將指標移至下一筆資料
@@ -249,7 +248,6 @@ public class OrderListActivity extends FragmentActivity  implements PopupBillInp
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 				long id) {
-			Log.v("Msg","OrderListActivity onItemClick");
 			adapter.setSelectedItem(position);
 			OrderListRow row = row_data.get(position);
 			selectedRow = row;

@@ -472,7 +472,7 @@ PopupSubmitInputWindow.OnClickSubmitButtonListener{
 		priceMap = new HashMap<Double, Integer>();
 		HashMap<Double, Integer> map = new HashMap<Double, Integer>();
 		SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
-		Log.v("Msg","Hash Map");
+
 		Cursor cursor = db.rawQuery("select "+ DBConstants.ORDER_DETAIL_DISCOUNT + ", SUM(" + DBConstants.ORDER_DETAIL_AMOUNT + "), SUM("
 				+ DBConstants.ORDER_DETAIL_TOTAL + ") from " + DBConstants.ORDER_DETAIL_TABLE_NAME +
 				" WHERE " + DBConstants.ORDER_DETAIL_PRODUCT_ID + "=" + String.valueOf(productNo) + " AND " + DBConstants.ORDER_DETAIL_SN + "=" + String.valueOf(SN)
@@ -494,7 +494,6 @@ PopupSubmitInputWindow.OnClickSubmitButtonListener{
 		priceMap = new HashMap<Double, Integer>();
 		priceMapTotal = new HashMap<Double, Integer>();
 		HashMap<Double, Integer> map = new HashMap<Double, Integer>();
-		Log.v("Msg","Use db in HashMap<Double, Integer>");
 		for(String thisSN:thisSNs)
 		{
 			SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
@@ -888,6 +887,7 @@ PopupSubmitInputWindow.OnClickSubmitButtonListener{
 					outputByteBuffer = createShiftBIG5("——————————————————————\n");
 					port.writePort(outputByteBuffer, 0, outputByteBuffer.length);
 					int count = 0;
+					// 印出各個產品的詳細資料
 					for(int j = 0 ; j < map.categoryNos[i]; j++)
 					{
 						HashMap<Double, Integer> pMap = getProductNumber(i * 1000 + j);
@@ -1116,7 +1116,7 @@ PopupSubmitInputWindow.OnClickSubmitButtonListener{
 	    	listViewCategory.performItemClick(listViewCategory.getAdapter().getView(0, null, null), 0, 0);
 		loadingDialog.dismiss();
 		
-		
+		MainActivity.dbhelper.table_dumper(DBConstants.ORDER_DETAIL_TABLE_NAME);
 	}
 	private static byte[] createShiftBIG5(String inputText) {
     	byte[] byteBuffer = null;
@@ -1155,14 +1155,15 @@ PopupSubmitInputWindow.OnClickSubmitButtonListener{
              e.printStackTrace(); 
           } 
 	 }
-	
+
 	 public void httpPostFileUpload( HttpClient client, String uploadUri,  String inputNameAttr, String fname) 
 			 throws ClientProtocolException, IOException 
 	{
-
 		HttpUriRequest request = new HttpPost(uploadUri + "?fname="+fname); 
 		MultipartEntity form = new MultipartEntity(); 
-		client.getParams().setBooleanParameter("http.protocol.expect-continue", false); 
+		client.getParams().setBooleanParameter("http.protocol.expect-continue", false);
+		File file = getDatabasePath("YUNGGIPOSDB");
+		Log.v("Msg",file.getAbsolutePath());
 		form.addPart(inputNameAttr, new FileBody(getDatabasePath("YUNGGIPOSDB"))); 
 		((HttpEntityEnclosingRequestBase) request).setEntity(form);
          try { 

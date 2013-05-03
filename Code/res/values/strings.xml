@@ -71,6 +71,8 @@
 	
 	<string name="price_input_title_1">購買金額</string>
 	<string name="price_input_title_2">元</string>
+	<string name="setting">設定</string>
+	<string name="product_setting">產品設定</string>
 	
 	
 </resources>

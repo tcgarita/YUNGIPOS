@@ -61,7 +61,26 @@
         android:layout_marginLeft="310dp"
         android:layout_marginTop="130dp"
         android:gravity="center"
-        android:text="設定"
+        android:text="@string/setting"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <ImageButton
+        android:id="@+id/product_settings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="450dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/order_button_title"
+        android:src="@drawable/settings" />
+    
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="450dp"
+        android:layout_marginTop="130dp"
+        android:gravity="center"
+        android:text="@string/product_setting"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
 </FrameLayout>

@@ -26,15 +26,14 @@ public class ButtonAdapter extends BaseAdapter {
 	    private Context mContext;
 	    private List<Pair<String,String>> product_data;
 	    private int section_id;
-	    protected OnClickOrderButtonListener callback2;
+	    protected OnClickOrderButtonListener callback;
 	   
 	    
 		public void setCallback(OnClickOrderButtonListener fragment)
 		{
 			try {
-				Log.v("Msg","set callback in ButtonAdapter");
 				//callback = (OnClickButtonListener) fragment;
-				callback2 = fragment;
+				callback = fragment;
 		    } catch (ClassCastException e) {
 		    	throw new ClassCastException(fragment.toString()
 		    			+ " must implement OnClickButtonListener");
@@ -113,9 +112,9 @@ public class ButtonAdapter extends BaseAdapter {
 	    	   public void onClick(View v) {
 	    		   Log.v("Msg","section:"+String.valueOf(section_id)+",id:"+String.valueOf(id));
 	    		   if(false && section_id == 4){
-	    			   callback2.onButtonClicked(section_id-1,id); // Map db and ProductMap temporarily
+	    			   callback.onButtonClicked(section_id-1,id); // Map db and ProductMap temporarily
 	    		   }else{
-	    			   callback2.onButtonClicked(id); // Map db and ProductMap temporarily
+	    			   callback.onButtonClicked(section_id,id); // Map db and ProductMap temporarily
 	    		   }
 	    	   }
 	    }

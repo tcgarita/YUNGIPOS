@@ -70,16 +70,16 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	private LayoutInflater inflater;
 	private ProductMap productMap;
 	private String targetName;
+	/* tcgarita */
+	private Product product;
+	private SoldProduct sold_product;
+	private ArrayList<SoldProduct> sold_array;
+	
 	private int targetPrice;
-	private int targetSectionNo;
-	private int targetBtnNo;
+	
 	private ArrayList<ListRow> row_data;
 	private RowAdapter adapter;
 	private PopupWindow popWindow;
-	/*tcgarita*/
-	private GridView gridView;
-	private ButtonAdapter btn_adapter;
-	/*tcgarita*/
 	private int total = 0;
 	private TextView textViewTotal;
 	private ArrayList<String> product_data;
@@ -168,6 +168,8 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	    }   
 	    
 	    row_data = new ArrayList<ListRow>();
+	    
+	    sold_array = new ArrayList<SoldProduct>();
 	
 	    adapter = new RowAdapter(getActivity(), 
                 R.layout.listview_item_row, row_data);
@@ -211,7 +213,8 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	}
 	private void pop(int again)
 	{  
-		if(targetPrice == 0)
+		// 輸入金額
+		if(sold_product.getSoldPrice() == 0)
 		{
 			PopupNumberInputWindow popupNumberInputWindow = new PopupNumberInputWindow(this.inflater, getResources(), targetName.replace("　", ""), 1, again);
 			popupNumberInputWindow.setCallback(this);
@@ -221,6 +224,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 			popWindow.setFocusable(true);
 			popWindow.showAtLocation(this.fragmentView, Gravity.LEFT|Gravity.TOP, 0, 0);
 		}
+		// 輸入數量
 		else
 		{
 			PopupNumberInputWindow popupNumberInputWindow = new PopupNumberInputWindow(this.inflater, getResources(), targetName.replace("　", ""), 0, again);
@@ -347,108 +351,91 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	  }; 
 
 	@Override
-	public void onButtonClicked(int sectionNo, int btnNo) {
-		Log.v("Fragment0", sectionNo + " " + btnNo);
+	//public void onButtonClicked(int sectionNo, int product_id) {
+	public void onButtonClicked(int cat_id, int product_id) {
+		Log.v("Fragment0", cat_id + " " + product_id);
 		if(popWindow != null && popWindow.isShowing() == false)
 		{
-			targetSectionNo = sectionNo;
-			targetBtnNo = btnNo;
-			
-			targetName = productMap.productNames[sectionNo][btnNo];
-			targetPrice = productMap.productPrice[sectionNo][btnNo];
-			
-			if(sectionNo == 2 && btnNo == 6)
-				pop(1);
-			else
-				pop(0);
-		}
-	}
-	public void onButtonClicked(int product_id) {
-		if(popWindow != null && popWindow.isShowing() == false)
-		{
-			this.get_product_detail(product_id);
-			
-			Log.v("Msg","Yoyo");
-			
-			if(targetName.matches("辦桌"))
+			product = MainActivity.dbhelper.get_product_by_id(product_id);
+			sold_product = new SoldProduct(product);
+			targetName = sold_product.getSoldName();
+			if(product.name.matches("辦桌"))
 				pop(1);
 			else 	
 				pop(0);
 		}
 	}
-	private String discountMapping(Double discount)
-	{
-		String str = "";
-		if(discount == 0.5)
-			str = "５折";
-		if(discount == 0.6)
-			str = "６折";
-		if(discount == 0.7)
-			str = "７折";
-		if(discount == 0.8)
-			str = "８折";
-		if(discount == 0.9)
-			str = "９折";
-		if(discount == 0)
-			str = "招待";
-		return str;
-	}
+
 	@Override
-	public void onNumberEnterClicked(int count, double discount, int p) {
-		if(targetPrice == 0)
-		{
-			popWindow.dismiss();
-			if(count != 0)
-			{			
-				targetPrice = count;
-				if(p == 1)
-				{
-					pop(0);
-					return;
-				}
+	public void onNumberEnterClicked(int count, double discount, int pop) {
 		
-			}
-			else
-			{
-				popWindow.dismiss();
-				return;
-			}
-			count = 1;
+		if(count == 0){ // 數量=0
+			popWindow.dismiss();
+			return;
 		}
+		
+		if(sold_product.getSoldPrice() == 0){ // 要自訂價錢又要自訂份數的
+			popWindow.dismiss();
+			sold_product.setSoldPrice(count);
+			if(pop == 1){
+				pop(0);return;
+			}else{
+				count = 1;
+			}
+		}
+		
 		if(discount != 1.0 && discount >= 0)
-		{
-			targetName = String.format(productMap.productNamesDiscount[targetSectionNo][targetBtnNo], discountMapping(discount));
-			targetPrice = (int) Math.round(targetPrice * discount);
-		}
-		if(count != 0)
-		{
-			NumberFormat formatter = new DecimalFormat("###,###,###");
+			sold_product.setDiscount(discount);
+		
+		sold_product.setCount(count);
+		
+		//targetPrice = sold_product.getFinalSoldPrice();
+		targetName = sold_product.getSoldName();
+		
+		NumberFormat formatter = new DecimalFormat("###,###,###");
 			
-			int index = product_data.indexOf(targetName);
-			if(index == -1 || productMap.productPrice[targetSectionNo][targetBtnNo] == 0)
+		int index = product_data.indexOf(targetName);
+		if(index == -1 || product.sticker_price == 0)
+		{
+			product_data.add(targetName);
+			row_data.add(
+					new ListRow(targetName, 
+							sold_product.getFinalSoldPrice(), 
+							sold_product.getCount(),
+							sold_product.getTotalPrice(), 
+							discount, sold_product.getProductCatId(),sold_product.getProductId()));
+		}
+		else
+		{
+			product_data.remove(index);
+			product_data.add(targetName);
+			ListRow rowData = row_data.get(index);
+			sold_product.addCount(count);
+			rowData = new ListRow(targetName, 
+					sold_product.getFinalSoldPrice(),
+					sold_product.getCount(), 
+					sold_product.getTotalPrice(),
+					discount, 
+					sold_product.getProductCatId(),
+					sold_product.getProductId());
+			row_data.remove(index);
+			row_data.add(rowData);
+		}
+			
+		total += sold_product.getTotalPrice();
+		Log.v("Msg","Total:"+ sold_product.getTotalPrice());
+			
+		textViewTotal.setText(formatter.format(total));
+			
+			// special case, 買一送一
+			/*if(targetSectionNo == 0 && targetBtnNo == 12)
 			{
-				product_data.add(targetName);
-				row_data.add(new ListRow(targetName, String.valueOf(targetPrice), String.valueOf(count), String.valueOf(targetPrice * count), discount, targetSectionNo * 1000 + targetBtnNo));
-				
-			}
-			else
-			{
-				product_data.remove(index);
-				product_data.add(targetName);
-				ListRow rowData = row_data.get(index);
-				int newCount = Integer.parseInt(rowData.title2) + count;
-				rowData = new ListRow(targetName, String.valueOf(targetPrice), String.valueOf(newCount), String.valueOf(targetPrice * newCount), discount, targetSectionNo * 1000 + targetBtnNo);
-				row_data.remove(index);
-				row_data.add(rowData);
-			}
-			total += targetPrice * count;
-			textViewTotal.setText(formatter.format(total));
-			if(targetSectionNo == 0 && targetBtnNo == 12)
-			{
-				targetName = String.format(productMap.productNamesDiscount[targetSectionNo][targetBtnNo], discountMapping(0.0));
+				//targetName = String.format(productMap.productNamesDiscount[targetSectionNo][targetBtnNo], discountMapping(0.0));
+				targetName = targetName + " (" + discountMapping(0.0)+")HaHaa";
 				targetPrice = (int) Math.round(targetPrice * 0);
 				index = product_data.indexOf(targetName);
-				if(index == -1 || productMap.productPrice[targetSectionNo][targetBtnNo] == 0)
+				//if(index == -1 || productMap.productPrice[targetSectionNo][targetBtnNo] == 0)
+				if(index == -1 || product.sticker_price == 0)
 				{
 					product_data.add(targetName);
 					row_data.add(new ListRow(targetName, String.valueOf(targetPrice), String.valueOf(count), String.valueOf(targetPrice * count), 0, targetSectionNo * 1000 + targetBtnNo));
@@ -464,11 +451,10 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 					row_data.remove(index);
 					row_data.add(rowData);
 				}
-			}
-			adapter.notifyDataSetChanged();
-			listView.setSelection(adapter.getCount() - 1);
+			}*/
 			
-		}
+		adapter.notifyDataSetChanged();
+		listView.setSelection(adapter.getCount() - 1);
 		popWindow.dismiss();
 		
 	}
@@ -541,6 +527,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	        values.put(DBConstants.ORDER_DETAIL_PRODUCT_ID, row.productNO);
 	        values.put(DBConstants.ORDER_DETAIL_SN, SN);
 	        values.put(DBConstants.ORDER_DETAIL_DELETE, 0);
+	        Log.v("Msg","WTF, product:"+row.title0 + " product_id:"+ row.productNO);
 	        db.insert(DBConstants.ORDER_DETAIL_TABLE_NAME, null, values);
 	        
         }
@@ -626,7 +613,6 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	{
 		public void onClick(View v)
 		{
-			Log.v("Msg","OrderSectionFragment clickOrderListButton,OnClickListener");
 			Intent intent = new Intent();
 			Bundle bundle = new Bundle();
 			bundle.putInt("mode", 0);
@@ -1060,15 +1046,4 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	    m_handler.removeCallbacks(m_statusChecker);
 	}
 
-	private void get_product_detail(int id){
-		SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from product where id=? limit 1", new String [] {String.valueOf(id)});
-        Log.v("Msg","get product id: "+ String.valueOf(id));
-        if(cursor.getCount()>0){
-        	cursor.moveToFirst();
-        	targetName = cursor.getString(1);
-        	targetPrice = Integer.parseInt(cursor.getString(2));
-        }
-        cursor.close();
-	}
 }

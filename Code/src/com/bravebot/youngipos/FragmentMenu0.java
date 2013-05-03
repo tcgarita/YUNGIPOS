@@ -23,7 +23,6 @@ public class FragmentMenu0 extends FragmentMenu {
 				Bundle savedInstanceState) {
 			//fragmentView = inflater.inflate(R.layout.fragment_menu_0, container, false);
 			//fragmentView = inflater.createView();
-			
 			fragmentView = inflater.inflate(R.layout.fragment_gridview, container, false);
 			this.initViews();
 			
@@ -37,7 +36,6 @@ public class FragmentMenu0 extends FragmentMenu {
 
 			ButtonAdapter adapter = new ButtonAdapter(getActivity(),1);
 			gridview.setAdapter(adapter);
-			//this.callback.onButtonClicked(1, 2);
 			adapter.setCallback(this.callback);
 		}
 		

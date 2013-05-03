@@ -132,7 +132,6 @@ public class OrderListRowAdapter extends ArrayAdapter<OrderListRow>{
 
     public void setSelectedItem(int position) {
         selectedItem = position;
-        Log.v("Msg","OrderListRowAdapter setSelectedItem");
         this.notifyDataSetChanged();
     }
    

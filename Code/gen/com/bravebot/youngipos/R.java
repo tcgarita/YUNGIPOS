@@ -181,9 +181,10 @@ public final class R {
         public static final int popup_pay_input=0x7f03000e;
         public static final int popup_prepare_input=0x7f03000f;
         public static final int popup_submit_input=0x7f030010;
-        public static final int statistics_category_row=0x7f030011;
-        public static final int statistics_data_activity=0x7f030012;
-        public static final int statistics_list_row=0x7f030013;
+        public static final int product_setting=0x7f030011;
+        public static final int statistics_category_row=0x7f030012;
+        public static final int statistics_data_activity=0x7f030013;
+        public static final int statistics_list_row=0x7f030014;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;

@@ -42,6 +42,8 @@ public class MainActivity extends FragmentActivity {
 	ImageButton order_button;
 	ImageButton settings_button;
 	ImageButton accounts_button;
+	// kehan
+	ImageButton product_settings_button;
 	public static MyDBHelper dbhelper;
 
 	@Override
@@ -132,6 +134,10 @@ public class MainActivity extends FragmentActivity {
 		accounts_button.setOnClickListener(clickAccounts);
 		settings_button = (ImageButton)this.findViewById(R.id.settings_button);
 		settings_button.setOnClickListener(clickSettings);
+		// kehan
+		product_settings_button = (ImageButton)this.findViewById(R.id.product_settings_button);
+		product_settings_button.setOnClickListener(clickProducts);
+		
 	}
 	
 	private ImageButton.OnClickListener clickOrder = new ImageButton.OnClickListener()
@@ -169,6 +175,17 @@ public class MainActivity extends FragmentActivity {
 
 		}
 	};
+	
+	private ImageButton.OnClickListener clickProducts = new ImageButton.OnClickListener()
+	{
+		public void onClick(View v)
+		{
+			Intent intent = new Intent();
+			intent.setClass(MainActivity.this, OrderActivity.class);
+			startActivity(intent);
+		}
+	};
+		
 	
 	public void portDiscovery()
     {

@@ -68,6 +68,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	private Fragment fragment_menu_2;
 	private ListView listView;
 	private LayoutInflater inflater;
+//	private ProductMap productMap;
 	private String targetName;
 	/* tcgarita */
 	private Product product;
@@ -131,6 +132,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		m_handler = new Handler();
 		Bundle bundle = getArguments();
 		mode = bundle.getInt("mode");
+		productMap = new ProductMap();
 		product_data = new ArrayList<String>();
 		this.inflater = inflater;
 		fragmentView = inflater.inflate(R.layout.fragment_order_section_0, container, false);

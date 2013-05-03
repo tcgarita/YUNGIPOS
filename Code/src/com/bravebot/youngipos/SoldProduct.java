@@ -5,7 +5,6 @@ public class SoldProduct {
 	private double discount;  // 折扣
 	private int sold_price;   // 售價
 	private int count;        // 數量
-	private String sold_name; // 名稱
 	
 	public SoldProduct(){
 		super();

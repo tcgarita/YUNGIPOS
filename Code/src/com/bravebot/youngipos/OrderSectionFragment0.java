@@ -356,7 +356,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		Log.v("Fragment0", cat_id + " " + product_id);
 		if(popWindow != null && popWindow.isShowing() == false)
 		{
-			product = MainActivity.dbhelper.get_product_by_id(product_id);
+			product = MainActivity.dbhelper.getProductById(product_id);
 			sold_product = new SoldProduct(product);
 			targetName = sold_product.getSoldName();
 			if(product.name.matches("辦桌"))

@@ -78,16 +78,75 @@
 	    android:layout_width="480dp"
 	    android:layout_height="510dp"
 	    android:layout_marginLeft="799dp"
-	    android:layout_marginTop="50dp"
+	    android:layout_marginTop="0dp"
 	    android:background="#FFFFFF" >
 
-	    <ListView
-	        android:id="@+id/listView1"
-	        android:layout_width="480dp"
-	        android:layout_height="510dp"
-	        android:background="@drawable/back_border">
-	
-	    </ListView>
+		<TableLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent" 
+		    android:background="@drawable/back_border">
+
+		    <TableRow
+		        android:id="@+id/tableRow1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" 
+		        android:padding="10dp">
+
+		        <TextView
+		            android:id="@+id/textView1"
+		            android:layout_width="wrap_content"
+		            android:layout_height="60dp"
+		            android:text="@string/product_setting"
+		            android:textSize="30sp"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+		        <EditText
+		            android:id="@+id/editText1"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:ems="10" >
+
+		            <requestFocus />
+		        </EditText>
+
+		    </TableRow>
+
+		    <TableRow
+		        android:id="@+id/tableRow2"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" 
+		        android:padding="10dp">
+
+		        <TextView
+		            android:id="@+id/textView2"
+		            android:layout_width="wrap_content"
+		            android:layout_height="60dp"
+		            android:text="@string/product_setting"
+		            android:textSize="30sp"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+		        <EditText
+		            android:id="@+id/editText2"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:ems="10" >
+		            <requestFocus />
+		        </EditText>
+		    </TableRow>
+
+		    <TableRow
+		        android:id="@+id/tableRow3"
+		        android:layout_width="wrap_content"
+		        android:layout_height="100dp" >
+		    </TableRow>
+
+		    <TableRow
+		        android:id="@+id/tableRow4"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+		    </TableRow>
+		</TableLayout>
+
     </FrameLayout>
 
 	<TextView

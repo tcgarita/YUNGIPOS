@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -172,6 +173,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	
 //	    adapter = new RowAdapter(getActivity(), 
 //                R.layout.listview_item_row, row_data);
+	    /*
 	    adapter = new RowAdapter(getActivity(),
 	    					R.layout.listview_item_row);
 	    adapter.setCallback(this);
@@ -179,6 +181,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
         listView = (ListView)fragmentView.findViewById(R.id.listView1);
         
         listView.setAdapter(adapter);
+        */
 		return fragmentView;
 	}
 	@Override
@@ -249,7 +252,9 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	@Override
 	public void onButtonClicked(int cat_id, int product_id) {
 		// TODO Auto-generated method stub
-		
+		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
+		Product product1 = MainActivity.dbhelper.getProductById(product_id);
+		editText1.setText(product1.name);
 	}
 
 	

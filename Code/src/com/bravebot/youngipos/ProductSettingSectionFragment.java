@@ -260,12 +260,14 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
 		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
 		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
+		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
 		
 		Product product = MainActivity.dbhelper.getProductById(product_id);
 		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
 		editText1.setText(product.name);
 		editText2.setText(category.get(tabHost.getCurrentTab()).name);
 		editText3.setText(String.valueOf(product.sticker_price));
+		editText5.setText(String.valueOf(product_id));
 	}
 
 
@@ -274,11 +276,13 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
 		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
 		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
+		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
 		
 		editText1.setText("請填入產品名稱");
 		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
 		editText2.setText(category.get(tabHost.getCurrentTab()).name);
 		editText3.setText(String.valueOf(0));
+		editText5.setText(String.valueOf(0));
 		// TODO Auto-generated method stub
 		
 	}

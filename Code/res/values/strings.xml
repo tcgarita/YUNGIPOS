@@ -73,5 +73,7 @@
     <string name="product_category">產品類別：</string>
     <string name="product_price">產品價格：</string>
     <string name="new_product">新增品項</string>
+    <string name="product_id">產品編號：</string>
+    <string name="product_setting_title">產品設定</string>
 
 </resources>

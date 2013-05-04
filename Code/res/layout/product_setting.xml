@@ -14,13 +14,14 @@
 	    android:orientation="horizontal" >
 
     </RadioGroup>  
+
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
-        android:text="@string/order_section_title0"
+        android:text="@string/product_setting_title"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/black"
         android:textColorLink="@color/red"
@@ -75,8 +76,8 @@
     </TabHost>
 
 	<FrameLayout
-	    android:layout_width="480dp"
-	    android:layout_height="510dp"
+	    android:layout_width="481dp"
+	    android:layout_height="671dp"
 	    android:layout_marginLeft="799dp"
 	    android:layout_marginTop="0dp"
 	    android:background="#FFFFFF" >
@@ -85,6 +86,37 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="match_parent" 
 		    android:background="@drawable/back_border">
+            
+           <TableRow
+		        android:id="@+id/tableRow4"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+
+		        <Space
+		            android:layout_width="wrap_content"
+		            android:layout_height="30dp" />
+		    </TableRow>
+
+			<TableRow
+			    android:id="@+id/tableRow5"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content" 
+			    android:padding="10dp">
+
+		        <TextView
+		            android:id="@+id/textView5"
+		            android:layout_width="wrap_content"
+		            android:layout_height="60dp"
+		            android:text="@string/product_id"
+		            android:textAppearance="?android:attr/textAppearanceLarge"
+		            android:textSize="30sp" />
+
+		        <EditText
+		            android:id="@+id/editText5"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:ems="30" />
+			</TableRow>
 
 		    <TableRow
 		        android:id="@+id/tableRow1"
@@ -155,68 +187,45 @@
 		    </TableRow>
 
 		    <TableRow
-		        android:id="@+id/tableRow4"
+		        android:id="@+id/tableRow6"
 		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" >
+		        android:layout_height="wrap_content" 
+		        android:padding="10dp">
+		        
+		        <TextView
+		            android:id="@+id/textView4"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="Large Text"
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		        
+		        <CheckBox
+		            android:id="@+id/checkBox1"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="CheckBox" />
+
 		    </TableRow>
+
+		    <Space
+		        android:layout_width="wrap_content"
+		        android:layout_height="20dp" />
+
+		    <Button
+		        android:id="@+id/button2"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="Button" />
+
+		    <Button
+		        android:id="@+id/button3"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="Button" />
+
 		</TableLayout>
 
     </FrameLayout>
-
-	<TextView
-	    android:id="@+id/TextView05"
-	    android:layout_width="wrap_content"
-	    android:layout_height="50dp"
-	    android:layout_marginLeft="805dp"
-	    android:layout_marginTop="560dp"
-	    android:gravity="center_vertical"
-	    android:text="@string/bill_title_6"
-	    android:textAppearance="?android:attr/textAppearanceLarge"
-	    android:textSize="30sp" />
-
-	<TextView
-	    android:id="@+id/TextViewTotal"
-	    android:layout_width="300dp"
-	    android:layout_height="50dp"
-	    android:layout_marginLeft="915dp"
-	    android:layout_marginTop="560dp"
-	    android:gravity="center_vertical|right"
-	    android:textAppearance="?android:attr/textAppearanceLarge"
-	    android:textSize="30sp" />
-
-	<TextView
-	    android:id="@+id/TextView06"
-	    android:layout_width="wrap_content"
-	    android:layout_height="50dp"
-	    android:layout_marginLeft="1230dp"
-	    android:layout_marginTop="560dp"
-	    android:gravity="center_vertical"
-	    android:text="@string/bill_title_7"
-	    android:textAppearance="?android:attr/textAppearanceLarge"
-	    android:textSize="30sp" />
-
-	<Button
-	    android:id="@+id/PayButton"
-	    android:layout_width="220dp"
-	    android:layout_height="60dp"
-	    android:layout_marginLeft="1050dp"
-	    android:layout_marginTop="620dp"
-	    android:background="@drawable/pay_button"
-	    android:text="@string/button_title_1"
-	    android:textColor="@color/white"
-	    android:textSize="30sp"
-	    android:textStyle="italic" />
-
-	<Button
-	    android:id="@+id/CancelButton"
-	    android:layout_width="220dp"
-	    android:layout_height="60dp"
-	    android:layout_marginLeft="810dp"
-	    android:layout_marginTop="620dp"
-	    android:background="@drawable/cancel_button"
-	    android:text="@string/button_title_2"
-	    android:textColor="@color/white"
-	    android:textSize="30sp" />
 
 	<View
 	    android:id="@+id/View01"

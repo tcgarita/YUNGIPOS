@@ -69,5 +69,9 @@
     <string name="title_activity_product">ProductActivity</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="product_name">產品名稱：</string>
+    <string name="product_category">產品類別：</string>
+    <string name="product_price">產品價格：</string>
+    <string name="new_product">新增品項</string>
 
 </resources>

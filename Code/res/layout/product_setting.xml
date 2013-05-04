@@ -96,18 +96,15 @@
 		            android:id="@+id/textView1"
 		            android:layout_width="wrap_content"
 		            android:layout_height="60dp"
-		            android:text="@string/product_setting"
-		            android:textSize="30sp"
-		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		            android:text="@string/product_name"
+		            android:textAppearance="?android:attr/textAppearanceLarge"
+		            android:textSize="30sp" />
 
 		        <EditText
 		            android:id="@+id/editText1"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:ems="10" >
-
-		            <requestFocus />
-		        </EditText>
+		            android:ems="30" />
 
 		    </TableRow>
 
@@ -121,9 +118,9 @@
 		            android:id="@+id/textView2"
 		            android:layout_width="wrap_content"
 		            android:layout_height="60dp"
-		            android:text="@string/product_setting"
-		            android:textSize="30sp"
-		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		            android:text="@string/product_category"
+		            android:textAppearance="?android:attr/textAppearanceLarge"
+		            android:textSize="30sp" />
 
 		        <EditText
 		            android:id="@+id/editText2"
@@ -137,7 +134,24 @@
 		    <TableRow
 		        android:id="@+id/tableRow3"
 		        android:layout_width="wrap_content"
-		        android:layout_height="100dp" >
+		        android:layout_height="wrap_content" 
+		        android:padding="10dp">
+
+		        <TextView
+		            android:id="@+id/textView3"
+		            android:layout_width="wrap_content"
+		            android:layout_height="60dp"
+		            android:text="@string/product_price"
+		            android:textAppearance="?android:attr/textAppearanceLarge"
+		            android:textSize="30sp" />
+
+		        <EditText
+		            android:id="@+id/editText3"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:ems="10"
+		            android:inputType="number" />
+
 		    </TableRow>
 
 		    <TableRow
@@ -219,5 +233,13 @@
 	    android:layout_marginLeft="533dp"
 	    android:layout_marginTop="200dp"
 	    android:background="@color/white" />
+
+	<Button
+	    android:id="@+id/button1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="700dp"
+	    android:layout_marginTop="150dp"
+	    android:text="@string/new_product" />
 
 </FrameLayout>

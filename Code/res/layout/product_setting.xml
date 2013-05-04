@@ -115,7 +115,9 @@
 		            android:id="@+id/editText5"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
+		            android:editable="false"
 		            android:ems="30" />
+
 			</TableRow>
 
 		    <TableRow
@@ -136,7 +138,8 @@
 		            android:id="@+id/editText1"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:ems="30" />
+		            android:ems="30"
+		            android:singleLine="true" />
 
 		    </TableRow>
 
@@ -158,7 +161,9 @@
 		            android:id="@+id/editText2"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
+		            android:editable="false"
 		            android:ems="10" >
+
 		            <requestFocus />
 		        </EditText>
 		    </TableRow>
@@ -182,7 +187,8 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:ems="10"
-		            android:inputType="number" />
+		            android:inputType="number"
+		            android:singleLine="true" />
 
 		    </TableRow>
 
@@ -209,19 +215,19 @@
 
 		    <Space
 		        android:layout_width="wrap_content"
-		        android:layout_height="20dp" />
+		        android:layout_height="155dp" />
 
 		    <Button
 		        android:id="@+id/button2"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="Button" />
+		        android:text="@string/save" />
 
 		    <Button
 		        android:id="@+id/button3"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="Button" />
+		        android:text="@string/delete" />
 
 		</TableLayout>
 

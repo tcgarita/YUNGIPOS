@@ -47,6 +47,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 		// For each of the sections in the app, add a tab to the action bar.
 		actionBar.addTab(actionBar.newTab().setText("門市現金")
 				 .setTabListener(this));
+		
 		actionBar.addTab(actionBar.newTab().setText(R.string.order_section_title1)
 				 .setTabListener(this));
 		actionBar.addTab(actionBar.newTab().setText(R.string.order_section_title2)
@@ -55,6 +56,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 				 .setTabListener(this));
 		actionBar.addTab(actionBar.newTab().setText("待結訂單")
 				 .setTabListener(this));
+		
 		Log.v("Msg","Order ACtivity Constructor");
 		SharedPreferences settings = getSharedPreferences ("POS_ORDER", 0);
 		//waitOrderCount = settings.getInt("WaitOrderCount", 0);

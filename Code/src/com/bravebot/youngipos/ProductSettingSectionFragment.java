@@ -61,7 +61,7 @@ import android.widget.TextView;
 
 @SuppressLint("SimpleDateFormat")
 public class ProductSettingSectionFragment extends Fragment implements FragmentMenu.OnClickOrderButtonListener, PopupNumberInputWindow.OnClickNumberButtonListener, RowAdapter.OnClickDeleteButtonListener
-, PopupBillInputWindow.OnClickBillButtonListener, Button.OnClickListener{
+, PopupBillInputWindow.OnClickBillButtonListener{
 	private View fragmentView;
 	private TabHost tabHost;
 	private Fragment fragment_menu_0;
@@ -100,6 +100,8 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	private TextView textViewMsg;
 	private Handler m_handler;
 	private Button new_product_button;
+	private Button save_product_button;
+	private Button del_product_button;
 	private int SN;
 	public enum Alignment {Left, Center, Right};
 
@@ -227,8 +229,38 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	{
 		tabHost = (TabHost)fragmentView.findViewById(android.R.id.tabhost);
 		tabHost.setup();
+		
 		new_product_button = (Button) fragmentView.findViewById(R.id.button1);
-		new_product_button.setOnClickListener(this);
+		new_product_button.setOnClickListener(new View.OnClickListener()  {
+            public void onClick(View view)  {
+        		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
+        		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
+        		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
+        		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
+        		
+        		editText1.setText("請填入產品名稱");
+        		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
+        		editText2.setText(category.get(tabHost.getCurrentTab()).name);
+        		editText3.setText(String.valueOf(0));
+        		editText5.setText(String.valueOf(0));
+            }
+       });
+	
+		save_product_button = (Button) fragmentView.findViewById(R.id.button2);
+		save_product_button.setOnClickListener(new View.OnClickListener()  {
+            public void onClick(View view)  {
+            	// do something
+            }
+       });
+		
+		
+		del_product_button = (Button) fragmentView.findViewById(R.id.button3);
+		del_product_button.setOnClickListener(new View.OnClickListener()  {
+            public void onClick(View view)  {
+            	MainActivity.dbhelper.delProductById(1);
+            	((FragmentMenu) fragment_menu_0).getButtonAdapter().notifyDataSetChanged();
+            }
+       });
 		
 	}
 
@@ -268,23 +300,6 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		editText2.setText(category.get(tabHost.getCurrentTab()).name);
 		editText3.setText(String.valueOf(product.sticker_price));
 		editText5.setText(String.valueOf(product_id));
-	}
-
-
-	@Override
-	public void onClick(View v) {
-		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
-		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
-		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
-		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
-		
-		editText1.setText("請填入產品名稱");
-		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
-		editText2.setText(category.get(tabHost.getCurrentTab()).name);
-		editText3.setText(String.valueOf(0));
-		editText5.setText(String.valueOf(0));
-		// TODO Auto-generated method stub
-		
 	}
 
 

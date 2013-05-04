@@ -75,5 +75,7 @@
     <string name="new_product">新增品項</string>
     <string name="product_id">產品編號：</string>
     <string name="product_setting_title">產品設定</string>
+    <string name="save">儲存</string>
+    <string name="delete">刪除</string>
 
 </resources>

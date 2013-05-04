@@ -258,6 +258,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
 	public int delProductById (int id) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		return db.delete("product", "id=?", new String[]{String.valueOf("id")});
+		
 	}
 	
 	public int editProductById(int id, String new_name, int new_price, int cat_id ) {

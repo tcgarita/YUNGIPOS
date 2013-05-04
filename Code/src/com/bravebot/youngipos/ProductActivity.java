@@ -3,7 +3,7 @@ package com.bravebot.youngipos;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import com.bravebot.youngipos.OrderSectionFragment0.OrderSectionFragmentListener;
+import com.bravebot.youngipos.ProductSettingSectionFragment.OrderSectionFragmentListener;
 import android.util.Log;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -30,7 +30,7 @@ import android.widget.TextView;
 public class ProductActivity extends FragmentActivity implements
 ActionBar.TabListener, OrderSectionFragmentListener{
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-	private OrderSectionFragment0 fragment0;
+	private ProductSettingSectionFragment fragment0;
 	public ActionBar actionBar;
 	private int waitOrderCount = 0;
 	
@@ -39,21 +39,21 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
-		setContentView(R.layout.product_setting);
+		setContentView(R.layout.activity_order);
 		// Set up the action bar to show tabs.
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setHomeButtonEnabled(true);
 		// For each of the sections in the app, add a tab to the action bar.
-		actionBar.addTab(actionBar.newTab().setText("ÈñÄÂ∏ÇÁèæÈáë")
+		actionBar.addTab(actionBar.newTab().setText("™˘•´≤{™˜")
 				 .setTabListener(this));
 		actionBar.addTab(actionBar.newTab().setText(R.string.order_section_title1)
 				 .setTabListener(this));
 		actionBar.addTab(actionBar.newTab().setText(R.string.order_section_title2)
 				 .setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("ÊúàÁµê")
+		actionBar.addTab(actionBar.newTab().setText("§Îµ≤")
 				 .setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("ÂæÖÁµêË®ÇÂñÆ")
+		actionBar.addTab(actionBar.newTab().setText("´›µ≤≠q≥Ê")
 				 .setTabListener(this));
 		Log.v("Msg","Order ACtivity Constructor");
 		SharedPreferences settings = getSharedPreferences ("POS_ORDER", 0);
@@ -71,13 +71,13 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 		if(waitOrderCount != 0)
 		{
 			actionBar.removeTabAt(4);
-			actionBar.addTab(actionBar.newTab().setText("ÂæÖÁµêË®ÇÂñÆ(" + String.valueOf(waitOrderCount) + ")" )
+			actionBar.addTab(actionBar.newTab().setText("´›µ≤≠q≥Ê(" + String.valueOf(waitOrderCount) + ")" )
 					 .setTabListener(this));
 		}
 		else
 		{
 			actionBar.removeTabAt(4);
-			actionBar.addTab(actionBar.newTab().setText("ÂæÖÁµêË®ÇÂñÆ")
+			actionBar.addTab(actionBar.newTab().setText("´›µ≤≠q≥Ê")
 					 .setTabListener(this));
 		}
 	}
@@ -119,7 +119,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		if(tab.getPosition() == 0)
 		{
-			fragment0 = new OrderSectionFragment0();
+			fragment0 = new ProductSettingSectionFragment();
 			Bundle bundle = new Bundle();
 			bundle.putInt("mode", 0);
 			fragment0.setArguments(bundle);
@@ -129,7 +129,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 		}
 		else if(tab.getPosition() == 1)
 		{
-			fragment0 = new OrderSectionFragment0();
+			fragment0 = new ProductSettingSectionFragment();
 			Bundle bundle = new Bundle();
 			bundle.putInt("mode", 1);
 			fragment0.setArguments(bundle);
@@ -139,7 +139,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 		}
 		else if(tab.getPosition() == 2)
 		{
-			fragment0 = new OrderSectionFragment0();
+			fragment0 = new ProductSettingSectionFragment();
 			Bundle bundle = new Bundle();
 			bundle.putInt("mode", 2);
 			fragment0.setArguments(bundle);
@@ -149,7 +149,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 		}
 		else if(tab.getPosition() == 3)
 		{
-			fragment0 = new OrderSectionFragment0();
+			fragment0 = new ProductSettingSectionFragment();
 			Bundle bundle = new Bundle();
 			bundle.putInt("mode", 3);
 			fragment0.setArguments(bundle);
@@ -175,7 +175,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 	{
 		waitOrderCount += 1;
 		actionBar.removeTabAt(4);
-		actionBar.addTab(actionBar.newTab().setText("ÂæÖÁµêË®ÇÂñÆ(" + String.valueOf(waitOrderCount) + ")")
+		actionBar.addTab(actionBar.newTab().setText("´›µ≤≠q≥Ê(" + String.valueOf(waitOrderCount) + ")")
 				 .setTabListener(this));
 		SharedPreferences settings = getSharedPreferences("POS_ORDER", 0);
 		//SharedPreferences.Editor PE = settings.edit();

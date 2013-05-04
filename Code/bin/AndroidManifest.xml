@@ -7,44 +7,52 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="17" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH" >
+    </uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name_main"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.bravebot.youngipos.MainActivity"
             android:label="@string/app_name_main"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".OrderActivity"
+            android:name="com.bravebot.youngipos.OrderActivity"
             android:label="@string/app_name_order"
             android:screenOrientation="landscape" >
         </activity>
-      <activity
-            android:name=".OrderListActivity"
+        <activity
+            android:name="com.bravebot.youngipos.OrderListActivity"
             android:label="@string/app_name_datalist"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name=".StatisticsActivity"
+            android:name="com.bravebot.youngipos.StatisticsActivity"
             android:label="@string/app_name_statistics"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.bravebot.youngipos.SettingsActivity"
             android:label="@string/app_name_settings"
             android:screenOrientation="landscape" >
         </activity>
-        
+        <activity
+            android:name="com.bravebot.youngipos.ProductActivity"
+            android:label="@string/title_activity_product" >
+        </activity>
     </application>
 
 </manifest>

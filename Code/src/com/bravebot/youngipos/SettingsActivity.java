@@ -54,7 +54,7 @@ public class SettingsActivity extends FragmentActivity implements PopupPrepareIn
 	private RadioButton radio0;
 	private RadioButton radio1;
 	private RadioButton radio2;
- 
+  
      
 	
 	@Override

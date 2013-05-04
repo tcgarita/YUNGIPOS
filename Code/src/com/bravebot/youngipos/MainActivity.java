@@ -181,7 +181,7 @@ public class MainActivity extends FragmentActivity {
 		public void onClick(View v)
 		{
 			Intent intent = new Intent();
-			intent.setClass(MainActivity.this, OrderActivity.class);
+			intent.setClass(MainActivity.this, ProductActivity.class);
 			startActivity(intent);
 		}
 	};

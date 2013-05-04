@@ -2,6 +2,7 @@ package com.bravebot.youngipos;
 
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -13,7 +14,9 @@ import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.util.Log;
 
@@ -69,13 +72,14 @@ public class MyDBHelper extends SQLiteOpenHelper {
 				 DBConstants.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				 DBConstants.ORDER_DETAIL_ORDER_ID + " INTEGER, " +
 				 DBConstants.ORDER_DETAIL_PRODUCT + " INTEGER, " +
-				 DBConstants.ORDER_DETAIL_PRODUCT_ID + " INTEGER, " +
+				 DBConstants.ORDER_DETAIL_CAT_ID + " INTEGER, " +
 				 DBConstants.ORDER_DETAIL_AMOUNT + " INTEGER, " +
 				 DBConstants.ORDER_DETAIL_PRICE + " INTEGER, " +
 				 DBConstants.ORDER_DETAIL_TOTAL + " INTEGER, " +
 				 DBConstants.ORDER_DETAIL_DISCOUNT + " REAL, " +
 				 DBConstants.ORDER_DETAIL_SN + " INTEGER, " +
-				 DBConstants.ORDER_DETAIL_DELETE + " INTEGER)";
+				 DBConstants.ORDER_DETAIL_DELETE + " INTEGER, "+
+				 DBConstants.ORDER_DETAIL_PRODUCT_ID +" INTEGER)";
 		 db.execSQL(ORDER_DETAIL_TABLE);
 
 	}
@@ -147,11 +151,11 @@ public class MyDBHelper extends SQLiteOpenHelper {
         cursor.close();
 	}
 
-	public Cursor getOrderDetail (){
+	/*public Cursor getOrderDetail (){
 		SQLiteDatabase db = this.getReadableDatabase();
 		return db.rawQuery("select * from " + DBConstants.ORDER_DETAIL_TABLE_NAME + " WHERE "
 				+ DBConstants.ORDER_DETAIL_DELETE + "=0", null);
-	}
+	}*/
 	
 	public Product getProductById (int id){
 		Product p = new Product();
@@ -165,6 +169,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
 			p.sticker_price = cursor.getInt(2);
 			p.cat_id = cursor.getInt(3);	
 		}
+		cursor.close();
 		return p;
 	}
 	
@@ -183,7 +188,8 @@ public class MyDBHelper extends SQLiteOpenHelper {
 				p.cat_id = cursor.getInt(3);
 				res.add(p);
 			} while (cursor.moveToNext());
-		}		
+		}
+		cursor.close();
 		return res;
 	}
 	
@@ -200,6 +206,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
 				res.add(p);
 			} while (cursor.moveToNext());
 		}
+		cursor.close();
 		return res;
 	}
 	
@@ -266,5 +273,139 @@ public class MyDBHelper extends SQLiteOpenHelper {
 			values.put("cat_id", cat_id);
 		
 		return db.update("product", values, "id=?", new String[]{String.valueOf(id)});
+	}
+	@SuppressLint("SimpleDateFormat")
+	//public void addOrder(ArrayList<ListRow> Lists, int mode, int total_price, int orderNumber, int SN){
+	public void addOrder(ArrayList<SoldProduct> Lists, int mode, int total_price, int orderNumber, int SN){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); 
+		String timeString = dateFormat.format(new Date());
+		dateFormat = new SimpleDateFormat("yyyyMMdd");
+		String dateString = dateFormat.format(new Date());
+		
+		SQLiteDatabase db = MainActivity.dbhelper.getWritableDatabase();
+		String orderTitle = "";
+		int count = 0; 
+		int status;
+		
+//		for(int i=0;i<Lists.size();i++){
+//			orderTitle += Lists.get(i).title0.replace(" ", "");
+//			if(i>=3){
+//				orderTitle += "等";
+//				break;
+//			} else
+//				orderTitle += ", ";
+//		}
+//		for(ListRow row : Lists)
+		for(SoldProduct row : Lists)
+		{
+//			orderTitle = orderTitle + row.title0.replace("　", "");
+			orderTitle = orderTitle + row.getSoldName();
+			count += 1;
+			if(count == Lists.size())
+				break;
+			else if(count >= 3)
+			{
+				orderTitle += "等";
+				break;
+			}
+			else
+				orderTitle += ", "; 
+		}
+		
+        switch (mode){
+    		case 0: status = 1; break;
+    		case 3: status = 2; break;
+    		default: status = 0;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(DBConstants.ORDER_TITLE, orderTitle);
+        values.put(DBConstants.ORDER_PRICE, total_price);
+        values.put(DBConstants.ORDER_TYPE, mode);
+        values.put(DBConstants.ORDER_CREATE_TIME, timeString);
+        values.put(DBConstants.ORDER_MODIFY_TIME, timeString);
+        values.put(DBConstants.ORDER_DATE, dateString);
+        values.put(DBConstants.ORDER_NUMBER, orderNumber);
+        values.put(DBConstants.ORDER_SN, SN);
+        values.put(DBConstants.ORDER_DELETE, 0);
+        values.put(DBConstants.ORDER_STATUS, status);
+        
+        long orderId = db.insert(DBConstants.ORDER_TABLE_NAME, null, values);
+	
+        for(SoldProduct row : Lists){
+	        values = new ContentValues();
+	        values.put(DBConstants.ORDER_DETAIL_ORDER_ID, orderId);
+	        values.put(DBConstants.ORDER_DETAIL_PRODUCT, row.getSoldName());
+	        values.put(DBConstants.ORDER_DETAIL_AMOUNT, row.getCount());
+	        values.put(DBConstants.ORDER_DETAIL_PRICE, row.getFinalSoldPriceString());
+	        values.put(DBConstants.ORDER_DETAIL_TOTAL, row.getTotalPriceString());
+	        values.put(DBConstants.ORDER_DETAIL_DISCOUNT, row.getDiscount());
+	        values.put(DBConstants.ORDER_DETAIL_CAT_ID, row.getProductCatId());
+	        values.put(DBConstants.ORDER_DETAIL_PRODUCT_ID, row.getProductId());
+	        Log.v("Msg","單價:"+row.getFinalSoldPriceString()+" 總計:"+row.getTotalPriceString());
+	        values.put(DBConstants.ORDER_DETAIL_SN, SN);
+	        values.put(DBConstants.ORDER_DETAIL_DELETE, 0);
+	        db.insert(DBConstants.ORDER_DETAIL_TABLE_NAME, null, values);
+		}	
+	}
+	
+	public ArrayList<OrderListRow> readDataFromDatabase(int mode, int SN) {
+		ArrayList<OrderListRow> row_data = new ArrayList<OrderListRow>();
+		SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
+		Cursor cursor;
+		if(mode == 0)
+			cursor = db.rawQuery("select * from " + DBConstants.ORDER_TABLE_NAME + " WHERE " + DBConstants.ORDER_SN 
+					+ "=?" + " AND " + DBConstants.ORDER_DETAIL_DELETE + "=0" +
+					" ORDER BY -_id ", new String[]{String.valueOf(SN)});
+		else
+			cursor = db.rawQuery("select * from " + DBConstants.ORDER_TABLE_NAME + " WHERE " + DBConstants.ORDER_STATUS +"=0 AND " +
+					DBConstants.ORDER_SN + "=?" + " AND " + DBConstants.ORDER_DETAIL_DELETE + "=0"+
+					" ORDER BY -_id", new String[]{String.valueOf(SN)});
+		
+        if(cursor.getCount() > 0) {
+        	cursor.moveToFirst();   //將指標移至第一筆資料
+        	do{
+        		row_data.add(new OrderListRow(
+        				cursor.getString(0), 
+        				cursor.getInt(8), 
+        				cursor.getString(7), 
+        				cursor.getString(4), 
+        				cursor.getString(1), 
+        				cursor.getString(2), 
+        				cursor.getString(3), 
+        				cursor.getString(8)));
+        	}while(cursor.moveToNext());
+        }
+	    cursor.close();
+	    return row_data;  
+	}
+	
+	public ArrayList<SoldProduct> readDataDetailFromDatabase(String order_id, int SN) {
+		ArrayList<SoldProduct> row_data_detail = new ArrayList<SoldProduct>();
+
+		SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
+		Cursor cursor = db.rawQuery(
+				"select * from " + DBConstants.ORDER_DETAIL_TABLE_NAME + 
+				" WHERE "+ DBConstants.ORDER_DETAIL_ORDER_ID + "=? AND " + 
+				DBConstants.ORDER_SN + "=?" + " AND " + 
+				DBConstants.ORDER_DETAIL_DELETE + "=0" + " ORDER BY -_id", 
+				new String[]{order_id,String.valueOf(SN)});
+		
+		if(cursor.getCount()>0){
+			cursor.moveToFirst();
+			do{
+				Log.v("Msg",cursor.getString(2));
+				row_data_detail.add(
+					new SoldProduct(
+						cursor.getInt(10),
+						cursor.getDouble(7),
+						cursor.getInt(4),
+						cursor.getInt(5),
+						cursor.getInt(6)
+						));
+			}while(cursor.moveToNext());
+		}
+        cursor.close();
+        return row_data_detail;
 	}
 }

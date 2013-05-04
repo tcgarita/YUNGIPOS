@@ -55,7 +55,6 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 				 .setTabListener(this));
 		actionBar.addTab(actionBar.newTab().setText("待結訂單")
 				 .setTabListener(this));
-		Log.v("Msg","Order ACtivity Constructor");
 		SharedPreferences settings = getSharedPreferences ("POS_ORDER", 0);
 		//waitOrderCount = settings.getInt("WaitOrderCount", 0);
 

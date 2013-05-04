@@ -142,12 +142,17 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		TabWidget tw = tabHost.getTabWidget(); 
 		tw.setBackgroundColor(Color.BLACK);
 		tabHost.setOnTabChangedListener(menuTabChange);
-		fragment_menu_0 = new FragmentMenu0();
+		
+		fragment_menu_0 = new FragmentMenu();
+		((FragmentMenu) fragment_menu_0).setCategory(1);
 		((FragmentMenu) fragment_menu_0).setCallback(this);
-		fragment_menu_1 = new FragmentMenu1();
+		fragment_menu_1 = new FragmentMenu();
+		((FragmentMenu) fragment_menu_1).setCategory(2);
 		((FragmentMenu) fragment_menu_1).setCallback(this);
-		fragment_menu_2 = new FragmentMenu2();
+		fragment_menu_2 = new FragmentMenu();
+		((FragmentMenu) fragment_menu_2).setCategory(3);
 		((FragmentMenu) fragment_menu_2).setCallback(this);
+		
 	    FragmentTransaction ft  = getFragmentManager().beginTransaction();
 	    ft.replace(android.R.id.tabcontent, fragment_menu_0);
 	    ft.commit();
@@ -165,8 +170,10 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	    
 	    sold_array = new ArrayList<SoldProduct>();
 	
-	    adapter = new RowAdapter(getActivity(), 
-                R.layout.listview_item_row, row_data);
+//	    adapter = new RowAdapter(getActivity(), 
+//                R.layout.listview_item_row, row_data);
+	    adapter = new RowAdapter(getActivity(),
+	    					R.layout.listview_item_row);
 	    adapter.setCallback(this);
         
         listView = (ListView)fragmentView.findViewById(R.id.listView1);

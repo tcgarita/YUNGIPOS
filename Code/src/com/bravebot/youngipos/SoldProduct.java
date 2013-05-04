@@ -1,10 +1,14 @@
 package com.bravebot.youngipos;
 
+import android.util.Log;
+
 public class SoldProduct {
 	private Product product;  // 產品
 	private double discount;  // 折扣
 	private int sold_price;   // 售價
 	private int count;        // 數量
+	private int total_price, final_price;  
+	private int product_id;
 	
 	public SoldProduct(){
 		super();
@@ -28,8 +32,20 @@ public class SoldProduct {
 			this.discount = 1;
 			this.count = 1;
 			this.sold_price = this.product.sticker_price;
+			Log.v("Msg","in soldproduct contructor");
 		}
 	}
+	public SoldProduct(int product_id, double discount, int count, int final_price, int total_price){
+		this.product = MainActivity.dbhelper.getProductById(product_id);
+		this.sold_price = product.sticker_price;
+		this.product_id = product_id;
+		this.discount = discount;
+		this.count = count;
+		this.final_price = final_price;
+		this.total_price = total_price;
+		
+	}
+	
 	public int getProductId(){
 		return this.product.id;
 	}
@@ -60,7 +76,17 @@ public class SoldProduct {
 		return this.sold_price;
 	}
 	public int getFinalSoldPrice(){
-		return (int) Math.round(this.sold_price * this.discount);
+		final_price = (int) Math.round(this.sold_price * this.discount);
+		return final_price;
+	}
+	
+	public String getFinalSoldPriceString(){
+		if( this != null ){
+			this.getFinalSoldPrice();
+			return String.valueOf(final_price);
+		}
+		else 
+			return "";
 	}
 	
 	public boolean setCount(int count){
@@ -74,18 +100,36 @@ public class SoldProduct {
 		return this.count;
 	}
 
+	public String getCountString(){
+		if(this != null){
+			return String.valueOf(this.count);
+		}else
+			return "";
+	}
+	
 	public void addCount(int add){
+		Log.v("Msg","Add in SoldProduct : "+ add);
 		this.count += add;
+		Log.v("Msg","Count : "+ this.count);
 	}
 	
 	public int getTotalPrice(){
-		return this.getFinalSoldPrice() * this.count;
+		total_price = this.getFinalSoldPrice() * this.count;
+		return total_price;
+	}
+	
+	public String getTotalPriceString(){
+		if(this != null){
+			this.getTotalPrice();
+			return String.valueOf(total_price);
+		} else 
+			return "";
 	}
 	
 	public String getSoldName(){
 		if(this.discount != 1.0){
 			return this.product.name + 
-					" (" + discountMapping(this.discount)+")";
+					"(" + discountMapping(this.discount)+")";
 		}
 		else {
 			return this.product.name;

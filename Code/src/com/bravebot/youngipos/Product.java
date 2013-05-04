@@ -15,4 +15,10 @@ public class Product {
 		this.id = id;
 		this.cat_id = category;
 	}
+	public String getNameandPrice(){
+		if(this.sticker_price>0)
+			return this.name+"\n( $"+this.sticker_price+" )";
+		else
+			return this.name+"\n(¦Û­q)";
+	}
 }

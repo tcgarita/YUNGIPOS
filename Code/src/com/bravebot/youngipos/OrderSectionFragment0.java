@@ -48,7 +48,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -69,12 +68,10 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	private ListView listView;
 	private LayoutInflater inflater;
 	private String targetName;
+	
 	/* tcgarita */
 	private Product product;
 	private SoldProduct sold_product;
-	private ArrayList<SoldProduct> sold_array;
-	
-	private int targetPrice;
 	
 	private ArrayList<ListRow> row_data;
 	private RowAdapter adapter;
@@ -146,12 +143,17 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		TabWidget tw = tabHost.getTabWidget(); 
 		tw.setBackgroundColor(Color.BLACK);
 		tabHost.setOnTabChangedListener(menuTabChange);
-		fragment_menu_0 = new FragmentMenu0();
+		
+		fragment_menu_0 = new FragmentMenu();
+		((FragmentMenu) fragment_menu_0).setCategory(1);
 		((FragmentMenu) fragment_menu_0).setCallback(this);
-		fragment_menu_1 = new FragmentMenu1();
+		fragment_menu_1 = new FragmentMenu();
+		((FragmentMenu) fragment_menu_1).setCategory(2);
 		((FragmentMenu) fragment_menu_1).setCallback(this);
-		fragment_menu_2 = new FragmentMenu2();
+		fragment_menu_2 = new FragmentMenu();
+		((FragmentMenu) fragment_menu_2).setCategory(3);
 		((FragmentMenu) fragment_menu_2).setCallback(this);
+		
 	    FragmentTransaction ft  = getFragmentManager().beginTransaction();
 	    ft.replace(android.R.id.tabcontent, fragment_menu_0);
 	    ft.commit();
@@ -165,12 +167,9 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	        tv.setTypeface(null,Typeface.NORMAL);
 	    }   
 	    
-	    row_data = new ArrayList<ListRow>();
-	    
-	    sold_array = new ArrayList<SoldProduct>();
+//	    sold_array = new ArrayList<SoldProduct>();
 	
-	    adapter = new RowAdapter(getActivity(), 
-                R.layout.listview_item_row, row_data);
+	    adapter = new RowAdapter(getActivity(),R.layout.listview_item_row);
 	    adapter.setCallback(this);
         
         listView = (ListView)fragmentView.findViewById(R.id.listView1);
@@ -356,17 +355,18 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		{
 			product = MainActivity.dbhelper.getProductById(product_id);
 			sold_product = new SoldProduct(product);
+			
 			targetName = sold_product.getSoldName();
+			
 			if(product.name.matches("辦桌"))
 				pop(1);
 			else 	
 				pop(0);
-		}
+		}		
 	}
 
 	@Override
 	public void onNumberEnterClicked(int count, double discount, int pop) {
-		
 		if(count == 0){ // 數量=0
 			popWindow.dismiss();
 			return;
@@ -385,46 +385,37 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		if(discount != 1.0 && discount >= 0)
 			sold_product.setDiscount(discount);
 		
-		sold_product.setCount(count);
-		
-		//targetPrice = sold_product.getFinalSoldPrice();
 		targetName = sold_product.getSoldName();
 		
 		NumberFormat formatter = new DecimalFormat("###,###,###");
 			
 		int index = product_data.indexOf(targetName);
+		Log.v("Msg","index "+index);
+		Log.v("Msg","count in order"+count);
 		if(index == -1 || product.sticker_price == 0)
 		{
 			product_data.add(targetName);
-			row_data.add(
-					new ListRow(targetName, 
-							sold_product.getFinalSoldPrice(), 
-							sold_product.getCount(),
-							sold_product.getTotalPrice(), 
-							discount, sold_product.getProductCatId(),sold_product.getProductId()));
+			sold_product.setCount(count);
+			adapter.AddRow(sold_product);
+			Log.v("Msg","add new row");
 		}
 		else
-		{
+		{	
 			product_data.remove(index);
 			product_data.add(targetName);
-			ListRow rowData = row_data.get(index);
+			sold_product = (SoldProduct) adapter.getItem(index);
 			sold_product.addCount(count);
-			rowData = new ListRow(targetName, 
-					sold_product.getFinalSoldPrice(),
-					sold_product.getCount(), 
-					sold_product.getTotalPrice(),
-					discount, 
-					sold_product.getProductCatId(),
-					sold_product.getProductId());
-			row_data.remove(index);
-			row_data.add(rowData);
+
+			adapter.setRow(index, sold_product);
 		}
-			
-		total += sold_product.getTotalPrice();
-		Log.v("Msg","Total:"+ sold_product.getTotalPrice());
+		total = adapter.getTotalAmount();
+
+		Log.v("Msg","Total Price:"+ sold_product.getTotalPrice());
 			
 		textViewTotal.setText(formatter.format(total));
-			
+		listView.setSelection(adapter.getCount() - 1);
+		popWindow.dismiss();
+		
 			// special case, 買一送一
 			/*if(targetSectionNo == 0 && targetBtnNo == 12)
 			{
@@ -449,91 +440,26 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 					row_data.remove(index);
 					row_data.add(rowData);
 				}
-			}*/
+			}
 			
 		adapter.notifyDataSetChanged();
 		listView.setSelection(adapter.getCount() - 1);
 		popWindow.dismiss();
-		
+		*/
 	}
 	
 	@Override
 	public void onDeleteButtonClicked(int position) {
 		NumberFormat formatter = new DecimalFormat("###,###,###");
+		
+		adapter.delRow(position);
+		total = adapter.getTotalAmount();
 		product_data.remove(position);
-		ListRow rowData = row_data.get(position);
-		row_data.remove(position);
-		adapter.notifyDataSetChanged();
 		listView.setSelection(adapter.getCount() - 1);
-		String tmp = rowData.title3.replaceAll(",", "");
-		total -= Integer.parseInt(tmp);
 		textViewTotal.setText(formatter.format(total));
 		Log.v("Msg","tcgarita OrderSectionFragment");
 	}
-	@SuppressLint("SimpleDateFormat")
-	private void addDataToDatabase()
-	{
-		String orderTitle = "";
-		int count = 0;
-		for(ListRow row : row_data)
-		{
-			orderTitle = orderTitle + row.title0.replace("　", "");
-			count += 1;
-			if(count == row_data.size())
-				break;
-			else if(count >= 3)
-			{
-				orderTitle += "等";
-				break;
-			}
-			else
-				orderTitle += ", "; 
-		}
-		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); 
-		String timeString = dateFormat.format(new Date());
-		dateFormat = new SimpleDateFormat("yyyyMMdd");
-		String dateString = dateFormat.format(new Date());
-		
-		SQLiteDatabase db = MainActivity.dbhelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DBConstants.ORDER_TITLE, orderTitle);
-        values.put(DBConstants.ORDER_PRICE, total);
-        values.put(DBConstants.ORDER_TYPE, mode);
-        values.put(DBConstants.ORDER_CREATE_TIME, timeString);
-        values.put(DBConstants.ORDER_MODIFY_TIME, timeString);
-        values.put(DBConstants.ORDER_DATE, dateString);
-        values.put(DBConstants.ORDER_NUMBER, orderNumber);
-        values.put(DBConstants.ORDER_SN, SN);
-        values.put(DBConstants.ORDER_DELETE, 0);
-        int status = 0;
-        if(mode == 0)
-        	status = 1;
-        else if(mode == 3)
-        	status = 2;
-        values.put(DBConstants.ORDER_STATUS, status);
-        
-        long orderId = db.insert(DBConstants.ORDER_TABLE_NAME, null, values);
-        for(ListRow row : row_data)
-        {
-	        values = new ContentValues();
-	        values.put(DBConstants.ORDER_DETAIL_ORDER_ID, orderId);
-	        values.put(DBConstants.ORDER_DETAIL_PRODUCT, row.title0);
-	        values.put(DBConstants.ORDER_DETAIL_AMOUNT, Integer.parseInt(row.title2.replace(",", "")));
-	        values.put(DBConstants.ORDER_DETAIL_PRICE, Integer.parseInt(row.title1.replace(",", "")));
-	        values.put(DBConstants.ORDER_DETAIL_TOTAL, Integer.parseInt(row.title3.replace(",", "")));
-	        values.put(DBConstants.ORDER_DETAIL_DISCOUNT, row.discount);
-	        values.put(DBConstants.ORDER_DETAIL_PRODUCT_ID, row.productNO);
-	        values.put(DBConstants.ORDER_DETAIL_SN, SN);
-	        values.put(DBConstants.ORDER_DETAIL_DELETE, 0);
-	        Log.v("Msg","WTF, product:"+row.title0 + " product_id:"+ row.productNO);
-	        db.insert(DBConstants.ORDER_DETAIL_TABLE_NAME, null, values);
-	        
-        }
-        
-        
-        
-	}
-
+	
 	private Button.OnClickListener clickPayButton = new Button.OnClickListener()
 	{
 		public void onClick(View v)
@@ -547,8 +473,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 				}
 				if(product_data.size() > 0)
 				{
-					addDataToDatabase();
-					NumberFormat formatter = new DecimalFormat("###,###,###");
+					MainActivity.dbhelper.addOrder(adapter.getData(), mode, total, orderNumber, SN);					NumberFormat formatter = new DecimalFormat("###,###,###");
 					if(mode == 0)
 					{
 						cashBoxMoney += total;
@@ -599,14 +524,16 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		{
 			
 			product_data.clear();
-			row_data.clear();
+			adapter.clearRow();
+			sold_product = null;
 			total = 0;
-			adapter.notifyDataSetChanged();
-			textViewTotal.setText(String.valueOf(total));
+//			textViewTotal.setText(String.valueOf(total));
+			textViewTotal.setText(String.valueOf(adapter.getTotalAmount()));
 			radioGroup.check(R.id.radioButton0);
 			
 		}
 	};
+	// 訂單查詢
 	private Button.OnClickListener clickOrderListButton = new Button.OnClickListener()
 	{
 		public void onClick(View v)
@@ -617,10 +544,9 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 			intent.setClass(getActivity(), OrderListActivity.class);
 			intent.putExtras(bundle);
 			startActivity(intent);
-
-			
 		}
 	};
+	// 銷售數據
 	private Button.OnClickListener clickDataButton = new Button.OnClickListener()
 	{
 		public void onClick(View v)
@@ -631,8 +557,6 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 			intent.setClass(getActivity(), StatisticsActivity.class);
 			intent.putExtras(bundle);
 			startActivity(intent);
-			
-			
 		}
 	};
 	
@@ -652,9 +576,8 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 				byte[] openCashDrawer = new byte[] {0x07};
 				port.writePort(openCashDrawer, 0, openCashDrawer.length);
 				product_data.clear();
-				row_data.clear();
+				adapter.clearRow();
 				total = 0;
-				adapter.notifyDataSetChanged();
 				textViewTotal.setText(String.valueOf(total));
 				radioGroup.check(R.id.radioButton0);
 				return;
@@ -750,15 +673,30 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 					port.writePort(outputByteBuffer, 0, outputByteBuffer.length);
 					NumberFormat formatter = new DecimalFormat("###,###,###");
 					int total = 0;
-					for(ListRow row : row_data) {
-						total += Integer.parseInt(row.title3);
+
+					ArrayList<SoldProduct> row_data = adapter.getData();
+					for(SoldProduct row : row_data){
+//					ArrayList<ListRow> row_data = adapter.getData();
+//					for(ListRow row : row_data) {
+//						total += Integer.parseInt(row.title3);
 				       // String productStr = String.format("%1$-12s%-7s%7s%7s", row.title0, row.title1, row.title2, row.title3);
-						String productStr = String.format("%-7s%5s%8s%9s", row.title0 , formatter.format(Integer.parseInt(row.title1)), row.title2, formatter.format(Integer.parseInt(row.title3)));
+//						String productStr = String.format("%-7s%5s%8s%9s", 
+//								row.title0, 
+//								formatter.format(Integer.parseInt(row.title1)), 
+//								row.title2, 
+//								formatter.format(Integer.parseInt(row.title3)));
+						
+						String productStr = String.format("%-7s%5s%8s%9s", 
+								row.getSoldName(), 
+								formatter.format(row.getFinalSoldPrice()), 
+								row.getCountString(), 
+								formatter.format(row.getTotalPriceString()));
 						
 				        outputByteBuffer = createShiftBIG5(productStr + "\n");
 				        System.out.println(productStr);
 						port.writePort(outputByteBuffer, 0, outputByteBuffer.length);
 				    }
+					total = adapter.getTotalAmount();
 					outputByteBuffer = createShiftBIG5("——————————————————————\n");
 					port.writePort(outputByteBuffer, 0, outputByteBuffer.length);
 					productTitleStr = String.format("%-33s%7s", "結算金額", formatter.format(total));
@@ -787,10 +725,10 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 
 			
 			product_data.clear();
-			row_data.clear();
+			adapter.clearRow();
 			total = 0;
-			adapter.notifyDataSetChanged();
-			textViewTotal.setText(String.valueOf(total));
+			//textViewTotal.setText(String.valueOf(total));
+			textViewTotal.setText("0");
 			radioGroup.check(R.id.radioButton0);
 
     	}
@@ -912,10 +850,11 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
     		editor.commit();
     		dialog.dismiss();
     		product_data.clear();
-			row_data.clear();
 			total = 0;
-			adapter.notifyDataSetChanged();
-			textViewTotal.setText(String.valueOf(total));
+			adapter.clearRow();
+
+			//textViewTotal.setText(String.valueOf(total));
+			textViewTotal.setText(String.valueOf(adapter.getTotalAmount()));
 			radioGroup.check(R.id.radioButton0);
 		}
 		
@@ -984,8 +923,9 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 				    startRepeatingTask();
 				    
 				}
+								
+				MainActivity.dbhelper.addOrder(adapter.getData(), mode, total, orderNumber, SN);
 				
-				addDataToDatabase();
 				NumberFormat formatter = new DecimalFormat("###,###,###");
 				
 				cashBoxMoney += total;

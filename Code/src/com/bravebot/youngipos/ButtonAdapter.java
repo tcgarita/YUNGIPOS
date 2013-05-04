@@ -24,15 +24,15 @@ import android.widget.GridView;
 
 public class ButtonAdapter extends BaseAdapter {
 	    private Context mContext;
-	    private List<Pair<String,String>> product_data;
+	    private ArrayList<Product> products;
 	    private int section_id;
+	    
 	    protected OnClickOrderButtonListener callback;
 	   
 	    
 		public void setCallback(OnClickOrderButtonListener fragment)
 		{
 			try {
-				//callback = (OnClickButtonListener) fragment;
 				callback = fragment;
 		    } catch (ClassCastException e) {
 		    	throw new ClassCastException(fragment.toString()
@@ -47,29 +47,10 @@ public class ButtonAdapter extends BaseAdapter {
 	    }
 	    
 	    void init_product_data(int cat_id){
-	    	product_data = new ArrayList<Pair<String,String>>();
-	    	SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
-	    	Cursor cursor = db.rawQuery("select * from product where cat_id=?", 
-	    						new String [] {String.valueOf(cat_id)});
-	        if(cursor.getCount()>0){
-	        	cursor.moveToFirst();
-	        	do{
-	        		int price = Integer.parseInt(cursor.getString(2));
-	        		if(price == 0){
-	        			product_data.add(new Pair<String,String>(
-    							cursor.getString(0),
-    							cursor.getString(1)+"\n(¦Û­q)"));
-	        		}else{
-	        			product_data.add(new Pair<String,String>(
-    							cursor.getString(0),
-    							cursor.getString(1)+"\n$"+cursor.getString(2)));
-	        		}
-	        	}while(cursor.moveToNext());
-	        }
-	        cursor.close();
+	    	products = MainActivity.dbhelper.getProductByCatId(cat_id);
 	    }
 	    public Object getItem(int position) {
-	        return null;
+	        return products.get(position);
 	    }
 
 	    public long getItemId(int position) {
@@ -87,35 +68,35 @@ public class ButtonAdapter extends BaseAdapter {
 	            btn.setPadding(8, 8, 8, 8);
 	        } else {
 	            btn = (Button) convertView;
-	        }
-	        Pair<String,String> p = product_data.get(position);
-	        btn.setId(Integer.parseInt(p.first));
-	        btn.setText(p.second);
-	        btn.setOnClickListener(new ItemButton_Click(Integer.parseInt(p.first)));
+	        }        
+	        Product p = products.get(position);
+	        btn.setId(p.id);
+	        btn.setText(p.getNameandPrice());
+	        btn.setOnClickListener(new ItemButton_Click(p));
+	        
 	        return btn;
+	    }
+	    
+	    public void addProduct(Product p){
+	    	products.add(p);
+	    	this.notifyDataSetChanged();
 	    }
 	    
 		@Override
 		public int getCount() {
-			return product_data.size();
-			//return 0;
+			return products.size();
 		}
 		
 	    class ItemButton_Click implements OnClickListener {
-	    	   private int id;
-
-	    	   ItemButton_Click(int product_id) {
-	    	       id = product_id;
+	    	   private Product product;
+	    	   ItemButton_Click(Product p) {
+	    	       this.product = p;
 	    	   }
 
 	    	   @Override
 	    	   public void onClick(View v) {
-	    		   Log.v("Msg","section:"+String.valueOf(section_id)+",id:"+String.valueOf(id));
-	    		   if(false && section_id == 4){
-	    			   callback.onButtonClicked(section_id-1,id); // Map db and ProductMap temporarily
-	    		   }else{
-	    			   callback.onButtonClicked(section_id,id); // Map db and ProductMap temporarily
-	    		   }
+	    		   Log.v("Msg","section:"+String.valueOf(section_id)+",id:"+product.id);
+	    		   callback.onButtonClicked(section_id,product.id);
 	    	   }
 	    }
 }

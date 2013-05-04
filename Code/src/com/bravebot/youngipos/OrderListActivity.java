@@ -49,7 +49,7 @@ import android.widget.TextView;
 public class OrderListActivity extends FragmentActivity  implements PopupBillInputWindowOrderList.OnClickBillButtonListener{
 	
 	private ArrayList<OrderListRow> row_data;
-	private ArrayList<ListRow> row_data_detail;
+	private ArrayList<SoldProduct> row_data_detail;
 	private ListView listView;
 	private ListView listViewDetail;
 	private OrderListRowAdapter adapter;
@@ -83,12 +83,15 @@ public class OrderListActivity extends FragmentActivity  implements PopupBillInp
 		row_data = new ArrayList<OrderListRow>();
 		adapter = new OrderListRowAdapter(this, R.layout.orderlistview_item_row, row_data);
 		listView.setAdapter(adapter);
-		row_data_detail = new ArrayList<ListRow>();
-		adapter_detail = new RowAdapter(this, R.layout.listview_item_row, row_data_detail);
+	
+//		adapter_detail = new RowAdapter(this, R.layout.listview_item_row, row_data_detail);
+		adapter_detail = new RowAdapter(this, R.layout.listview_item_row);
+		row_data_detail = adapter_detail.getData();
 		adapter_detail.showDeleteButton = false;
 		listViewDetail.setAdapter(adapter_detail);
 	    
 	    readDataFromDatabase();
+	    
 	    listView.setOnItemClickListener(clickListItem);
 	    if(row_data.size() > 0)
 	    	listView.performItemClick(listView.getAdapter().getView(0, null, null), 0, 0);
@@ -120,9 +123,9 @@ public class OrderListActivity extends FragmentActivity  implements PopupBillInp
         	}
         }
 	    cursor.close();
-	    adapter.notifyDataSetChanged();
-	        
+	    adapter.notifyDataSetChanged();  
 	}
+	/*
 	private void readDataDetailFromDatabase(String order_id) {
 		row_data_detail.clear();
 		SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
@@ -143,7 +146,7 @@ public class OrderListActivity extends FragmentActivity  implements PopupBillInp
         }
         cursor.close();
         adapter_detail.notifyDataSetChanged();
-	}
+	}*/
 	
 	private void payBillToDatabase(String order_id)
 	{
@@ -251,7 +254,11 @@ public class OrderListActivity extends FragmentActivity  implements PopupBillInp
 			adapter.setSelectedItem(position);
 			OrderListRow row = row_data.get(position);
 			selectedRow = row;
-			readDataDetailFromDatabase(row.id);
+//			readDataDetailFromDatabase(row.id);
+			
+			adapter_detail.setData(
+					MainActivity.dbhelper.readDataDetailFromDatabase(row.id, SN));
+			
 			payButton.setEnabled(row.paid == 0 ? true : false);
 			NumberFormat formatter = new DecimalFormat("###,###,###");
 			totalView.setText(formatter.format(Integer.valueOf(row.title3)));

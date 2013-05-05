@@ -49,7 +49,7 @@ public class ButtonAdapter extends BaseAdapter {
 	    void init_product_data(int cat_id){
 	    	products = MainActivity.dbhelper.getProductByCatId(cat_id);
 	    }
-	    public Object getItem(int position) {
+	    public Product getItem(int position) {
 	        return products.get(position);
 	    }
 
@@ -70,6 +70,7 @@ public class ButtonAdapter extends BaseAdapter {
 	            btn = (Button) convertView;
 	        }        
 	        Product p = products.get(position);
+	        p.pos = position;
 	        btn.setId(p.id);
 	        btn.setText(p.getNameandPrice());
 	        btn.setOnClickListener(new ItemButton_Click(p));
@@ -82,6 +83,21 @@ public class ButtonAdapter extends BaseAdapter {
 	    	this.notifyDataSetChanged();
 	    }
 	    
+	    public void delProduct(int index){
+	    	products.remove(index);
+	    	this.notifyDataSetChanged();
+	    }
+	    
+	    public void editProduct(int index, String name, int price, int cat_id){
+	    	Product p = products.get(index);
+	    	if( !( name.equals("") || p.name.equals(name)) )
+	    		p.name = name;
+	    	if( price != -1)
+	    		p.sticker_price = price;
+	    	if( cat_id != -1)
+	    		p.cat_id = cat_id;
+	    	this.notifyDataSetChanged();
+	    }
 		@Override
 		public int getCount() {
 			return products.size();
@@ -96,7 +112,8 @@ public class ButtonAdapter extends BaseAdapter {
 	    	   @Override
 	    	   public void onClick(View v) {
 	    		   Log.v("Msg","section:"+String.valueOf(section_id)+",id:"+product.id);
-	    		   callback.onButtonClicked(section_id,product.id);
+	    		   //callback.onButtonClicked(section_id,product.id);
+	    		   callback.onButtonClicked(product,product.id);
 	    	   }
 	    }
 }

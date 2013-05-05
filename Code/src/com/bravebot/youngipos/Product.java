@@ -5,6 +5,7 @@ public class Product {
 	int sticker_price;
 	int id;
 	int cat_id;
+	int pos;  	 // ButtonAdapter's position
 	
 	public Product(){
 		super();

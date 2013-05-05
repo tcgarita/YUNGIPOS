@@ -349,8 +349,8 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 
 	@Override
 	//public void onButtonClicked(int sectionNo, int product_id) {
-	public void onButtonClicked(int cat_id, int product_id) {
-		Log.v("Fragment0", cat_id + " " + product_id);
+	public void onButtonClicked(Product p, int product_id) {
+		Log.v("Fragment0", p.pos + " " + product_id);
 		if(popWindow != null && popWindow.isShowing() == false)
 		{
 			product = MainActivity.dbhelper.getProductById(product_id);

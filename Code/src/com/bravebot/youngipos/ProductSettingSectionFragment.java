@@ -22,6 +22,7 @@ import com.starmicronics.stario.StarIOPortException;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
 
@@ -70,46 +71,21 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	private Fragment fragment_menu_0;
 	private Fragment fragment_menu_1;
 	private Fragment fragment_menu_2;
-	private ListView listView;
-	private LayoutInflater inflater;
-	private String targetName;
-	/* tcgarita */
-	private Product product;
-	private SoldProduct sold_product;
-	private ArrayList<SoldProduct> sold_array;
-	
-	private int targetPrice;
-	
-	private ArrayList<ListRow> row_data;
-	private RowAdapter adapter;
-	private PopupWindow popWindow;
-	private int total = 0;
-	private TextView textViewTotal;
-	private ArrayList<String> product_data;
-	private int cashBoxMoney;
-	private int cashBoxMoneyDefault;
-	private int todayMoney;
-	private int waitMoney;
-	private int monthMoney;
-	private int orderNumber;
-	private TextView titleView;
-	private TextView cashBoxMoneyView;
-	private TextView todayMoneyView;
-	private TextView waitMoneyView;
-	private TextView monthMoneyView;
-	private TextView orderNumberView;
-	private TextView dateView;
-	private int mode;
-	private TextView textViewMsg;
 	private Handler m_handler;
+	private Product product;
+	private ArrayList<Category> category;
+	private PopupWindow popWindow;
+	private LayoutInflater inflater;
+	private int mode;
 	private Button new_product_button;
 	private Button save_product_button;
 	private Button del_product_button;
 	private CheckBox customize_checkbox;
-	private int SN;
+	
 	public enum Alignment {Left, Center, Right};
 
 	public OrderSectionFragmentListener callback;
+
 	
 	public ProductSettingSectionFragment() {
 		
@@ -135,7 +111,6 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		m_handler = new Handler();
 		Bundle bundle = getArguments();
 		mode = bundle.getInt("mode");
-		product_data = new ArrayList<String>();
 		this.inflater = inflater;
 		fragmentView = inflater.inflate(R.layout.product_setting, container, false);
 
@@ -173,23 +148,8 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	        tv.setTextSize(23);
 	        tv.setTextColor(Color.WHITE);
 	        tv.setTypeface(null,Typeface.NORMAL);
-	    }   
-	    
-	    row_data = new ArrayList<ListRow>();
-	    
-	    sold_array = new ArrayList<SoldProduct>();
-	
-//	    adapter = new RowAdapter(getActivity(), 
-//                R.layout.listview_item_row, row_data);
-	    /*
-	    adapter = new RowAdapter(getActivity(),
-	    					R.layout.listview_item_row);
-	    adapter.setCallback(this);
-        
-        listView = (ListView)fragmentView.findViewById(R.id.listView1);
-        
-        listView.setAdapter(adapter);
-        */
+	    }
+	    category = MainActivity.dbhelper.getAllCategory();
 		return fragmentView;
 	}
 	@Override
@@ -222,8 +182,6 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 			    ft.replace(android.R.id.tabcontent, fragment_menu_2);
 			    ft.commit();
 			}
-		
-			
 		  }
 	};
 	
@@ -233,7 +191,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	{
 		tabHost = (TabHost)fragmentView.findViewById(android.R.id.tabhost);
 		tabHost.setup();
-		
+	
 		new_product_button = (Button) fragmentView.findViewById(R.id.button1);
 		new_product_button.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
@@ -243,10 +201,11 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
         		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
         		
         		editText1.setText("請填入產品名稱");
-        		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
+//        		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
         		editText2.setText(category.get(tabHost.getCurrentTab()).name);
         		editText3.setText(String.valueOf(75));
         		editText5.setText(String.valueOf(0));
+        		product = null;
             }
        });
 	
@@ -254,6 +213,57 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		save_product_button.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
             	// do something
+        		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
+        		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
+        		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
+        		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
+        		CheckBox checkbox1 = (CheckBox) fragmentView.findViewById(R.id.checkBox1);
+        		if(editText5.getText().toString().equals(""))
+        			return;
+        		String name = editText1.getText().toString();
+        		String text_id = editText5.getText().toString();
+    			int price;
+    			if(checkbox1.isChecked())
+    				price = 0;
+    			else 
+    				price = Integer.parseInt(editText3.getText().toString());
+    			int cat = getCategoryIdByName(editText2.getText().toString());
+    			
+        		if( Integer.parseInt(text_id) == 0 ){
+        			// 新增
+        			Log.v("Msg","name:"+name+",cat:"+cat+",price:"+price);
+        			long new_id = MainActivity.dbhelper.addProduct(editText1.getText().toString(), price, cat);
+        			if( new_id > 0 ){
+        				// TODO it's not a safety way to convert long to integer
+        				Product new_product = new Product(name,price, (int) new_id, cat);
+        				((FragmentMenu) fragment_menu_0).getButtonAdapter().addProduct(new_product);
+        			} else {
+        				setAlert("新增修改品項","新增產品失敗，請聯繫程式設計師");
+        			}
+        		}
+        		else {
+        			// 修改
+        			if( product.id == Integer.parseInt(text_id)){
+        				if( name.equals(product.name) && 
+        					price == product.sticker_price && 
+        					cat == product.cat_id)
+        					return;
+        				
+        				// -1 表示沒更動, 因為 price = 0 有意義，所以統一用 -1  
+        				String edit_name = "";
+        				int edit_price = -1, edit_cat_id = -1;
+        				
+        				if( !name.equals(product.name) )
+        					edit_name = name;
+        				if(price != product.sticker_price)
+        					edit_price = price;
+        				if(cat != product.cat_id)
+        					edit_cat_id = cat;
+        				MainActivity.dbhelper.editProductById(product.id, edit_name, edit_price, edit_cat_id);
+        				((FragmentMenu) fragment_menu_0).getButtonAdapter().editProduct(product.pos,edit_name, edit_price, edit_cat_id);
+        				setAlert("新增修改品項","修改成功");
+        			}
+        		}
             }
        });
 		
@@ -261,8 +271,10 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		del_product_button = (Button) fragmentView.findViewById(R.id.button3);
 		del_product_button.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
-            	MainActivity.dbhelper.delProductById(1);
-            	((FragmentMenu) fragment_menu_0).getButtonAdapter().notifyDataSetChanged();
+            	if(product != null){
+            		MainActivity.dbhelper.delProductById(product.id);
+            		((FragmentMenu) fragment_menu_0).getButtonAdapter().delProduct(product.pos);
+            	}
             }
        });
 		
@@ -306,7 +318,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 
 
 	@Override
-	public void onButtonClicked(int cat_id, int product_id) {
+	public void onButtonClicked(Product p, int product_id) {
 		// TODO Auto-generated method stub
 		
 		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
@@ -314,9 +326,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
 		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
 		CheckBox checkbox1 = (CheckBox) fragmentView.findViewById(R.id.checkBox1);
-		
-		Product product = MainActivity.dbhelper.getProductById(product_id);
-		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
+		product = p; // product is a global variable.
 		editText1.setText(product.name);
 		editText2.setText(category.get(tabHost.getCurrentTab()).name);
 		editText3.setText(String.valueOf(product.sticker_price));
@@ -328,5 +338,18 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		}
 	}
 
-
+	public int getCategoryIdByName(String name) {
+		for(Category c : category){
+			if( c.name.equals(name) )
+				return c.id;
+		}
+		return 0;
+	}
+	
+	public void setAlert(String title, String msg){
+		Builder dialog = new AlertDialog.Builder(getActivity());
+		dialog.setTitle(title).setMessage(msg);
+		dialog.setCancelable(true);
+		dialog.show();
+	}
 }

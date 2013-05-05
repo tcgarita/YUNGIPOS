@@ -252,12 +252,17 @@ public class MyDBHelper extends SQLiteOpenHelper {
 		values.put("name",name);
 		values.put("price", price);
 		values.put("cat_id", category_id);
-		return db.insert("product", null, values);
+		long res = db.insert("product", null, values);
+		Log.v("Msg", "res :"+res);
+		//return db.insert("product", null, values);
+		return res;
 	}
 	
 	public int delProductById (int id) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		return db.delete("product", "id=?", new String[]{String.valueOf("id")});
+		int res = db.delete("product", "id=?", new String[]{String.valueOf(id)});
+		Log.v("Msg","id:"+id+ " delete: "+res);
+		return res;
 		
 	}
 	

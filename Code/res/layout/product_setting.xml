@@ -116,7 +116,8 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:editable="false"
-		            android:ems="30" />
+		            android:ems="30"
+		            android:enabled="false" />
 
 			</TableRow>
 
@@ -195,27 +196,20 @@
 		    <TableRow
 		        android:id="@+id/tableRow6"
 		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" 
-		        android:padding="10dp">
-		        
-		        <TextView
-		            android:id="@+id/textView4"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="Large Text"
-		            android:textAppearance="?android:attr/textAppearanceLarge" />
+		        android:layout_height="wrap_content"
+		        android:paddingLeft="10dp">
 		        
 		        <CheckBox
 		            android:id="@+id/checkBox1"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="CheckBox" />
+		            android:text="@string/customized_price" />
 
 		    </TableRow>
 
 		    <Space
 		        android:layout_width="wrap_content"
-		        android:layout_height="155dp" />
+		        android:layout_height="180dp" />
 
 		    <Button
 		        android:id="@+id/button2"
@@ -253,7 +247,7 @@
 	    android:id="@+id/button1"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginLeft="700dp"
+	    android:layout_marginLeft="600dp"
 	    android:layout_marginTop="150dp"
 	    android:text="@string/new_product" />
 

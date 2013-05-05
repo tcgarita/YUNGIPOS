@@ -45,17 +45,17 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setHomeButtonEnabled(true);
 		// For each of the sections in the app, add a tab to the action bar.
-		actionBar.addTab(actionBar.newTab().setText("門市現金")
+		actionBar.addTab(actionBar.newTab().setText("新增修改品項")
 				 .setTabListener(this));
 		
-		actionBar.addTab(actionBar.newTab().setText(R.string.order_section_title1)
-				 .setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText(R.string.order_section_title2)
-				 .setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("月結")
-				 .setTabListener(this));
-		actionBar.addTab(actionBar.newTab().setText("待結訂單")
-				 .setTabListener(this));
+		//actionBar.addTab(actionBar.newTab().setText(R.string.order_section_title1)
+		//		 .setTabListener(this));
+		//actionBar.addTab(actionBar.newTab().setText(R.string.order_section_title2)
+		//		 .setTabListener(this));
+		//actionBar.addTab(actionBar.newTab().setText("月結")
+		//		 .setTabListener(this));
+		//actionBar.addTab(actionBar.newTab().setText("待結訂單")
+		//		 .setTabListener(this));
 		
 		Log.v("Msg","Order ACtivity Constructor");
 		SharedPreferences settings = getSharedPreferences ("POS_ORDER", 0);
@@ -68,6 +68,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 	public void onResume()
 	{
 		super.onResume();
+		/*
 		actionBar.selectTab(actionBar.getTabAt(0));
 		waitOrderCount = getWaitBillNumber();
 		if(waitOrderCount != 0)
@@ -82,6 +83,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 			actionBar.addTab(actionBar.newTab().setText("待結訂單")
 					 .setTabListener(this));
 		}
+		*/
 	}
 	private int getWaitBillNumber()
 	{

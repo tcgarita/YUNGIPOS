@@ -135,14 +135,14 @@ public final class R {
         public static final int View5=0x7f0a001c;
         public static final int View7=0x7f0a0024;
         public static final int accounts_button=0x7f0a0008;
-        public static final int action_settings=0x7f0a0084;
-        public static final int button1=0x7f0a0082;
-        public static final int button2=0x7f0a0080;
-        public static final int button3=0x7f0a0081;
+        public static final int action_settings=0x7f0a0083;
+        public static final int button1=0x7f0a0081;
+        public static final int button2=0x7f0a007f;
+        public static final int button3=0x7f0a0080;
         public static final int buttonConnect=0x7f0a0037;
         public static final int buttonQueryOrder=0x7f0a0030;
         public static final int buttonSubmit=0x7f0a0004;
-        public static final int checkBox1=0x7f0a007f;
+        public static final int checkBox1=0x7f0a007e;
         public static final int container=0x7f0a0000;
         public static final int editText1=0x7f0a0078;
         public static final int editText2=0x7f0a007a;
@@ -151,7 +151,7 @@ public final class R {
         public static final int frameDiscount=0x7f0a006d;
         public static final int gridview=0x7f0a003a;
         public static final int listView1=0x7f0a0015;
-        public static final int menu_back=0x7f0a0083;
+        public static final int menu_back=0x7f0a0082;
         public static final int myRadioGroup=0x7f0a000e;
         public static final int order_button=0x7f0a0006;
         public static final int product_settings_button=0x7f0a000c;
@@ -174,7 +174,6 @@ public final class R {
         public static final int textView1=0x7f0a0007;
         public static final int textView2=0x7f0a0029;
         public static final int textView3=0x7f0a0009;
-        public static final int textView4=0x7f0a007e;
         public static final int textView5=0x7f0a0075;
         public static final int textViewCashBox=0x7f0a002a;
         public static final int textViewTitle=0x7f0a0011;
@@ -257,6 +256,7 @@ public final class R {
         public static final int button_title_1=0x7f070038;
         public static final int button_title_2=0x7f070039;
         public static final int button_title_3=0x7f07003a;
+        public static final int customized_price=0x7f07004c;
         public static final int delete=0x7f07004b;
         public static final int hello_world=0x7f070043;
         public static final int humanaffairs_button_title=0x7f07000c;

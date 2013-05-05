@@ -48,6 +48,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -102,6 +105,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	private Button new_product_button;
 	private Button save_product_button;
 	private Button del_product_button;
+	private CheckBox customize_checkbox;
 	private int SN;
 	public enum Alignment {Left, Center, Right};
 
@@ -241,7 +245,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
         		editText1.setText("請填入產品名稱");
         		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
         		editText2.setText(category.get(tabHost.getCurrentTab()).name);
-        		editText3.setText(String.valueOf(0));
+        		editText3.setText(String.valueOf(75));
         		editText5.setText(String.valueOf(0));
             }
        });
@@ -261,6 +265,21 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
             	((FragmentMenu) fragment_menu_0).getButtonAdapter().notifyDataSetChanged();
             }
        });
+		
+		customize_checkbox = (CheckBox) fragmentView.findViewById(R.id.checkBox1);
+		customize_checkbox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				// TODO Auto-generated method stub
+				EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
+				if(isChecked == true) {					
+					editText3.setEnabled(false);
+				} else {
+					editText3.setEnabled(true);
+				}
+			}
+		});
 		
 	}
 
@@ -289,10 +308,12 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	@Override
 	public void onButtonClicked(int cat_id, int product_id) {
 		// TODO Auto-generated method stub
+		
 		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
 		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
 		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
 		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
+		CheckBox checkbox1 = (CheckBox) fragmentView.findViewById(R.id.checkBox1);
 		
 		Product product = MainActivity.dbhelper.getProductById(product_id);
 		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
@@ -300,6 +321,11 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		editText2.setText(category.get(tabHost.getCurrentTab()).name);
 		editText3.setText(String.valueOf(product.sticker_price));
 		editText5.setText(String.valueOf(product_id));
+		if (product.sticker_price == 0) {
+			checkbox1.setChecked(true);
+		} else {
+			checkbox1.setChecked(false);
+		}
 	}
 
 

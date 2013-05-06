@@ -214,9 +214,20 @@ public class MyDBHelper extends SQLiteOpenHelper {
 	
 	public long addCategory(String name) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		ContentValues values = new ContentValues();
-		values.put("name", name);
-		return db.insert("category", null, values);
+		db.beginTransaction();
+		Cursor cursor = db.rawQuery("select count(*) from category where 1", null);
+		cursor.moveToFirst();
+		int count = cursor.getInt(0);
+		long res = 0;
+		if(count < 6){
+			ContentValues values = new ContentValues();
+			values.put("name", name);
+			res = db.insert("category", null, values);
+			db.setTransactionSuccessful();
+		}
+		cursor.close();
+		db.endTransaction();
+		return res;
 	}
 	
 	public boolean delCategoryById (int cat_id){

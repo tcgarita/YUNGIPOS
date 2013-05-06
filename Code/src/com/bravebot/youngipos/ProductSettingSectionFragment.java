@@ -37,6 +37,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -56,6 +57,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -134,14 +136,13 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 				category = c;
 			}
 		}
-		TabWidget tw = tabHost.getTabWidget(); 
-		tw.setBackgroundColor(Color.BLACK);
+		
 		tabHost.setOnTabChangedListener(menuTabChange);
+		tabHost.setCurrentTab(0);
 		
 	    FragmentTransaction ft  = getFragmentManager().beginTransaction();
 	    ft.replace(android.R.id.tabcontent, hash_fragment.get(String.valueOf(first_cat)));
 	    ft.commit();
-	    tabHost.setCurrentTab(0);
 	    
 	    for(int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) 
 	    {

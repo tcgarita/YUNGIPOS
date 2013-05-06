@@ -154,14 +154,13 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 				first_cat = c.id;
 			}
 		}
-		TabWidget tw = tabHost.getTabWidget(); 
-		tw.setBackgroundColor(Color.BLACK);
+
 		tabHost.setOnTabChangedListener(menuTabChange);
-		
+	    tabHost.setCurrentTab(0);
+	    
 	    FragmentTransaction ft  = getFragmentManager().beginTransaction();
 	    ft.replace(android.R.id.tabcontent, hash_fragment.get(String.valueOf(first_cat)));
 	    ft.commit();
-	    tabHost.setCurrentTab(0);
 
 	    for(int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) 
 	    {

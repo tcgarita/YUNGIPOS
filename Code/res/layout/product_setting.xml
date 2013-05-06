@@ -42,11 +42,12 @@
             android:orientation="vertical" >
 
             <TabWidget
+                style="@style/HCLActionBarTabBarStyle"
                 android:id="@android:id/tabs"
                 android:layout_width="800dp"
                 android:layout_height="50dp"
                 android:gravity="top"
-                android:longClickable="false" >
+                android:longClickable="false">
 
             </TabWidget>
 
@@ -54,20 +55,9 @@
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" 
-                android:background="@drawable/back_border">
+                >
 				<LinearLayout
                     android:id="@+id/tab1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
                 </LinearLayout>
@@ -226,21 +216,6 @@
 
     </FrameLayout>
 
-	<View
-	    android:id="@+id/View01"
-	    android:layout_width="1dp"
-	    android:layout_height="50dp"
-	    android:layout_marginLeft="266dp"
-	    android:layout_marginTop="200dp"
-	    android:background="@color/white" />
-
-	<View
-	    android:id="@+id/View02"
-	    android:layout_width="1dp"
-	    android:layout_height="50dp"
-	    android:layout_marginLeft="533dp"
-	    android:layout_marginTop="200dp"
-	    android:background="@color/white" />
 
 	<Button
 	    android:id="@+id/button1"

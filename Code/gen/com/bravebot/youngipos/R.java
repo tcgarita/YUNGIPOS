@@ -44,16 +44,10 @@ public final class R {
         public static final int ic_launcher=0x7f020008;
         public static final int pay_button=0x7f020009;
         public static final int query_button=0x7f02000a;
-        public static final int sample_0=0x7f02000b;
-        public static final int sample_1=0x7f02000c;
-        public static final int sample_2=0x7f02000d;
-        public static final int sample_3=0x7f02000e;
-        public static final int sample_4=0x7f02000f;
-        public static final int sample_5=0x7f020010;
-        public static final int sample_6=0x7f020011;
-        public static final int sample_7=0x7f020012;
-        public static final int sell_operation=0x7f020013;
-        public static final int settings=0x7f020014;
+        public static final int sell_operation=0x7f02000b;
+        public static final int settings=0x7f02000c;
+        public static final int tab_divider=0x7f02000d;
+        public static final int white_divider=0x7f02000e;
     }
     public static final class id {
         public static final int Button0=0x7f0a003c;
@@ -326,8 +320,9 @@ public final class R {
         public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
          */
-        public static final int AppTheme=0x7f080003;
-        public static final int MyActionBarTabTextStyle=0x7f080001;
-        public static final int myCustomMenuTextApearance=0x7f080002;
+        public static final int AppTheme=0x7f080004;
+        public static final int HCLActionBarTabBarStyle=0x7f080001;
+        public static final int MyActionBarTabTextStyle=0x7f080002;
+        public static final int myCustomMenuTextApearance=0x7f080003;
     }
 }

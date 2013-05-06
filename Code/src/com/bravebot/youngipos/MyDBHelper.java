@@ -158,11 +158,13 @@ public class MyDBHelper extends SQLiteOpenHelper {
 	}*/
 	
 	public Product getProductById (int id){
-		Product p = new Product();
+		Product p = null;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM product where id=?", 
 				new String[]{String.valueOf(id)});
 		if(cursor.getCount()>0){
+			Log.v("Msg","has product");
+			p = new Product();
 			cursor.moveToFirst();
 			p.id = cursor.getInt(0);
 			p.name = cursor.getString(1);
@@ -292,16 +294,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
 		String orderTitle = "";
 		int count = 0; 
 		int status;
-		
-//		for(int i=0;i<Lists.size();i++){
-//			orderTitle += Lists.get(i).title0.replace(" ", "");
-//			if(i>=3){
-//				orderTitle += "µ¥";
-//				break;
-//			} else
-//				orderTitle += ", ";
-//		}
-//		for(ListRow row : Lists)
+
 		for(SoldProduct row : Lists)
 		{
 //			orderTitle = orderTitle + row.title0.replace("¡@", "");
@@ -407,7 +400,8 @@ public class MyDBHelper extends SQLiteOpenHelper {
 						cursor.getDouble(7),
 						cursor.getInt(4),
 						cursor.getInt(5),
-						cursor.getInt(6)
+						cursor.getInt(6),
+						cursor.getString(2)
 						));
 			}while(cursor.moveToNext());
 		}

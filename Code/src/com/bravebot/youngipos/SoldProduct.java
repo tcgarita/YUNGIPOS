@@ -9,6 +9,7 @@ public class SoldProduct {
 	private int count;        // ¼Æ¶q
 	private int total_price, final_price;  
 	private int product_id;
+	private String name_from_db;// from database 
 	
 	public SoldProduct(){
 		super();
@@ -35,15 +36,20 @@ public class SoldProduct {
 			Log.v("Msg","in soldproduct contructor");
 		}
 	}
-	public SoldProduct(int product_id, double discount, int count, int final_price, int total_price){
+	public SoldProduct(int product_id, double discount, int count, int final_price, int total_price, String name_from_db){
 		this.product = MainActivity.dbhelper.getProductById(product_id);
-		this.sold_price = product.sticker_price;
+		if(product == null){
+			this.sold_price = 0;
+		}
+		else 
+			this.sold_price = product.sticker_price;
 		this.product_id = product_id;
 		this.discount = discount;
 		this.count = count;
 		this.final_price = final_price;
 		this.total_price = total_price;
-		
+		this.name_from_db = name_from_db;
+		Log.v("Msg","final_price:"+final_price+" total_price:"+total_price+" discount:"+discount);
 	}
 	
 	public int getProductId(){
@@ -60,6 +66,7 @@ public class SoldProduct {
 		}else{
 			this.discount = 1.0;
 		}
+		this.final_price = (int) Math.round(this.sold_price * this.discount);
 	}
 	public double getDiscount(){
 		return this.discount;
@@ -76,7 +83,9 @@ public class SoldProduct {
 		return this.sold_price;
 	}
 	public int getFinalSoldPrice(){
-		final_price = (int) Math.round(this.sold_price * this.discount);
+		if(product != null && this.sold_price != 0)
+			final_price = (int) Math.round(this.sold_price * this.discount);
+		 
 		return final_price;
 	}
 	
@@ -127,13 +136,17 @@ public class SoldProduct {
 	}
 	
 	public String getSoldName(){
-		if(this.discount != 1.0){
-			return this.product.name + 
+		String name;
+		if(product != null)
+			name = product.name;
+		else
+			name = name_from_db;
+		
+		if(this.discount != 1.0)
+			return name + 
 					"(" + discountMapping(this.discount)+")";
-		}
-		else {
-			return this.product.name;
-		}
+		else 
+			return name;
 	}
 	
 	private String discountMapping(Double discount)

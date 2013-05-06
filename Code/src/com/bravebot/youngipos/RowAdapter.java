@@ -84,7 +84,7 @@ public class RowAdapter extends BaseAdapter{
 	        holder.name.setText(sold_product.getSoldName());
 	        holder.price.setText(formatter.format(sold_product.getFinalSoldPrice()));
 	        holder.count.setText(sold_product.getCountString());
-	        holder.total.setText(sold_product.getTotalPriceString());
+	        holder.total.setText(formatter.format(sold_product.getTotalPrice()));
 	        
 	        holder.deleteButton.setOnClickListener(new ItemButton_Click(position));
 	        return row;

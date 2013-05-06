@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,6 +49,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -63,17 +65,15 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-@SuppressLint("SimpleDateFormat")
+@SuppressLint({ "SimpleDateFormat", "UseSparseArrays" })
 public class ProductSettingSectionFragment extends Fragment implements FragmentMenu.OnClickOrderButtonListener, PopupNumberInputWindow.OnClickNumberButtonListener, RowAdapter.OnClickDeleteButtonListener
 , PopupBillInputWindow.OnClickBillButtonListener{
 	private View fragmentView;
 	private TabHost tabHost;
-	private Fragment fragment_menu_0;
-	private Fragment fragment_menu_1;
-	private Fragment fragment_menu_2;
 	private Handler m_handler;
 	private Product product;
-	private ArrayList<Category> category;
+	private ArrayList<Category> categories;
+	private Category category;
 	private PopupWindow popWindow;
 	private LayoutInflater inflater;
 	private int mode;
@@ -81,6 +81,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	private Button save_product_button;
 	private Button del_product_button;
 	private CheckBox customize_checkbox;
+	private HashMap<String, Fragment> hash_fragment;
 	
 	public enum Alignment {Left, Center, Right};
 
@@ -115,32 +116,33 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		fragmentView = inflater.inflate(R.layout.product_setting, container, false);
 
 		this.initViews();
+		categories = MainActivity.dbhelper.getAllCategory();
+		hash_fragment =	new HashMap<String, Fragment>();
+		int first_cat = 0;
 		
-		tabHost.addTab(tabHost.newTabSpec("tab1")
-		       .setIndicator("便當").setContent(R.id.tab1));
-		tabHost.addTab(tabHost.newTabSpec("tab2")
-		       .setIndicator("燒臘").setContent(R.id.tab2));
-		tabHost.addTab(tabHost.newTabSpec("tab3")
-		       .setIndicator("粥品/小菜/其他").setContent(R.id.tab3));
+		for(Category  c: categories) {
+			tabHost.addTab(tabHost.newTabSpec(String.valueOf(c.id))
+				.setIndicator(c.name).setContent(R.id.tab1));
+			
+			Fragment fragment = new FragmentMenu();
+			((FragmentMenu) fragment ).setCategory(c.id);
+			((FragmentMenu) fragment ).setCallback(this);		
+			
+			hash_fragment.put(String.valueOf(c.id), fragment);	
+			if(first_cat == 0){
+				first_cat = c.id;
+				category = c;
+			}
+		}
 		TabWidget tw = tabHost.getTabWidget(); 
 		tw.setBackgroundColor(Color.BLACK);
 		tabHost.setOnTabChangedListener(menuTabChange);
 		
-		fragment_menu_0 = new FragmentMenu();
-		((FragmentMenu) fragment_menu_0).setCategory(1);
-		((FragmentMenu) fragment_menu_0).setCallback(this);
-		
-		fragment_menu_1 = new FragmentMenu();
-		((FragmentMenu) fragment_menu_1).setCategory(2);
-		((FragmentMenu) fragment_menu_1).setCallback(this);
-		fragment_menu_2 = new FragmentMenu();
-		((FragmentMenu) fragment_menu_2).setCategory(3);
-		((FragmentMenu) fragment_menu_2).setCallback(this);
-		
 	    FragmentTransaction ft  = getFragmentManager().beginTransaction();
-	    ft.replace(android.R.id.tabcontent, fragment_menu_0);
+	    ft.replace(android.R.id.tabcontent, hash_fragment.get(String.valueOf(first_cat)));
 	    ft.commit();
-		tabHost.setCurrentTab(0);
+	    tabHost.setCurrentTab(0);
+	    
 	    for(int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) 
 	    {
 	    	tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 52;
@@ -149,7 +151,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	        tv.setTextColor(Color.WHITE);
 	        tv.setTypeface(null,Typeface.NORMAL);
 	    }
-	    category = MainActivity.dbhelper.getAllCategory();
+	    
 		return fragmentView;
 	}
 	@Override
@@ -164,25 +166,13 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		@Override
 		public void onTabChanged(String tabId) 
 		{
-			if(tabId.equalsIgnoreCase("tab1"))
-			{
-			    FragmentTransaction ft  = getFragmentManager().beginTransaction();
-			    ft.replace(android.R.id.tabcontent, fragment_menu_0);
-			    ft.commit();
-			}
-			else if(tabId.equalsIgnoreCase("tab2"))
-			{
-			    FragmentTransaction ft  = getFragmentManager().beginTransaction();
-			    ft.replace(android.R.id.tabcontent, fragment_menu_1);
-			    ft.commit();
-			}
-			else if(tabId.equalsIgnoreCase("tab3"))
-			{
-			    FragmentTransaction ft  = getFragmentManager().beginTransaction();
-			    ft.replace(android.R.id.tabcontent, fragment_menu_2);
-			    ft.commit();
-			}
-		  }
+			category = getCategoryById(Integer.parseInt((tabId)));
+			Log.v("Msg","Category on change:"+category.name);
+			FragmentTransaction ft  = getFragmentManager().beginTransaction();
+			ft.replace(android.R.id.tabcontent, hash_fragment.get(tabId));
+			ft.commit();
+			clearEditText();	
+		 }
 	};
 	
 
@@ -201,8 +191,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
         		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
         		
         		editText1.setText("請填入產品名稱");
-//        		ArrayList<Category> category = MainActivity.dbhelper.getAllCategory();
-        		editText2.setText(category.get(tabHost.getCurrentTab()).name);
+        		editText2.setText(categories.get(tabHost.getCurrentTab()).name);
         		editText3.setText(String.valueOf(75));
         		editText5.setText(String.valueOf(0));
         		product = null;
@@ -236,7 +225,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
         			if( new_id > 0 ){
         				// TODO it's not a safety way to convert long to integer
         				Product new_product = new Product(name,price, (int) new_id, cat);
-        				((FragmentMenu) fragment_menu_0).getButtonAdapter().addProduct(new_product);
+        				((FragmentMenu) hash_fragment.get(String.valueOf(category.id))).getButtonAdapter().addProduct(new_product);
         			} else {
         				setAlert("新增修改品項","新增產品失敗，請聯繫程式設計師");
         			}
@@ -260,7 +249,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
         				if(cat != product.cat_id)
         					edit_cat_id = cat;
         				MainActivity.dbhelper.editProductById(product.id, edit_name, edit_price, edit_cat_id);
-        				((FragmentMenu) fragment_menu_0).getButtonAdapter().editProduct(product.pos,edit_name, edit_price, edit_cat_id);
+        				((FragmentMenu) hash_fragment.get(String.valueOf(category.id))).getButtonAdapter().editProduct(product.pos,edit_name, edit_price, edit_cat_id);
         				setAlert("新增修改品項","修改成功");
         			}
         		}
@@ -272,9 +261,13 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		del_product_button.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
             	if(product != null){
+            		Log.v("Msg","product:"+product.name);
+            		Log.v("Msg","category:"+category.name);
             		MainActivity.dbhelper.delProductById(product.id);
-            		((FragmentMenu) fragment_menu_0).getButtonAdapter().delProduct(product.pos);
+            		((FragmentMenu) hash_fragment.get(String.valueOf(category.id))).getButtonAdapter().delProduct(product.pos);
+            		product = null;
             	}
+            	clearEditText();
             }
        });
 		
@@ -328,7 +321,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		CheckBox checkbox1 = (CheckBox) fragmentView.findViewById(R.id.checkBox1);
 		product = p; // product is a global variable.
 		editText1.setText(product.name);
-		editText2.setText(category.get(tabHost.getCurrentTab()).name);
+		editText2.setText(categories.get(tabHost.getCurrentTab()).name);
 		editText3.setText(String.valueOf(product.sticker_price));
 		editText5.setText(String.valueOf(product_id));
 		if (product.sticker_price == 0) {
@@ -338,8 +331,24 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		}
 	}
 
+	public Category getCategoryByName(String name) {
+		for(Category c : categories){
+			if( c.name.equals(name) )
+				return c;
+		}
+		return null;
+	}
+	
+	public Category getCategoryById(int id){
+		for(Category c : categories){
+			if( c.id == id )
+				return c;
+		}
+		return null;
+	}
+	
 	public int getCategoryIdByName(String name) {
-		for(Category c : category){
+		for(Category c : categories){
 			if( c.name.equals(name) )
 				return c.id;
 		}
@@ -351,5 +360,17 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		dialog.setTitle(title).setMessage(msg);
 		dialog.setCancelable(true);
 		dialog.show();
+	}
+	
+	public void clearEditText() {
+		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
+		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
+		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
+		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
+		
+		editText1.setText("");
+		editText2.setText("");
+		editText3.setText("");
+		editText5.setText("");
 	}
 }

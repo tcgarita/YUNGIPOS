@@ -72,6 +72,9 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	/* tcgarita */
 	private Product product;
 	private SoldProduct sold_product;
+	private ArrayList<Category> categories;
+	private Category category;
+	private HashMap<String, Fragment> hash_fragment;
 	
 	private ArrayList<ListRow> row_data;
 	private RowAdapter adapter;
@@ -134,30 +137,32 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 
 		this.initViews();
 		
-		tabHost.addTab(tabHost.newTabSpec("tab1")
-		       .setIndicator("便當").setContent(R.id.tab1));
-		tabHost.addTab(tabHost.newTabSpec("tab2")
-		       .setIndicator("燒臘").setContent(R.id.tab2));
-		tabHost.addTab(tabHost.newTabSpec("tab3")
-		       .setIndicator("粥品/小菜/其他").setContent(R.id.tab3));
+		categories = MainActivity.dbhelper.getAllCategory();
+		hash_fragment =	new HashMap<String, Fragment>();
+		int first_cat = 0;
+		
+		for(Category  c: categories) {
+			tabHost.addTab(tabHost.newTabSpec(String.valueOf(c.id))
+				.setIndicator(c.name).setContent(R.id.tab1));
+			Fragment fragment = new FragmentMenu();
+			((FragmentMenu) fragment ).setCategory(c.id);
+			((FragmentMenu) fragment ).setCallback(this);				
+			hash_fragment.put(String.valueOf(c.id), fragment);
+			
+			if(first_cat == 0){
+				category = c;
+				first_cat = c.id;
+			}
+		}
 		TabWidget tw = tabHost.getTabWidget(); 
 		tw.setBackgroundColor(Color.BLACK);
 		tabHost.setOnTabChangedListener(menuTabChange);
 		
-		fragment_menu_0 = new FragmentMenu();
-		((FragmentMenu) fragment_menu_0).setCategory(1);
-		((FragmentMenu) fragment_menu_0).setCallback(this);
-		fragment_menu_1 = new FragmentMenu();
-		((FragmentMenu) fragment_menu_1).setCategory(2);
-		((FragmentMenu) fragment_menu_1).setCallback(this);
-		fragment_menu_2 = new FragmentMenu();
-		((FragmentMenu) fragment_menu_2).setCategory(3);
-		((FragmentMenu) fragment_menu_2).setCallback(this);
-		
 	    FragmentTransaction ft  = getFragmentManager().beginTransaction();
-	    ft.replace(android.R.id.tabcontent, fragment_menu_0);
+	    ft.replace(android.R.id.tabcontent, hash_fragment.get(String.valueOf(first_cat)));
 	    ft.commit();
-		tabHost.setCurrentTab(0);
+	    tabHost.setCurrentTab(0);
+
 	    for(int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) 
 	    {
 	    	tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 52;
@@ -167,8 +172,6 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	        tv.setTypeface(null,Typeface.NORMAL);
 	    }   
 	    
-//	    sold_array = new ArrayList<SoldProduct>();
-	
 	    adapter = new RowAdapter(getActivity(),R.layout.listview_item_row);
 	    adapter.setCallback(this);
         
@@ -240,6 +243,12 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		@Override
 		public void onTabChanged(String tabId) 
 		{
+			category = getCategoryById(Integer.parseInt((tabId)));
+			FragmentTransaction ft  = getFragmentManager().beginTransaction();
+			ft.replace(android.R.id.tabcontent, hash_fragment.get(tabId));
+			ft.commit();
+			
+			/*
 			if(tabId.equalsIgnoreCase("tab1"))
 			{
 			    FragmentTransaction ft  = getFragmentManager().beginTransaction();
@@ -257,9 +266,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 			    FragmentTransaction ft  = getFragmentManager().beginTransaction();
 			    ft.replace(android.R.id.tabcontent, fragment_menu_2);
 			    ft.commit();
-			}
-		
-			
+			}*/
 		  }
 	};
 	
@@ -374,7 +381,12 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 		
 		if(sold_product.getSoldPrice() == 0){ // 要自訂價錢又要自訂份數的
 			popWindow.dismiss();
-			sold_product.setSoldPrice(count);
+			boolean res = sold_product.setSoldPrice(count);
+			if(res)
+				Log.v("Msg","set ok");
+			else
+				Log.v("Msg","set failed");
+			
 			if(pop == 1){
 				pop(0);return;
 			}else{
@@ -984,4 +996,11 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 	    m_handler.removeCallbacks(m_statusChecker);
 	}
 
+	public Category getCategoryById(int id){
+		for(Category c : categories){
+			if( c.id == id )
+				return c;
+		}
+		return null;
+	}
 }

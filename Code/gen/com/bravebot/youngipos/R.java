@@ -251,6 +251,7 @@ public final class R {
         public static final int button_title_2=0x7f070039;
         public static final int button_title_3=0x7f07003a;
         public static final int customized_price=0x7f07004c;
+        public static final int customizing=0x7f07004e;
         public static final int delete=0x7f07004b;
         public static final int hello_world=0x7f070043;
         public static final int humanaffairs_button_title=0x7f07000c;
@@ -267,6 +268,7 @@ public final class R {
         public static final int lunchbox_title_7=0x7f070014;
         public static final int lunchbox_title_8=0x7f070015;
         public static final int lunchbox_title_9=0x7f070016;
+        public static final int managing_product=0x7f07004d;
         public static final int menu_settings=0x7f070008;
         public static final int new_product=0x7f070047;
         public static final int number_input_title_1=0x7f07003b;

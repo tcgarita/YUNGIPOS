@@ -20,6 +20,6 @@ public class Product {
 		if(this.sticker_price>0)
 			return this.name+"\n( $"+this.sticker_price+" )";
 		else
-			return this.name+"\n(�ۭq)";
+			return this.name+"\n(自訂)";
 	}
 }

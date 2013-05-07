@@ -3,10 +3,10 @@ package com.bravebot.youngipos;
 import android.util.Log;
 
 public class SoldProduct {
-	private Product product;  // ²£«~
-	private double discount;  // §é¦©
-	private int sold_price;   // °â»ù
-	private int count;        // ¼Æ¶q
+	private Product product;  // ï¿½ï¿½ï¿½~
+	private double discount;  // ï¿½é¦©
+	private int sold_price;   // ï¿½ï¿½ï¿½
+	private int count;        // ï¿½Æ¶q
 	private int total_price, final_price;  
 	private int product_id;
 	private String name_from_db;// from database 
@@ -153,17 +153,17 @@ public class SoldProduct {
 	{
 		String str = "";
 		if(discount == 0.5)
-			str = "¢´§é";
+			str = "ï¼•æŠ˜";
 		if(discount == 0.6)
-			str = "¢µ§é";
+			str = "ï¼–æŠ˜";
 		if(discount == 0.7)
-			str = "¢¶§é";
+			str = "ï¼—æŠ˜";
 		if(discount == 0.8)
-			str = "¢·§é";
+			str = "ï¼˜æŠ˜";
 		if(discount == 0.9)
-			str = "¢¸§é";
+			str = "ï¼™æŠ˜";
 		if(discount == 0)
-			str = "©Û«Ý";
+			str = "æ‹›å¾…";
 		return str;
 	}
 }

@@ -78,5 +78,6 @@
     <string name="save">儲存</string>
     <string name="delete">刪除</string>
     <string name="customized_price">自訂價格商品</string>
-
+    <string name="managing_product">新增修改品項</string>
+	<string name="customizing">自訂</string>
 </resources>

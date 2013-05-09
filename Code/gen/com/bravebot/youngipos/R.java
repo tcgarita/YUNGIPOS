@@ -129,10 +129,13 @@ public final class R {
         public static final int View5=0x7f0a001c;
         public static final int View7=0x7f0a0024;
         public static final int accounts_button=0x7f0a0008;
-        public static final int action_settings=0x7f0a0083;
+        public static final int action_settings=0x7f0a0087;
         public static final int button1=0x7f0a0081;
         public static final int button2=0x7f0a007f;
         public static final int button3=0x7f0a0080;
+        public static final int button4=0x7f0a0085;
+        public static final int button5=0x7f0a0082;
+        public static final int button6=0x7f0a0083;
         public static final int buttonConnect=0x7f0a0037;
         public static final int buttonQueryOrder=0x7f0a0030;
         public static final int buttonSubmit=0x7f0a0004;
@@ -143,9 +146,10 @@ public final class R {
         public static final int editText3=0x7f0a007c;
         public static final int editText5=0x7f0a0076;
         public static final int frameDiscount=0x7f0a006d;
+        public static final int gridView1=0x7f0a0084;
         public static final int gridview=0x7f0a003a;
         public static final int listView1=0x7f0a0015;
-        public static final int menu_back=0x7f0a0082;
+        public static final int menu_back=0x7f0a0086;
         public static final int myRadioGroup=0x7f0a000e;
         public static final int order_button=0x7f0a0006;
         public static final int product_settings_button=0x7f0a000c;
@@ -203,9 +207,10 @@ public final class R {
         public static final int popup_prepare_input=0x7f030010;
         public static final int popup_submit_input=0x7f030011;
         public static final int product_setting=0x7f030012;
-        public static final int statistics_category_row=0x7f030013;
-        public static final int statistics_data_activity=0x7f030014;
-        public static final int statistics_list_row=0x7f030015;
+        public static final int product_setting2=0x7f030013;
+        public static final int statistics_category_row=0x7f030014;
+        public static final int statistics_data_activity=0x7f030015;
+        public static final int statistics_list_row=0x7f030016;
     }
     public static final class menu {
         public static final int activity_main=0x7f090000;

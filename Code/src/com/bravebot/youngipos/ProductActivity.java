@@ -45,7 +45,7 @@ ActionBar.TabListener, OrderSectionFragmentListener{
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setHomeButtonEnabled(true);
 		// For each of the sections in the app, add a tab to the action bar.
-		actionBar.addTab(actionBar.newTab().setText("新增修改品項")
+		actionBar.addTab(actionBar.newTab().setText(R.string.managing_product)
 				 .setTabListener(this));
 		
 		//actionBar.addTab(actionBar.newTab().setText(R.string.order_section_title1)

@@ -47,7 +47,8 @@ public final class R {
         public static final int sell_operation=0x7f02000b;
         public static final int settings=0x7f02000c;
         public static final int tab_divider=0x7f02000d;
-        public static final int white_divider=0x7f02000e;
+        public static final int take_button=0x7f02000e;
+        public static final int white_divider=0x7f02000f;
     }
     public static final class id {
         public static final int Button0=0x7f0a003c;
@@ -198,19 +199,21 @@ public final class R {
         public static final int fragment_menu_1=0x7f030007;
         public static final int fragment_menu_2=0x7f030008;
         public static final int fragment_order_section_0=0x7f030009;
-        public static final int listview_item_row=0x7f03000a;
-        public static final int order_list_activity=0x7f03000b;
-        public static final int orderlistview_item_row=0x7f03000c;
-        public static final int popup_bill_input=0x7f03000d;
-        public static final int popup_number_input=0x7f03000e;
-        public static final int popup_pay_input=0x7f03000f;
-        public static final int popup_prepare_input=0x7f030010;
-        public static final int popup_submit_input=0x7f030011;
-        public static final int product_setting=0x7f030012;
-        public static final int product_setting2=0x7f030013;
-        public static final int statistics_category_row=0x7f030014;
-        public static final int statistics_data_activity=0x7f030015;
-        public static final int statistics_list_row=0x7f030016;
+        public static final int fragment_order_section_1=0x7f03000a;
+        public static final int fragment_order_section_2=0x7f03000b;
+        public static final int listview_item_row=0x7f03000c;
+        public static final int order_list_activity=0x7f03000d;
+        public static final int orderlistview_item_row=0x7f03000e;
+        public static final int popup_bill_input=0x7f03000f;
+        public static final int popup_number_input=0x7f030010;
+        public static final int popup_pay_input=0x7f030011;
+        public static final int popup_prepare_input=0x7f030012;
+        public static final int popup_submit_input=0x7f030013;
+        public static final int product_setting=0x7f030014;
+        public static final int product_setting2=0x7f030015;
+        public static final int statistics_category_row=0x7f030016;
+        public static final int statistics_data_activity=0x7f030017;
+        public static final int statistics_list_row=0x7f030018;
     }
     public static final class menu {
         public static final int activity_main=0x7f090000;

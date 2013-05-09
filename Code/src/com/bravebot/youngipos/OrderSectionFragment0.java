@@ -62,9 +62,6 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 , PopupBillInputWindow.OnClickBillButtonListener {
 	private View fragmentView;
 	private TabHost tabHost;
-	private Fragment fragment_menu_0;
-	private Fragment fragment_menu_1;
-	private Fragment fragment_menu_2;
 	private ListView listView;
 	private LayoutInflater inflater;
 	private String targetName;
@@ -246,26 +243,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 			FragmentTransaction ft  = getFragmentManager().beginTransaction();
 			ft.replace(android.R.id.tabcontent, hash_fragment.get(tabId));
 			ft.commit();
-			
-			/*
-			if(tabId.equalsIgnoreCase("tab1"))
-			{
-			    FragmentTransaction ft  = getFragmentManager().beginTransaction();
-			    ft.replace(android.R.id.tabcontent, fragment_menu_0);
-			    ft.commit();
-			}
-			else if(tabId.equalsIgnoreCase("tab2"))
-			{
-			    FragmentTransaction ft  = getFragmentManager().beginTransaction();
-			    ft.replace(android.R.id.tabcontent, fragment_menu_1);
-			    ft.commit();
-			}
-			else if(tabId.equalsIgnoreCase("tab3"))
-			{
-			    FragmentTransaction ft  = getFragmentManager().beginTransaction();
-			    ft.replace(android.R.id.tabcontent, fragment_menu_2);
-			    ft.commit();
-			}*/
+
 		  }
 	};
 	

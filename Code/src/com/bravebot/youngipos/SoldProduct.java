@@ -3,10 +3,10 @@ package com.bravebot.youngipos;
 import android.util.Log;
 
 public class SoldProduct {
-	private Product product;  // ���~
-	private double discount;  // �馩
-	private int sold_price;   // ���
-	private int count;        // �ƶq
+	private Product product;  // 產品
+	private double discount;  // 折扣
+	private int sold_price;   // 賣價
+	private int count;        // 數量
 	private int total_price, final_price;  
 	private int product_id;
 	private String name_from_db;// from database 

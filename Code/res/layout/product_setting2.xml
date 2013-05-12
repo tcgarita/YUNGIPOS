@@ -45,7 +45,10 @@
                 <ListView
                     android:id="@+id/listView1"
                     android:layout_width="400dp"
-                    android:layout_height="500dp" >
+                    android:layout_height="500dp"
+                    android:drawSelectorOnTop="true" 
+                    android:listSelector="@drawable/list_bg" 
+                    >
                 </ListView>
 
             </TableRow>
@@ -109,15 +112,14 @@
                 android:layout_height="wrap_content" >
 
                 <FrameLayout
+                    android:id="@android:id/tabcontent"
                     android:layout_width="860dp"
                     android:layout_height="550dp" >
-
-                    <GridView
-                        android:id="@+id/gridView1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:numColumns="3" >
-                    </GridView>
+					<LinearLayout
+                    	android:id="@+id/tab1"
+                    	android:layout_width="match_parent"
+                    	android:layout_height="match_parent" >
+                	</LinearLayout>
 
                 </FrameLayout>
 

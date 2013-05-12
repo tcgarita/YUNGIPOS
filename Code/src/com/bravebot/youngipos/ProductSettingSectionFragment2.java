@@ -13,64 +13,34 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-import com.bravebot.youngipos.PopupPrepareInputWindow.OnClickPrepareButtonListener;
-import com.bravebot.youngipos.PopupSubmitInputWindow.OnClickSubmitButtonListener;
-import com.starmicronics.stario.PortInfo;
-import com.starmicronics.stario.StarIOPort;
-import com.starmicronics.stario.StarIOPortException;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
-
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TabWidget;
-import android.widget.TextView;
 
 @SuppressLint({ "SimpleDateFormat", "UseSparseArrays" })
 public class ProductSettingSectionFragment2 extends Fragment implements FragmentMenu.OnClickOrderButtonListener, PopupNumberInputWindow.OnClickNumberButtonListener, RowAdapter.OnClickDeleteButtonListener
-, PopupBillInputWindow.OnClickBillButtonListener{
+{
 	private View fragmentView;
+	private ListView listView;
 	private TabHost tabHost;
 	private Handler m_handler;
 	private Product product;
@@ -116,11 +86,46 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 		Bundle bundle = getArguments();
 		mode = bundle.getInt("mode");
 		this.inflater = inflater;
-		Log.v("Msg","in product setting2");
 		fragmentView = inflater.inflate(R.layout.product_setting2, container, false);
-		this.initViews();
-		Log.v("Msg","after views");
+		this.initButtons();
 		categories = MainActivity.dbhelper.getAllCategory();
+		listView = (ListView) fragmentView.findViewById(R.id.listView1);
+		CategoryAdapter c_adapter = new CategoryAdapter(getActivity(), 
+				R.layout.category_list_item, categories);
+		listView.setAdapter(c_adapter);
+		listView.setDrawSelectorOnTop(true);
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				Category cat = (Category) listView.getItemAtPosition(position);
+				Log.v("Msg","Category on change:"+category.name);
+				FragmentTransaction ft  = getFragmentManager().beginTransaction();
+				ft.replace(android.R.id.tabcontent, hash_fragment.get(String.valueOf(cat.id)));
+				ft.commit();
+				Log.v("Msg",cat.name);
+			}
+		});
+		int first_cat = 0;
+		hash_fragment =	new HashMap<String, Fragment>();
+		for(Category  c: categories) {
+		
+			Fragment fragment = new FragmentMenu();
+			((FragmentMenu) fragment ).setCategory(c.id);
+			((FragmentMenu) fragment ).setCallback(this);		
+			Log.v("Msg","category:"+c.name);
+			hash_fragment.put(String.valueOf(c.id), fragment);	
+			if(first_cat == 0){
+				first_cat = c.id;
+				category = c;
+			}
+			
+		}
+		
+	    FragmentTransaction ft  = getFragmentManager().beginTransaction();
+	    ft.replace(android.R.id.tabcontent, hash_fragment.get(String.valueOf(first_cat)));
+	    ft.commit();
+		
 		/*
 		hash_fragment =	new HashMap<String, Fragment>();
 		int first_cat = 0;
@@ -164,24 +169,8 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 		super.onResume();
 	}
 
-	
-	private OnTabChangeListener menuTabChange = new OnTabChangeListener() 
-	{
-		@Override
-		public void onTabChanged(String tabId) 
-		{
-			category = getCategoryById(Integer.parseInt((tabId)));
-			Log.v("Msg","Category on change:"+category.name);
-			FragmentTransaction ft  = getFragmentManager().beginTransaction();
-			ft.replace(android.R.id.tabcontent, hash_fragment.get(tabId));
-			ft.commit();
-			clearEditText();	
-		 }
-	};
-	
-
 	@SuppressLint("SimpleDateFormat")
-	private void initViews()
+	private void initButtons()
 	{
 		btn_edit_category = (Button) fragmentView.findViewById(R.id.button1);
 		btn_edit_category.setOnClickListener(new View.OnClickListener()  {
@@ -299,14 +288,6 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 		*/
 	}
 
-
-	@Override
-	public void onSubmitEnterClicked(int count) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 	@Override
 	public void onDeleteButtonClicked(int position) {
 		// TODO Auto-generated method stub
@@ -342,28 +323,8 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 		}
 	}
 
-	public Category getCategoryByName(String name) {
-		for(Category c : categories){
-			if( c.name.equals(name) )
-				return c;
-		}
-		return null;
-	}
-	
-	public Category getCategoryById(int id){
-		for(Category c : categories){
-			if( c.id == id )
-				return c;
-		}
-		return null;
-	}
-	
-	public int getCategoryIdByName(String name) {
-		for(Category c : categories){
-			if( c.name.equals(name) )
-				return c.id;
-		}
-		return 0;
+	public void onCategoryClicked(Category cat){
+		
 	}
 	
 	public void setAlert(String title, String msg){
@@ -373,15 +334,4 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 		dialog.show();
 	}
 	
-	public void clearEditText() {
-		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
-		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
-		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
-		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
-		
-		editText1.setText("");
-		editText2.setText("");
-		editText3.setText("");
-		editText5.setText("");
-	}
 }

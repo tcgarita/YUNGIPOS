@@ -20,6 +20,7 @@ public final class R {
         public static final int lightGreen=0x7f050008;
         public static final int lightRed=0x7f050004;
         public static final int red=0x7f050003;
+        public static final int transparent=0x7f05000a;
         public static final int white=0x7f050005;
     }
     public static final class dimen {
@@ -42,13 +43,16 @@ public final class R {
         public static final int delete_button=0x7f020006;
         public static final int human_affairs=0x7f020007;
         public static final int ic_launcher=0x7f020008;
-        public static final int pay_button=0x7f020009;
-        public static final int query_button=0x7f02000a;
-        public static final int sell_operation=0x7f02000b;
-        public static final int settings=0x7f02000c;
-        public static final int tab_divider=0x7f02000d;
-        public static final int take_button=0x7f02000e;
-        public static final int white_divider=0x7f02000f;
+        public static final int list_bg=0x7f020009;
+        public static final int normal=0x7f02000a;
+        public static final int pay_button=0x7f02000b;
+        public static final int pressed=0x7f02000c;
+        public static final int query_button=0x7f02000d;
+        public static final int sell_operation=0x7f02000e;
+        public static final int settings=0x7f02000f;
+        public static final int tab_divider=0x7f020010;
+        public static final int take_button=0x7f020011;
+        public static final int white_divider=0x7f020012;
     }
     public static final class id {
         public static final int ButtonCancel=0x7f0a005a;
@@ -114,11 +118,11 @@ public final class R {
         public static final int View5=0x7f0a001c;
         public static final int View7=0x7f0a0024;
         public static final int accounts_button=0x7f0a0008;
-        public static final int action_settings=0x7f0a0076;
+        public static final int action_settings=0x7f0a0075;
         public static final int button1=0x7f0a0071;
         public static final int button2=0x7f0a006f;
         public static final int button3=0x7f0a0070;
-        public static final int button4=0x7f0a0074;
+        public static final int button4=0x7f0a0073;
         public static final int button5=0x7f0a0072;
         public static final int buttonConnect=0x7f0a0037;
         public static final int buttonQueryOrder=0x7f0a0030;
@@ -130,10 +134,9 @@ public final class R {
         public static final int editText3=0x7f0a006c;
         public static final int editText5=0x7f0a0066;
         public static final int frameDiscount=0x7f0a005d;
-        public static final int gridView1=0x7f0a0073;
         public static final int gridview=0x7f0a003a;
         public static final int listView1=0x7f0a0015;
-        public static final int menu_back=0x7f0a0075;
+        public static final int menu_back=0x7f0a0074;
         public static final int myRadioGroup=0x7f0a000e;
         public static final int order_button=0x7f0a0006;
         public static final int product_settings_button=0x7f0a000c;

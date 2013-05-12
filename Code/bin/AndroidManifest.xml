@@ -53,6 +53,10 @@
             android:name="com.bravebot.youngipos.ProductActivity"
             android:label="@string/title_activity_product" >
         </activity>
+        <activity
+        	android:name="com.bravebot.youngipos.ProductActivity2"
+        	android:label="@string/title_activity_product" >
+    	</activity>
     </application>
 
 </manifest>

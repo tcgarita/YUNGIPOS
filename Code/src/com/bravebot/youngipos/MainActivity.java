@@ -12,8 +12,7 @@ import android.app.AlertDialog.Builder;
 import com.starmicronics.stario.PortInfo;
 import com.starmicronics.stario.StarIOPort;
 import com.starmicronics.stario.StarIOPortException; 
-import com.starmicronics.stario.StarPrinterStatus;
-import android.content.Context;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,11 +28,9 @@ import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -181,7 +178,7 @@ public class MainActivity extends FragmentActivity {
 		public void onClick(View v)
 		{
 			Intent intent = new Intent();
-			intent.setClass(MainActivity.this, ProductActivity.class);
+			intent.setClass(MainActivity.this, ProductActivity2.class);
 			startActivity(intent);
 		}
 	};

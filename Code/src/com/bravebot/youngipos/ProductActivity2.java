@@ -3,17 +3,13 @@ package com.bravebot.youngipos;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import com.bravebot.youngipos.ProductSettingSectionFragment.OrderSectionFragmentListener;
+import com.bravebot.youngipos.ProductSettingSectionFragment2.OrderSectionFragmentListener;
 import android.util.Log;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -27,11 +23,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-public class ProductActivity extends FragmentActivity implements
+public class ProductActivity2 extends FragmentActivity implements
 ActionBar.TabListener, OrderSectionFragmentListener {
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-	private ProductSettingSectionFragment fragment0;
-	private ProductSettingSectionFragment2 fragment1;
+	private ProductSettingSectionFragment2 fragment0;
 	public ActionBar actionBar;
 	private int waitOrderCount = 0;
 	
@@ -47,11 +42,10 @@ ActionBar.TabListener, OrderSectionFragmentListener {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setHomeButtonEnabled(true);
 		// For each of the sections in the app, add a tab to the action bar.
-		Log.v("Msg","in product activity");
 		actionBar.addTab(actionBar.newTab().setText(R.string.managing_product)
 				 .setTabListener(this));
 				
-		Log.v("Msg","Product ACtivity Constructor");
+		Log.v("Msg","Product ACtivity2 Constructor");
 		SharedPreferences settings = getSharedPreferences ("POS_ORDER", 0);
 		//waitOrderCount = settings.getInt("WaitOrderCount", 0);
 
@@ -78,13 +72,6 @@ ActionBar.TabListener, OrderSectionFragmentListener {
 					 .setTabListener(this));
 		}
 		*/
-	}
-	private int getWaitBillNumber()
-	{
-		SQLiteDatabase db = MainActivity.dbhelper.getReadableDatabase();
-		Cursor cursor = db.rawQuery("select * from " + DBConstants.ORDER_TABLE_NAME + " WHERE " + DBConstants.ORDER_STATUS + " =0"+
-				" AND " + DBConstants.ORDER_DETAIL_DELETE + "=0", null);
-		return  cursor.getCount();
 	}
 	
 	@Override
@@ -116,7 +103,7 @@ ActionBar.TabListener, OrderSectionFragmentListener {
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		if(tab.getPosition() == 0)
 		{
-			fragment0 = new ProductSettingSectionFragment();
+			fragment0 = new ProductSettingSectionFragment2();
 			Bundle bundle = new Bundle();
 			bundle.putInt("mode", 0);
 			fragment0.setArguments(bundle);
@@ -124,6 +111,7 @@ ActionBar.TabListener, OrderSectionFragmentListener {
 			getSupportFragmentManager().beginTransaction()
 					.replace(R.id.container, fragment0).commit();
 		}
+		/*
 		else if(tab.getPosition() == 1)
 		{
 			fragment0 = new ProductSettingSectionFragment();
@@ -165,7 +153,19 @@ ActionBar.TabListener, OrderSectionFragmentListener {
 			startActivity(intent);
 			
 			
-		}
+		}*/
+		
+	}
+	public void addWaitOrderCount()
+	{
+		waitOrderCount += 1;
+		actionBar.removeTabAt(4);
+		actionBar.addTab(actionBar.newTab().setText("�ݵ��q��(" + String.valueOf(waitOrderCount) + ")")
+				 .setTabListener(this));
+		SharedPreferences settings = getSharedPreferences("POS_ORDER", 0);
+		//SharedPreferences.Editor PE = settings.edit();
+		//PE.putInt("WaitOrderCount", waitOrderCount);
+		//PE.commit();
 	}
 
 	@Override

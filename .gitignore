@@ -40,4 +40,4 @@ Code/gen/com/bravebot/youngipos/BuildConfig.java
 Code/bin/YOUNGIPOS.apk
 Code/bin/classes.dex
 Code/bin/jarlist.cache
-*.class
+$*.class

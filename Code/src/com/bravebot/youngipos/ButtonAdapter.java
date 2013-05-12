@@ -26,7 +26,7 @@ public class ButtonAdapter extends BaseAdapter {
 	    private Context mContext;
 	    private ArrayList<Product> products;
 	    private int section_id;
-	    
+	    private int selected_id = -1;
 	    protected OnClickOrderButtonListener callback;
 	   
 	    
@@ -98,6 +98,10 @@ public class ButtonAdapter extends BaseAdapter {
 	    		p.cat_id = cat_id;
 	    	this.notifyDataSetChanged();
 	    }
+	    public void clear(){
+	    	products.clear();
+	    	this.notifyDataSetChanged();
+	    }
 		@Override
 		public int getCount() {
 			return products.size();
@@ -113,7 +117,7 @@ public class ButtonAdapter extends BaseAdapter {
 	    	   public void onClick(View v) {
 	    		   Log.v("Msg","section:"+String.valueOf(section_id)+",id:"+product.id);
 	    		   //callback.onButtonClicked(section_id,product.id);
-	    		   callback.onButtonClicked(product,product.id);
+	    		   callback.onButtonClicked(product,product.id,v);
 	    	   }
 	    }
 }

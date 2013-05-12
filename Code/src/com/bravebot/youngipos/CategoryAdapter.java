@@ -14,12 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 class CategoryAdapter extends ArrayAdapter<Category> {
 	private Context mContext;
-	private int textViewResourceId;
-	    
+	private int textViewResourceId;    
 	public CategoryAdapter(Context context, int textViewResourceId,
 			List<Category> objects) {
 		super(context, textViewResourceId, objects);
@@ -29,14 +29,17 @@ class CategoryAdapter extends ArrayAdapter<Category> {
 	}
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView textview;
-
+        TextView textview = null;
+        
         if(convertView == null)
         {
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
             convertView = inflater.inflate(textViewResourceId, parent, false);            
             textview = (TextView)convertView.findViewById(R.id.textView1);
             convertView.setTag(textview);
+            
+            if(position==0)
+            	convertView.setBackgroundResource(R.color.lightBlue);
         }
         else
         {
@@ -45,10 +48,15 @@ class CategoryAdapter extends ArrayAdapter<Category> {
         
         Category cat = this.getItem(position);
         textview.setText(cat.name);
-		
-        
         
         return convertView;
     }	
 	
+    public void addCategory(Category category){
+    	this.add(category);
+    }
+    public void editCategory(Category category, String name){
+    	category.name = name;
+    	this.notifyDataSetChanged();
+    }
 }

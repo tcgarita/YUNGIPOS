@@ -320,7 +320,7 @@ public class OrderSectionFragment0 extends Fragment implements FragmentMenu.OnCl
 
 	@Override
 	//public void onButtonClicked(int sectionNo, int product_id) {
-	public void onButtonClicked(Product p, int product_id) {
+	public void onButtonClicked(Product p, int product_id, View v) {
 		Log.v("Fragment0", p.pos + " " + product_id);
 		if(popWindow != null && popWindow.isShowing() == false)
 		{

@@ -42,9 +42,13 @@
     <string name="save">儲存</string>
     <string name="delete">刪除</string>
     <string name="customized_price">自訂價格商品</string>
-    <string name="managing_product">新增修改品項</string>
+    
 	<string name="customizing">自訂</string>
-	<string name="btn_del_category">刪除類別</string>
+	
 	<string name="btn_edit_category">修改類別</string>
-	<string name="btn_add_category">新增類別</string>
+	<string name="btn_add_category">新增類別</string><string name="btn_del_category">刪除類別</string>
+	<string name="add_product">新增品項</string><string name="edit_product">修改品項</string>
+	<string name="del_product">刪除品項</string>
+	<string name="managing_product">修增修改品項</string>
+	<string name="category_name">類別名稱</string>
 </resources>

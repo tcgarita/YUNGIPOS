@@ -312,7 +312,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 
 
 	@Override
-	public void onButtonClicked(Product p, int product_id) {
+	public void onButtonClicked(Product p, int product_id, View v) {
 		// TODO Auto-generated method stub
 		
 		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);

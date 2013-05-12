@@ -45,10 +45,7 @@
                 <ListView
                     android:id="@+id/listView1"
                     android:layout_width="400dp"
-                    android:layout_height="500dp"
-                    android:drawSelectorOnTop="true" 
-                    android:listSelector="@drawable/list_bg" 
-                    >
+                    android:layout_height="500dp" >
                 </ListView>
 
             </TableRow>
@@ -97,10 +94,16 @@
                     android:gravity="right" >
 
                     <Button
+                        android:id="@+id/button6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_product" />
+
+                    <Button
                         android:id="@+id/button3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Button" />
+                        android:text="@string/del_product" />
 
                 </LinearLayout>
 
@@ -114,7 +117,8 @@
                 <FrameLayout
                     android:id="@android:id/tabcontent"
                     android:layout_width="860dp"
-                    android:layout_height="550dp" >
+                    android:layout_height="550dp"
+                    >
 					<LinearLayout
                     	android:id="@+id/tab1"
                     	android:layout_width="match_parent"
@@ -138,7 +142,7 @@
                         android:id="@+id/button4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Button" />
+                        android:text="@string/add_product" />
 
                 </LinearLayout>
 

@@ -16,7 +16,7 @@ public class FragmentMenu extends Fragment {
 	
 	protected OnClickOrderButtonListener callback;
     public interface OnClickOrderButtonListener {
-        public void onButtonClicked(Product p, int product_id);
+        public void onButtonClicked(Product p, int product_id, View v);
     }
 	public void setCallback(Fragment fragment)
 	{

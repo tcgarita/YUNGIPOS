@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -53,9 +52,7 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 	private HashMap<String, Fragment> hash_fragment;
 	private ProductSettingSectionFragment2 self;
 	View btn_prev_view = null;
-	int save = -1;
-	
-	
+
 	public enum Alignment {Left, Center, Right};
 
 	public OrderSectionFragmentListener callback;
@@ -88,11 +85,14 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 		mode = bundle.getInt("mode");
 		this.inflater = inflater;
 		fragmentView = inflater.inflate(R.layout.product_setting2, container, false);
+		
 		this.initButtons();
+		
 		categories = MainActivity.dbhelper.getAllCategory();
 		listView = (ListView) fragmentView.findViewById(R.id.listView1);
 		CategoryAdapter c_adapter = new CategoryAdapter(getActivity(), 
 				R.layout.category_list_item, categories);
+		
 		listView.setAdapter(c_adapter);
 		
 		int first_cat = 0;
@@ -113,27 +113,24 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long arg3) {
 				
-				category = (Category) listView.getItemAtPosition(position);
+				category = (Category) parent.getItemAtPosition(position);
 				
 				FragmentTransaction ft  = getFragmentManager().beginTransaction();
 				ft.replace(android.R.id.tabcontent, 
 						hash_fragment.get(String.valueOf(category.id)));
 				ft.commit();
 				
-				view.setBackgroundResource(R.color.lightBlue);
-				if( save != -1 && save != position )
-					parent.getChildAt(save).setBackgroundResource(R.color.transparent);
-				save = position;
-				product = null;
+				((CategoryAdapter) parent.getAdapter()).setSelected(position);
 				
+				product = null;
 			}
 		});
-		if(listView.getCount() > 0){
-			save = 0;
+		
+		if(listView.getCount() > 0)
 	    	listView.performItemClick(
 	    			listView.getAdapter().getView(0, null, null), 
 	    			0, listView.getAdapter().getItemId(0));
-		}
+		
 		self = this;
 		return fragmentView;
 	}
@@ -143,15 +140,13 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 		super.onResume();
 	}
 
-	@SuppressLint("SimpleDateFormat")
 	private void initButtons()
 	{
 		btn_add_category = (Button) fragmentView.findViewById(R.id.button5);
 		btn_add_category.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
-            	Log.v("Msg","add cat");
-            	CategoryPopupWindow(R.layout.popup_category_edit,"新增類別"
-                		,"",
+            	CategoryPopupWindow(R.layout.popup_category_edit,
+            			"新增類別","",
                 		new View.OnClickListener() {
         					@Override
         					public void onClick(View v) {
@@ -169,7 +164,7 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
         						
         								product = null;
                     					category = null;
-                    					save = -1;
+//                    					save = -1;
         							} else
         								new AlertDialog.Builder(getActivity())
         									.setTitle("錯誤").setMessage("類別最多六項")
@@ -203,7 +198,7 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 		btn_del_category.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
             	if(category!=null){
-            		del_dialog("即將刪除"+category.name+"\n(類別內所有品項都會一起刪除)",
+            		del_dialog("即將刪除"+category.name+"\n(類別內所有品項會一併刪除)",
             			new DialogInterface.OnClickListener() {
                     		@Override
                     		public void onClick(DialogInterface dialog, int which) {
@@ -214,9 +209,9 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
                     						.get(String.valueOf(category.id));
                     			temp.getButtonAdapter().clear();
                     			hash_fragment.remove(temp);
+                    			((CategoryAdapter) listView.getAdapter()).setSelected(-1);                    			
                     			product = null;
                     			category = null;
-                    			save = -1;
                     		}
                 	});
             	}

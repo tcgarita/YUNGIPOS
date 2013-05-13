@@ -45,7 +45,6 @@ ActionBar.TabListener, OrderSectionFragmentListener {
 		actionBar.addTab(actionBar.newTab().setText(R.string.managing_product)
 				 .setTabListener(this));
 				
-		Log.v("Msg","Product ACtivity2 Constructor");
 		SharedPreferences settings = getSharedPreferences ("POS_ORDER", 0);
 		//waitOrderCount = settings.getInt("WaitOrderCount", 0);
 

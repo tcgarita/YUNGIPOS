@@ -19,7 +19,8 @@ import android.widget.TextView;
 
 class CategoryAdapter extends ArrayAdapter<Category> {
 	private Context mContext;
-	private int textViewResourceId;    
+	private int textViewResourceId;
+	private int selected;
 	public CategoryAdapter(Context context, int textViewResourceId,
 			List<Category> objects) {
 		super(context, textViewResourceId, objects);
@@ -37,9 +38,6 @@ class CategoryAdapter extends ArrayAdapter<Category> {
             convertView = inflater.inflate(textViewResourceId, parent, false);            
             textview = (TextView)convertView.findViewById(R.id.textView1);
             convertView.setTag(textview);
-            
-            if(position==0)
-            	convertView.setBackgroundResource(R.color.lightBlue);
         }
         else
         {
@@ -49,9 +47,19 @@ class CategoryAdapter extends ArrayAdapter<Category> {
         Category cat = this.getItem(position);
         textview.setText(cat.name);
         
+        if( selected == position )
+        	convertView.setBackgroundResource(R.color.lightBlue);
+        else
+        	convertView.setBackgroundResource(R.color.transparent);
+        
         return convertView;
     }	
 	
+    public void setSelected(int pos){
+    	selected = pos;
+        this.notifyDataSetChanged();
+    }
+    
     public void addCategory(Category category){
     	this.add(category);
     }

@@ -186,7 +186,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		new_product_button = (Button) fragmentView.findViewById(R.id.button1);
 		new_product_button.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
-        		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
+        		EditText editText1 = (EditText) fragmentView.findViewById(R.id.edit_price);
         		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
         		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
         		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
@@ -203,7 +203,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 		save_product_button.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
             	// do something
-        		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
+        		EditText editText1 = (EditText) fragmentView.findViewById(R.id.edit_price);
         		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
         		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
         		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
@@ -315,7 +315,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	public void onButtonClicked(Product p, int product_id, View v) {
 		// TODO Auto-generated method stub
 		
-		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
+		EditText editText1 = (EditText) fragmentView.findViewById(R.id.edit_price);
 		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
 		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
 		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
@@ -364,7 +364,7 @@ public class ProductSettingSectionFragment extends Fragment implements FragmentM
 	}
 	
 	public void clearEditText() {
-		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
+		EditText editText1 = (EditText) fragmentView.findViewById(R.id.edit_price);
 		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
 		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
 		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);

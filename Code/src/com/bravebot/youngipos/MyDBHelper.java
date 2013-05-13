@@ -151,12 +151,6 @@ public class MyDBHelper extends SQLiteOpenHelper {
         cursor.close();
 	}
 
-	/*public Cursor getOrderDetail (){
-		SQLiteDatabase db = this.getReadableDatabase();
-		return db.rawQuery("select * from " + DBConstants.ORDER_DETAIL_TABLE_NAME + " WHERE "
-				+ DBConstants.ORDER_DETAIL_DELETE + "=0", null);
-	}*/
-	
 	public Product getProductById (int id){
 		Product p = null;
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -248,15 +242,11 @@ public class MyDBHelper extends SQLiteOpenHelper {
 	}
 	
 	public int editCategoryById(int id, String new_name){
-		if(!new_name.equals("")){
-			SQLiteDatabase db = this.getWritableDatabase();
-			ContentValues values = new ContentValues();
-			values.put("name", new_name);
-			return db.update("category", values, "id=?", 
-				new String[]{String.valueOf(id)});
-		} else {
-			return 0;
-		}
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("name", new_name);
+		return db.update("category", values, "id=?", 
+			new String[]{String.valueOf(id)});
 	}
 	
 	public long addProduct(String name, int price, int category_id){
@@ -265,16 +255,12 @@ public class MyDBHelper extends SQLiteOpenHelper {
 		values.put("name",name);
 		values.put("price", price);
 		values.put("cat_id", category_id);
-		long res = db.insert("product", null, values);
-		Log.v("Msg", "res :"+res);
-		//return db.insert("product", null, values);
-		return res;
+		return db.insert("product", null, values);
 	}
 	
 	public int delProductById (int id) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		int res = db.delete("product", "id=?", new String[]{String.valueOf(id)});
-		Log.v("Msg","id:"+id+ " delete: "+res);
 		return res;
 		
 	}
@@ -282,14 +268,9 @@ public class MyDBHelper extends SQLiteOpenHelper {
 	public int editProductById(int id, String new_name, int new_price, int cat_id ) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		if( ! new_name.equals("") )
-			values.put("name", new_name);
-		
-		if( new_price != -1 )
-			values.put("price", new_price);
-		
-		if( cat_id != -1 )
-			values.put("cat_id", cat_id);
+		values.put("name", new_name);
+		values.put("price", new_price);
+		values.put("cat_id", cat_id);
 		
 		return db.update("product", values, "id=?", new String[]{String.valueOf(id)});
 	}

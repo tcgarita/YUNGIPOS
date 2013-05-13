@@ -50,5 +50,5 @@
 	<string name="add_product">新增品項</string><string name="edit_product">修改品項</string>
 	<string name="del_product">刪除品項</string>
 	<string name="managing_product">修增修改品項</string>
-	<string name="category_name">類別名稱</string>
+	<string name="category_name">類別名稱：</string>
 </resources>

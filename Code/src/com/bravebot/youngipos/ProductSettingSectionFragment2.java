@@ -1,21 +1,9 @@
 package com.bravebot.youngipos;
 
-import java.io.UnsupportedEncodingException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import com.bravebot.youngipos.PopupBillInputWindow.ItemButton_Click;
-
-import android.R.drawable;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -40,7 +28,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.TabHost;
 import android.widget.TextView;
 
 @SuppressLint({ "SimpleDateFormat", "UseSparseArrays" })
@@ -48,7 +35,6 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 {
 	private View fragmentView;
 	private ListView listView;
-	private TabHost tabHost;
 	private Handler m_handler;
 	private Product product;
 	private ArrayList<Category> categories;
@@ -63,7 +49,6 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 	private Button btn_edit_product;
 	private Button btn_del_product;
 	private Button btn_add_product;
-	private CheckBox customize_checkbox;
 	private Drawable d;
 	private HashMap<String, Fragment> hash_fragment;
 	private ProductSettingSectionFragment2 self;
@@ -161,6 +146,41 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 	@SuppressLint("SimpleDateFormat")
 	private void initButtons()
 	{
+		btn_add_category = (Button) fragmentView.findViewById(R.id.button5);
+		btn_add_category.setOnClickListener(new View.OnClickListener()  {
+            public void onClick(View view)  {
+            	Log.v("Msg","add cat");
+            	CategoryPopupWindow(R.layout.popup_category_edit,"新增類別"
+                		,"",
+                		new View.OnClickListener() {
+        					@Override
+        					public void onClick(View v) {
+        						String new_name = ((EditText) pop_view.findViewById(R.id.edit)).getText().toString();
+        						if( !new_name.equals("") ){
+        							long id = MainActivity.dbhelper.addCategory(new_name);
+        							if(id > 0){
+        								Category cat = new Category((int)id,new_name);
+        								((CategoryAdapter)listView.getAdapter()).addCategory(cat);
+        						
+        								Fragment fragment = new FragmentMenu();
+        								((FragmentMenu) fragment ).setCategory(cat.id);
+        								((FragmentMenu) fragment ).setCallback(self);		
+        								hash_fragment.put(String.valueOf(cat.id), fragment);
+        						
+        								product = null;
+                    					category = null;
+                    					save = -1;
+        							} else
+        								new AlertDialog.Builder(getActivity())
+        									.setTitle("錯誤").setMessage("類別最多六項")
+        									.setCancelable(true)
+        									.show();
+        						}
+                    			popWindow.dismiss();
+        					}
+        				});
+            }
+		});
 		btn_edit_category = (Button) fragmentView.findViewById(R.id.button1);
 		btn_edit_category.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
@@ -189,12 +209,9 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
                     		public void onClick(DialogInterface dialog, int which) {
                     			MainActivity.dbhelper.delCategoryById(category.id);
                     			((CategoryAdapter) listView.getAdapter()).remove(category);
-                    			FragmentMenu temp = (FragmentMenu) hash_fragment.get(String.valueOf(category.id));
-                    			/*((FragmentMenu) hash_fragment
-                           				.get(String.valueOf(category.id)))
-                           				.getButtonAdapter()
-                           				.clear();
-                           				*/
+                    			FragmentMenu temp = 
+                    					(FragmentMenu) hash_fragment
+                    						.get(String.valueOf(category.id));
                     			temp.getButtonAdapter().clear();
                     			hash_fragment.remove(temp);
                     			product = null;
@@ -205,46 +222,63 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
             	}
             }
 		});
-		btn_add_category = (Button) fragmentView.findViewById(R.id.button5);
-		btn_add_category.setOnClickListener(new View.OnClickListener()  {
-            public void onClick(View view)  {
-            	Log.v("Msg","add cat");
-            	CategoryPopupWindow(R.layout.popup_category_edit,"新增類別"
-                		,"",
-                		new View.OnClickListener() {
-        					@Override
-        					public void onClick(View v) {
-        						String new_name = ((EditText) pop_view.findViewById(R.id.edit)).getText().toString();
-        						long id = MainActivity.dbhelper.addCategory(new_name);
-        						Category cat = new Category((int)id,new_name);
-        						((CategoryAdapter)listView.getAdapter()).addCategory(cat);
-        						
-        						Fragment fragment = new FragmentMenu();
-        						((FragmentMenu) fragment ).setCategory(cat.id);
-        						((FragmentMenu) fragment ).setCallback(self);		
-        						hash_fragment.put(String.valueOf(cat.id), fragment);
-        						
-        						product = null;
-                    			category = null;
-                    			save = -1;
-                    			
-                    			popWindow.dismiss();
-        					}
-        		});
-            }
-		});
+
 		btn_add_product = (Button) fragmentView.findViewById(R.id.button4);
 		btn_add_product.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
-
-            	Log.v("Msg","add cat");
+            	ProductPopupWindow(R.layout.popup_product_edit,
+                		"新增"+category.name+"品項",
+                		"", 0,
+                		new View.OnClickListener() {
+        					@Override
+        					public void onClick(View v) {
+        						String new_name = 
+        								((EditText) pop_view.findViewById(R.id.edit)).getText().toString();
+        						int new_price = Integer.valueOf(
+        								((EditText) pop_view.findViewById(R.id.edit_price)).getText().toString());
+        						
+        						if(!(new_name.equals("") && new_price == 0)){
+        							long id = MainActivity.dbhelper.addProduct(new_name, new_price, category.id);
+        							Product p = new Product(new_name, new_price, (int) id, category.id);
+        							((FragmentMenu) hash_fragment
+        								.get(String.valueOf(category.id)))
+                        				.getButtonAdapter()
+                        				.addProduct(p);
+        						}
+                    			popWindow.dismiss();
+        					}
+        				});
             }
 		});
 		btn_edit_product = (Button) fragmentView.findViewById(R.id.button6);
 		btn_edit_product.setOnClickListener(new View.OnClickListener()  {
             public void onClick(View view)  {
             	if(product!=null){
-            		Log.v("Msg","add cat");
+            		ProductPopupWindow(R.layout.popup_product_edit,
+            		"修改"+category.name+"品項",
+            		product.name,
+            		product.sticker_price,
+            		new View.OnClickListener() {
+    					@Override
+    					public void onClick(View v) {
+    						String new_name = 
+    								((EditText) pop_view.findViewById(R.id.edit)).getText().toString();
+    						int new_price = Integer.valueOf(
+    								((EditText) pop_view.findViewById(R.id.edit_price)).getText().toString());
+    						
+    						MainActivity.dbhelper.editProductById(
+    								product.id,new_name, 
+    								new_price, product.cat_id);
+    						
+    						((FragmentMenu) hash_fragment
+                    				.get(String.valueOf(category.id)))
+                    				.getButtonAdapter()
+                    				.editProduct(product.pos, new_name, 
+                    						new_price, product.cat_id);
+    						
+                			popWindow.dismiss();
+    					}
+    				});
             	}
             }
 		});
@@ -269,81 +303,6 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
             }
 		});
 		
-	/*
-		save_product_button = (Button) fragmentView.findViewById(R.id.button2);
-		save_product_button.setOnClickListener(new View.OnClickListener()  {
-            public void onClick(View view)  {
-            	// do something
-        		EditText editText1 = (EditText) fragmentView.findViewById(R.id.editText1);
-        		EditText editText2 = (EditText) fragmentView.findViewById(R.id.editText2);
-        		EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
-        		EditText editText5 = (EditText) fragmentView.findViewById(R.id.editText5);
-        		CheckBox checkbox1 = (CheckBox) fragmentView.findViewById(R.id.checkBox1);
-        		if(editText5.getText().toString().equals(""))
-        			return;
-        		String name = editText1.getText().toString();
-        		String text_id = editText5.getText().toString();
-    			int price;
-    			if(checkbox1.isChecked())
-    				price = 0;
-    			else 
-    				price = Integer.parseInt(editText3.getText().toString());
-    			int cat = getCategoryIdByName(editText2.getText().toString());
-    			
-        		if( Integer.parseInt(text_id) == 0 ){
-        			// 新增
-        			Log.v("Msg","name:"+name+",cat:"+cat+",price:"+price);
-        			long new_id = MainActivity.dbhelper.addProduct(editText1.getText().toString(), price, cat);
-        			if( new_id > 0 ){
-        				// TODO it's not a safety way to convert long to integer
-        				Product new_product = new Product(name,price, (int) new_id, cat);
-        				((FragmentMenu) hash_fragment.get(String.valueOf(category.id))).getButtonAdapter().addProduct(new_product);
-        			} else {
-        				setAlert("新增修改品項","新增產品失敗，請聯繫程式設計師");
-        			}
-        		}
-        		else {
-        			// 修改
-        			if( product.id == Integer.parseInt(text_id)){
-        				if( name.equals(product.name) && 
-        					price == product.sticker_price && 
-        					cat == product.cat_id)
-        					return;
-        				
-        				// -1 表示沒更動, 因為 price = 0 有意義，所以統一用 -1  
-        				String edit_name = "";
-        				int edit_price = -1, edit_cat_id = -1;
-        				
-        				if( !name.equals(product.name) )
-        					edit_name = name;
-        				if(price != product.sticker_price)
-        					edit_price = price;
-        				if(cat != product.cat_id)
-        					edit_cat_id = cat;
-        				MainActivity.dbhelper.editProductById(product.id, edit_name, edit_price, edit_cat_id);
-        				((FragmentMenu) hash_fragment.get(String.valueOf(category.id))).getButtonAdapter().editProduct(product.pos,edit_name, edit_price, edit_cat_id);
-        				setAlert("新增修改品項","修改成功");
-        			}
-        		}
-            }
-       });
-		
-		
-		customize_checkbox = (CheckBox) fragmentView.findViewById(R.id.checkBox1);
-		customize_checkbox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				// TODO Auto-generated method stub
-				EditText editText3 = (EditText) fragmentView.findViewById(R.id.editText3);
-				if(isChecked == true) {					
-					editText3.setEnabled(false);
-				} else {
-					editText3.setEnabled(true);
-				}
-			}
-		});
-		*/
 	}
 
 	@Override
@@ -362,9 +321,8 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 
 	@Override
 	public void onButtonClicked(Product p, int product_id, View v) {
-		// TODO Auto-generated method stub
-		Log.v("Msg","Oh: "+ p.name);
 		product = p;
+		
 		if(btn_prev_view == null)
 			d = v.getBackground();
 		
@@ -375,18 +333,7 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 		
 		btn_prev_view = v;
 	}
-
-	public void onCategoryClicked(Category cat){
-		
-	}
 	
-	public void setAlert(String title, String msg){
-		Builder dialog = new AlertDialog.Builder(getActivity());
-		dialog.setTitle(title).setMessage(msg);
-		dialog.setCancelable(true);
-		dialog.show();
-	}
-
 	public AlertDialog del_dialog(String message, DialogInterface.OnClickListener listener){
 		AlertDialog dialog = new AlertDialog.Builder(getActivity())
     	.setIcon(android.R.drawable.ic_dialog_alert)
@@ -422,6 +369,36 @@ public class ProductSettingSectionFragment2 extends Fragment implements Fragment
 			.setOnClickListener(submit_listener);
 		((TextView) pop_view.findViewById(R.id.title)).setText(title);
 		((EditText) pop_view.findViewById(R.id.edit)).setText(message);
+    	popWindow = new PopupWindow(1280,748);
+    	popWindow.setContentView(pop_view);
+		popWindow.update();
+		popWindow.setFocusable(true);
+		popWindow.showAtLocation(fragmentView, Gravity.LEFT|Gravity.TOP, 0, 0);
+	}
+	
+	public void ProductPopupWindow (int resource, String title, 
+			String message,int sticker_price, 
+			Button.OnClickListener submit_listener){
+    	pop_view = inflater.inflate(resource,null);
+    	((ImageButton) pop_view.findViewById(R.id.ButtonCancel))
+    		.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				popWindow.dismiss();
+			}
+		});
+		((Button) pop_view.findViewById(R.id.cancel))
+			.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				popWindow.dismiss();
+			}
+		});
+		((Button) pop_view.findViewById(R.id.submit))
+			.setOnClickListener(submit_listener);
+		((TextView) pop_view.findViewById(R.id.title)).setText(title);
+		((EditText) pop_view.findViewById(R.id.edit)).setText(message);
+		((EditText) pop_view.findViewById(R.id.edit_price))
+						.setText(String.valueOf(sticker_price));
     	popWindow = new PopupWindow(1280,748);
     	popWindow.setContentView(pop_view);
 		popWindow.update();

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">    
+
+    <View
+        android:id="@+id/View01"
+        android:layout_width="match_parent"
+        android:layout_height="748dp"
+        android:background="#88000000" />
+    
+    <View
+        android:id="@+id/view1"
+        android:layout_width="600dp"
+        android:layout_height="360dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="dp"
+        android:background="@color/white" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="600dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="155dp"
+        android:background="@color/blue" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="163dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:textStyle="italic|normal" />
+
+    <ImageButton
+        android:id="@+id/ButtonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="885dp"
+        android:layout_marginTop="160dp"
+        android:background="@null"
+        android:src="@drawable/delete_btn_press" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="400dp"
+        android:layout_marginTop="270dp"
+        android:text="@string/product_name"
+        android:textSize="32sp" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="470dp"
+        android:layout_marginTop="430dp"
+        android:text="@string/button_title_2"
+        android:textSize="32sp" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="700dp"
+        android:layout_marginTop="430dp"
+        android:text="@string/save"
+        android:textSize="32sp" />
+
+    <EditText
+        android:id="@+id/edit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="560dp"
+        android:layout_marginTop="270dp"
+        android:ems="10"
+        android:textSize="32sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="400dp"
+        android:layout_marginTop="350dp"
+        android:text="@string/product_price"
+        android:textSize="32sp" />
+
+    <EditText
+        android:id="@+id/edit_price"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="560dp"
+        android:layout_marginTop="350dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="32sp" />
+    
+</FrameLayout>
